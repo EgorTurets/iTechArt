@@ -21,8 +21,8 @@ h1, p {
     background-color: #00ebeb;
     border-radius: 5px;
     width: 200px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: -65px;
+    margin-bottom: 20px;
     margin-right: auto;
     margin-left: auto;
     position: relative;
@@ -38,11 +38,10 @@ h1, p {
     width: 1450px;
     background-color: #ebebeb;
     border-radius: 5px;
-    margin-top: -40px;
+    margin-top: 50px;
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 70px;
     text-align: center;
 }
 
