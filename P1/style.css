@@ -6,15 +6,28 @@ BODY {
     font-family: "Malgun Gothic";
 }
 
+div {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+h1, p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
 .logo {
     background-color: #00ebeb;
-    border-radius: 3px;
+    border-radius: 5px;
     width: 200px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     margin-right: auto;
     margin-left: auto;
     position: relative;
-    padding: 20px;
-    box-shadow: -5px 7px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    box-shadow: -7px 10px rgba(0, 0, 0, 0.1);
     font: bold 30px 'Malgun Gothic';
     letter-spacing: 3px;
     text-align: center;
@@ -29,7 +42,7 @@ BODY {
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 90px;
+    padding-top: 70px;
     text-align: center;
 }
 
@@ -49,6 +62,61 @@ BODY {
     margin-left: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.main-image {
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.red-button {
+    background-color: #ed3237;
+    border: 0px;
+    border-radius: 5px;
+    height: 40px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
+    font: bold 15px 'Malgun Gothic';
+    color: #ebebeb;
+    text-align: center;
+}
+
+.transparent-button {
+    background-color: #ebebeb;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
+    font: bold 15px 'Malgun Gothic';
+    text-align: center;
+}
+
+.p-products {
+    color: #ed3237;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.icon-background {
+    background-color: #373435;
+    padding: 10px;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
 }
 
 /*НЕ ИСПОЛЬЗУЕМЫЕ СТИЛИ*/
