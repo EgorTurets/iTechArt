@@ -23,6 +23,12 @@ p {
     margin-bottom: 10px;
 }
 
+footer {
+    color: #c5c5c5;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
 
 .logo {
     background-color: #00ebeb;
@@ -46,10 +52,10 @@ p {
     background-color: #ebebeb;
     border-radius: 5px;
     margin-top: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .menu-ul {
