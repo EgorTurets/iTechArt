@@ -1,0 +1,45 @@
+.info-box1 {
+    width: 400px;
+    height: 200px;
+    text-align: left;
+    float: left;
+}
+
+.icon {
+    color: #ebebeb;
+    vertical-align: middle;
+}
+
+.icon-background {
+    text-align: center;
+    width: 72px;
+    height: 32px;
+    background-color: #373435;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
+    float: left;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 128px;
+}
+
+.bold-text-info {
+    font: bold 15px 'Malgun Gothic';
+    color: #373435;
+    margin: 0px;
+}
+.info-text {
+    font: normal 12px 'Malgun Gothic';
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.more-info-button {
+    border: 0px;
+    background-color: #ebebeb;
+    float: left;
+    padding-left: 0px;
+    /*padding-right: 5px;*/
+}
