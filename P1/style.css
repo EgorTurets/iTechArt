@@ -29,9 +29,44 @@ footer {
     margin-bottom: 50px;
 }
 
+div.read-more {
+    padding: 0px;
+    width: 155px;
+    position: relative;
+    margin-top: -29px;
+    background-color: #ebebeb;
+}
+
+hr {
+    margin: 0px 30px 20px 30px;
+}
+
+hr.double-line {
+    margin: 6px 30px 0px 30px;
+    padding: 3px;
+    border-top: 1px solid #c2c2c2;
+    border-bottom: 1px solid #c2c2c2;
+    border-left: none;
+}
+
+a {
+    color: #909090;
+    text-decoration: none;
+}
+
+.active {
+    color: red;
+}
+
+.bottom-border {
+    margin-right: 30px;
+    margin-left: 30px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #c2c2c2;
+}
 
 .logo {
-    background-color: #00ebeb;
+    background-color: #ebebeb;
     border-radius: 5px;
     width: 200px;
     margin-top: -65px;
@@ -51,29 +86,21 @@ footer {
     width: 1230px;
     background-color: #ebebeb;
     border-radius: 5px;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    /*text-align: center;*/
+    margin: 50px auto 30px auto;
+    padding-bottom: 80px;
 }
 
-.menu-ul {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-    font-weight: bold;
-    display: inline-block;
-}
-
-.menu-li {
-    float: left;
-    border-bottom: 1px solid #00ebeb;
-    border-top: 1px solid #00ebeb;
+.menu-item {
     margin-right: 20px;
     margin-left: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
+    border-bottom: 1px solid #d2d2d2;
+    border-top: 1px solid #d2d2d2;
+    border-left: none;
+    border-right: none;
+    background-color: inherit;
+    display: inline-block;
 }
 
 .main-image {
@@ -83,20 +110,14 @@ footer {
     box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
 }
 
-.red-button {
-    background-color: #ed3237;
+button.red-button {
+    height: 40px;
+    padding: 5px 20px 5px 20px;
     border: 0px;
     border-radius: 5px;
-    height: 40px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-right: auto;
-    margin-left: auto;
-    padding: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
     font: bold 15px 'Malgun Gothic';
+    background-color: #ed3237;
     color: #ebebeb;
     text-align: center;
 }
@@ -120,6 +141,14 @@ footer {
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 0px;
+}
+
+.info-line:before, .info-line:after {
+    content: '';
+    display: table;
+}
+.info-line:after {
+    clear: both;
 }
 
 
