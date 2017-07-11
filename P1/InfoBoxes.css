@@ -1,0 +1,81 @@
+.info-box1 {
+    display: inline-block;
+    vertical-align: top;
+    width: 382px;
+    padding-top: 25px;
+    /*margin-right: 10px;*/
+    text-align: left;
+    /*float: left;*/
+}
+
+
+.info-box2 {
+    width: 270px;
+    background-color: #e2e2e2;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
+    padding-top: 30px;
+    padding-bottom: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 80px;
+    display: inline-block;
+    text-align: left;
+}
+
+.info-line {
+    margin-right: 30px;
+    margin-left: 30px;
+    padding-bottom: 0px;
+
+}
+
+.icon {
+    font-size: 24px;
+    color: #ebebeb;
+    vertical-align: middle;
+}
+
+.icon-background {
+    text-align: center;
+    width: 70px;
+    height: 26px;
+    background-color: #373435;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -8px 10px rgba(0, 0, 0, 0.1);
+    float: left;
+    margin: 0px 30px 80px 0px;
+}
+
+.bold-text-info {
+    margin: 0px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #373435;
+}
+.info-text {
+    font: normal 12px 'Malgun Gothic';
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.text-box2 {
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+.more-info-button {
+    border: 0px;
+    background-color: transparent;
+    float: left;
+    padding-left: 0px;
+    font: bold 15px 'Malgun Gothic';
+    color: #373435;
+}
