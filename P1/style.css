@@ -1,26 +1,31 @@
 BODY {
-    background: linear-gradient(90deg, rgb(44,44,44), rgb(45,45,45) 45%, rgb(40,40,40) 50%);
-    background-size: 3em 3em;
+    background: linear-gradient(90deg, rgb(44,44,44) 50%, rgb(50,50,50) 50%,rgb(50,50,50) 55%, rgb(40,40,40) 55%);
+    background-size: 40px 40px;
     background-color: black;
-    padding-top: 50px;
-    font-family: "Malgun Gothic";
+    padding-top: 39px;
+    font-family: "Source Sans Pro";
+    /*letter-spacing: 1px;*/
 }
 
 div {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 21px;
+    padding-bottom: 21px;
 }
 
 h1{
     color: #373435;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 12px;
+    margin-bottom: 7px;
+    letter-spacing: 3px;
 }
 
-p {
+p.main-text {
     color: #817e7f;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 19px;
+    letter-spacing: 1px;
+    line-height: 1.2;
 }
 
 footer {
@@ -33,17 +38,14 @@ div.read-more {
     padding: 0px;
     width: 155px;
     position: relative;
-    margin-top: -29px;
+    margin-top: -31px;
+    padding-bottom: 20px;
     background-color: #ebebeb;
 }
 
-hr {
-    margin: 0px 30px 20px 30px;
-}
-
 hr.double-line {
-    margin: 6px 30px 0px 30px;
-    padding: 3px;
+    margin: 8px 30px 0px 30px;
+    padding: 4px;
     border-top: 1px solid #c2c2c2;
     border-bottom: 1px solid #c2c2c2;
     border-left: none;
@@ -61,29 +63,28 @@ a {
 .bottom-border {
     margin-right: 30px;
     margin-left: 30px;
-    padding-bottom: 50px;
+    padding-bottom: 26px;
     border-bottom: 1px solid #c2c2c2;
 }
 
 .logo {
-    background-color: #ebebeb;
-    border-radius: 5px;
-    width: 200px;
-    margin-top: -65px;
-    margin-bottom: 20px;
-    margin-right: auto;
-    margin-left: auto;
     position: relative;
+    width: 209px;
+    height: 52px;
+    margin: -65px auto 21px auto;
     padding: 25px;
-    box-shadow: -7px 10px rgba(0, 0, 0, 0.1);
-    font: bold 30px 'Malgun Gothic';
-    letter-spacing: 3px;
+    border-radius: 5px;
+    background-color: #ebebeb;
+    box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: 3px;
     z-index: 9999;
 }
 
 .background-div {
-    width: 1230px;
+    width: 1220px;
     background-color: #ebebeb;
     border-radius: 5px;
     margin: 50px auto 30px auto;
@@ -91,32 +92,44 @@ a {
 }
 
 .menu-item {
-    margin-right: 20px;
-    margin-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin-right: 22px;
+    margin-left: 22px;
+    padding-top: 9px;
+    padding-bottom: 9px;
     border-bottom: 1px solid #d2d2d2;
     border-top: 1px solid #d2d2d2;
     border-left: none;
     border-right: none;
     background-color: inherit;
     display: inline-block;
+    letter-spacing: 1px;
 }
 
 .main-image {
+    width: 1160px;
+    height: 375px;
+    padding-right: 8px;     /*для выравнивания*/
     border-top-left-radius: 11px;
     border-bottom-left-radius: 11px;
     border-bottom-right-radius: 11px;
     box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
 }
 
-button.red-button {
-    height: 40px;
-    padding: 5px 20px 5px 20px;
+button {
+    height: 38px;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.red-button {
+    /*height: 40px;*/
+    width: 118px;
+    /*padding: 5px 20px 5px 20px;*/
     border: 0px;
     border-radius: 5px;
-    box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
-    font: bold 15px 'Malgun Gothic';
+    box-shadow: -4px 4px rgba(0, 0, 0, 0.1);
+    /*font-size: 13px;*/
+    font-weight: bold;
     background-color: #ed3237;
     color: #ebebeb;
     text-align: center;
@@ -126,14 +139,19 @@ button.red-button {
     background-color: #ebebeb;
     border: 1px solid #cecece;
     border-radius: 5px;
-    height: 40px;
+    /*height: 40px;*/
     margin: 5px;
     padding: 5px;
     padding-left: 20px;
     padding-right: 20px;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
-    font: bold 15px 'Malgun Gothic';
+    /*font-size: 13px;*/
+    font-weight: bold;
     text-align: center;
+}
+
+.add-button-margin {
+
 }
 
 .p-products {
@@ -143,13 +161,13 @@ button.red-button {
     margin-bottom: 0px;
 }
 
-.info-line:before, .info-line:after {
-    content: '';
-    display: table;
-}
-.info-line:after {
-    clear: both;
-}
+/*.info-line:before, .info-line:after {*/
+    /*content: '';*/
+    /*display: table;*/
+/*}*/
+/*.info-line:after {*/
+    /*clear: both;*/
+/*}*/
 
 
 
