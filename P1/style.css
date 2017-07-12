@@ -4,28 +4,32 @@ BODY {
     background-color: black;
     padding-top: 39px;
     font-family: "Source Sans Pro";
-    /*letter-spacing: 1px;*/
+    text-align: center;
 }
 
-div {
-    padding-top: 21px;
-    padding-bottom: 21px;
+nav {
+    padding: 20px 0 20px 0 ;
 }
 
 h1{
     color: #373435;
     margin-top: 12px;
     margin-bottom: 7px;
+    font-size: 31px;
     letter-spacing: 3px;
 }
 
 p.main-text {
     color: #817e7f;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
     font-size: 19px;
     letter-spacing: 1px;
     line-height: 1.2;
+}
+
+.main-info-block {
+    margin: 50px 0 45px 0;
 }
 
 footer {
@@ -35,20 +39,11 @@ footer {
 }
 
 div.read-more {
-    padding: 0px;
+    padding: 0;
     width: 155px;
     position: relative;
-    margin-top: -31px;
-    padding-bottom: 20px;
+    margin: -31px auto 0 auto;
     background-color: #ebebeb;
-}
-
-hr.double-line {
-    margin: 8px 30px 0px 30px;
-    padding: 4px;
-    border-top: 1px solid #c2c2c2;
-    border-bottom: 1px solid #c2c2c2;
-    border-left: none;
 }
 
 a {
@@ -60,18 +55,31 @@ a {
     color: red;
 }
 
-.bottom-border {
-    margin-right: 30px;
-    margin-left: 30px;
-    padding-bottom: 26px;
+img + div.main-info-block {
+    margin: 40px 0 70px 0;
+    /*margin-bottom: 70px;*/
+
+}
+
+.single-line {
+    margin: 50px 30px 0 30px;
+    border: none;
     border-bottom: 1px solid #c2c2c2;
+}
+
+.double-line {
+    margin: 8px 30px 0px 30px;
+    padding: 4px;
+    border-top: 1px solid #c2c2c2;
+    border-bottom: 1px solid #c2c2c2;
+    border-left: none;
 }
 
 .logo {
     position: relative;
-    width: 209px;
-    height: 52px;
-    margin: -65px auto 21px auto;
+    width: 210px;
+    height: 55px;
+    margin: 5px auto -60px auto;
     padding: 25px;
     border-radius: 5px;
     background-color: #ebebeb;
@@ -83,12 +91,16 @@ a {
     z-index: 9999;
 }
 
-.background-div {
-    width: 1220px;
+.gray-background {
+    display: inline-block;
+    text-align: center;
+    max-width: 1230px;
+    min-width: 450px;
+    width: 95%;
     background-color: #ebebeb;
     border-radius: 5px;
-    margin: 50px auto 30px auto;
-    padding-bottom: 80px;
+    margin: 0 auto 30px auto;
+    padding: 82px 0 53px 0;
 }
 
 .menu-item {
@@ -105,13 +117,15 @@ a {
     letter-spacing: 1px;
 }
 
+.menu-item:hover {
+    color: red;
+}
+
 .main-image {
-    width: 1160px;
-    height: 375px;
-    padding-right: 8px;     /*для выравнивания*/
-    border-top-left-radius: 11px;
-    border-bottom-left-radius: 11px;
-    border-bottom-right-radius: 11px;
+    margin: 20px 8px 20px 0;
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
     box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -122,36 +136,39 @@ button {
 }
 
 .red-button {
-    /*height: 40px;*/
     width: 118px;
-    /*padding: 5px 20px 5px 20px;*/
     border: 0px;
     border-radius: 5px;
     box-shadow: -4px 4px rgba(0, 0, 0, 0.1);
-    /*font-size: 13px;*/
     font-weight: bold;
     background-color: #ed3237;
     color: #ebebeb;
     text-align: center;
+
 }
 
-.transparent-button {
+.red-button:hover {
+    background-color: #ebebeb;
+    color: black;
+    border: 1px solid #cecece;
+    cursor: pointer;
+}
+
+.gray-button {
     background-color: #ebebeb;
     border: 1px solid #cecece;
     border-radius: 5px;
-    /*height: 40px;*/
     margin: 5px;
-    padding: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 5px 20px 5px 20px;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
-    /*font-size: 13px;*/
     font-weight: bold;
     text-align: center;
 }
 
-.add-button-margin {
-
+.gray-button:hover {
+    background-color: #ed3237;
+    color: #ebebeb;
+    cursor: pointer;
 }
 
 .p-products {
@@ -161,16 +178,14 @@ button {
     margin-bottom: 0px;
 }
 
-/*.info-line:before, .info-line:after {*/
-    /*content: '';*/
-    /*display: table;*/
-/*}*/
-/*.info-line:after {*/
-    /*clear: both;*/
-/*}*/
+.red-color-for-chevron {
+    color: #ed3237;
+}
 
-
-
-
-
-/*НЕ ИСПОЛЬЗУЕМЫЕ СТИЛИ*/
+.info-line:before, .info-line:after {
+    content: '';
+    display: table;
+}
+.info-line:after {
+    clear: both;
+}
