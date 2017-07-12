@@ -291,3 +291,10 @@ img + div.main-info-block {
 }
 
 /*МЕДИА-ЗАПРОСЫ*/
+
+/*скрывать менюбар и показывать кнопку открытия меню*/
+@media all and (max-width: 630px) {
+    .menu-bar {
+        display: none;
+    }
+}
