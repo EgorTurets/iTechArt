@@ -36,11 +36,12 @@ footer {
     color: #c5c5c5;
     text-align: center;
     margin-bottom: 50px;
+    line-height: 1.7;
 }
 
-div.read-more {
-    padding: 0;
-    width: 155px;
+div.read-more-wrap {
+    padding: 0 15px 0 15px;
+    width: 120px;
     position: relative;
     margin: -31px auto 0 auto;
     background-color: #ebebeb;
@@ -57,8 +58,6 @@ a {
 
 img + div.main-info-block {
     margin: 40px 0 70px 0;
-    /*margin-bottom: 70px;*/
-
 }
 
 .single-line {
@@ -68,11 +67,12 @@ img + div.main-info-block {
 }
 
 .double-line {
-    margin: 8px 30px 0px 30px;
+    margin: 8px 30px 0 30px;
     padding: 4px;
     border-top: 1px solid #c2c2c2;
     border-bottom: 1px solid #c2c2c2;
     border-left: none;
+    border-right: none;
 }
 
 .logo {
@@ -99,8 +99,8 @@ img + div.main-info-block {
     width: 95%;
     background-color: #ebebeb;
     border-radius: 5px;
-    margin: 0 auto 30px auto;
-    padding: 82px 0 53px 0;
+    margin: 0 auto 35px auto;
+    padding: 82px 0 75px 0;
 }
 
 .menu-item {
@@ -122,6 +122,8 @@ img + div.main-info-block {
 }
 
 .main-image {
+    max-width: 1170px;
+    width: 96%;
     margin: 20px 8px 20px 0;
     border-top-left-radius: 13px;
     border-bottom-left-radius: 13px;
@@ -129,21 +131,24 @@ img + div.main-info-block {
     box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
 }
 
-button {
-    height: 38px;
+.button-style {
+    display: inline-block;
+    height: 36px;
     letter-spacing: 2px;
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 36px;
 }
 
 .red-button {
     width: 118px;
-    border: 0px;
+    border: 1px solid #ed3237;
     border-radius: 5px;
     box-shadow: -4px 4px rgba(0, 0, 0, 0.1);
     font-weight: bold;
     background-color: #ed3237;
     color: #ebebeb;
     text-align: center;
+    cursor: pointer;
 
 }
 
@@ -151,15 +156,15 @@ button {
     background-color: #ebebeb;
     color: black;
     border: 1px solid #cecece;
-    cursor: pointer;
 }
 
 .gray-button {
+    margin: 5px;
+    padding: 0 15px 0 15px;
+    color: black;
     background-color: #ebebeb;
     border: 1px solid #cecece;
     border-radius: 5px;
-    margin: 5px;
-    padding: 5px 20px 5px 20px;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1);
     font-weight: bold;
     text-align: center;
@@ -171,11 +176,14 @@ button {
     cursor: pointer;
 }
 
-.p-products {
+.products-red-style {
+    margin: 20px 0 0 0;
     color: #ed3237;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 0px;
+}
+
+.buttons-wrap {
+    margin-top: -25px;
 }
 
 .red-color-for-chevron {
@@ -188,4 +196,96 @@ button {
 }
 .info-line:after {
     clear: both;
+}
+
+.info-box-first-line {
+    display: inline-block;
+    vertical-align: top;
+    width: 370px;
+    margin-top: 13px;
+    margin-bottom: 7px;
+    text-align: left;
+}
+
+.info-box-second-line {
+    display: inline-block;
+    width: 270px;
+    padding: 35px 0 27px 0;
+    margin-bottom: 20px;
+    background-color: #e2e2e2;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.left-row {
+    margin-right: 25px;
+}
+
+.right-row {
+    margin-left: 25px;
+}
+
+.icon {
+    font-size: 25px;
+    color: #ebebeb;
+    vertical-align: middle;
+}
+
+.icon-background {
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
+    width: 70px;
+    height: 70px;
+    margin-right: 30px;
+    padding: 20px 0 20px 0;
+    background-color: #373435;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    box-shadow: -8px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box-image {
+    margin: 20px 0 0 0;
+}
+
+.content-wrap {
+    width: 270px;
+}
+.icon-background, .content-wrap {
+    float: left;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.bold-text-info {
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #373435;
+}
+.info-text {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 20px auto 17px auto;
+    line-height: 1.7;
+}
+
+.text-box-r-l-margin {
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+.more-info-button {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #373435;
 }

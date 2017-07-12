@@ -3,7 +3,6 @@
 <head>
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="InfoBoxes.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -30,8 +29,8 @@
 
     <hr class="single-line"/>
     <hr class="double-line"/>
-    <div class="read-more">
-        <button class="red-button">READ MORE</button>
+    <div class="read-more-wrap">
+        <a href="index.html" class="button-style red-button">READ MORE</a>
     </div>
 
     <div class="main-info-block">
@@ -39,7 +38,6 @@
         <p class="main-text">Sed adipiscing ornare risus. Morbi est est, blandit sit amet, sagittis vel, euismod vel, velit.<br>
             Pellentesque egestas sem. Suspedisse commodo ullamcorper magna.</p>
     </div>
-
 
     <div class="info-box-first-line left-row">
         <div class="icon-background">
@@ -49,18 +47,18 @@
         <div class="content-wrap">
             <p class="bold-text-info">FUSCE PELLENTESQUE SUSCIPIT NIBH</p>
             <p class="info-text">Sed egestas, ante et vulputate voultpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, id...</p>
-            <button class="bold-text-info more-info-button">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></button>
+            <a class="bold-text-info more-info-button" href="index.html">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></a>
         </div>
-
     </div>
+
     <div class="info-box-first-line">
         <div class="icon-background">
             <i class="fa fa-users fa-2x icon" aria-hidden="true"></i>
         </div>
         <div class="content-wrap">
-        <p class="bold-text-info">INTEGER VITAE LIBERO AC RISUS EGESTAS</p>
-        <p class="info-text">Ced egestas, ante et vulputate voultpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucib...</p>
-        <button class="bold-text-info more-info-button">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></button>
+            <p class="bold-text-info">INTEGER VITAE LIBERO AC RISUS EGESTAS</p>
+            <p class="info-text">Ced egestas, ante et vulputate voultpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucib...</p>
+            <a class="bold-text-info more-info-button" href="index.html">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></a>
         </div>
     </div>
 
@@ -69,9 +67,9 @@
             <i class="fa fa-wrench fa-2x icon" aria-hidden="true"></i>
         </div>
         <div class="content-wrap">
-        <p class="bold-text-info">VESTIBULUM COMMODO FELIS QUTIS TORT</p>
-        <p class="info-text">Tegestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, fauc...</p>
-        <button class="bold-text-info more-info-button">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></button>
+            <p class="bold-text-info">VESTIBULUM COMMODO FELIS QUTIS TORT</p>
+            <p class="info-text">Tegestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, fauc...</p>
+            <a class="bold-text-info more-info-button" href="index.html">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></a>
         </div>
     </div>
 
@@ -82,52 +80,49 @@
         <p class="main-text">Fusce lobortis lorem at ipsum semper sgittis</p>
     </div>
 
-    <div class="info-line bottom-border">
-        <div class="info-box2">
-            <p class="bold-text-info text-box2">VESTIBULUM COMMODO FELIS QUIS TORTOR</p>
-            <img src="images/img_01.jpg">
-            <p class="info-text text-box2">Mauris nibh felis, adipiscing varius, adipiscing in, lacins vel, tellus. Suspendisse ac urma. Etiam pellentesque mauris ut lectus.</p>
-            <button class="more-info-button text-box2">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></button>
-        </div>
-        <div class="info-box2">
-            <p class="bold-text-info text-box2">DONEC QUIS DUI AT DOLOR TEMPOR INTERDUM</p>
-            <img src="images/img_02.jpg">
-            <p class="info-text text-box2">Suspendisse mauris. fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vechicula. Integer adipiscing risus</p>
-            <button class="more-info-button text-box2">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></button>
-        </div>
-        <div class="info-box2">
-            <p class="bold-text-info text-box2">FUSCE LOBORTIS LOREM AT IPSUM SEMPER</p>
-            <img src="images/img_03.jpg">
-            <p class="info-text text-box2">Facibus non, congue vel, arcu. Ut scelerisque hendrerit tellus. Integer sagittis. Vivamus a mauris eget arcu gravida tristique</p>
-            <button class="more-info-button text-box2">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></button>
-        </div>
-
+    <div class="info-box-second-line left-row">
+        <p class="bold-text-info text-box-r-l-margin">VESTIBULUM COMMODO FELIS QUIS TORTOR</p>
+        <img class="info-box-image" src="images/img_01.jpg">
+        <p class="info-text text-box-r-l-margin">Mauris nibh felis, adipiscing varius, adipiscing in, lacins vel, tellus. Suspendisse ac urma. Etiam pellentesque mauris ut lectus.</p>
+        <a class="bold-text-info more-info-button text-box-r-l-margin" href="index.html">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></a>
     </div>
+    <div class="info-box-second-line">
+        <p class="bold-text-info text-box-r-l-margin">DONEC QUIS DUI AT DOLOR TEMPOR INTERDUM</p>
+        <img class="info-box-image" src="images/img_02.jpg">
+        <p class="info-text text-box-r-l-margin">Suspendisse mauris. fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vechicula. Integer adipiscing risus</p>
+        <a class="bold-text-info more-info-button text-box-r-l-margin" href="index.html">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></a>
+    </div>
+    <div class="info-box-second-line right-row">
+        <p class="bold-text-info text-box-r-l-margin">FUSCE LOBORTIS LOREM AT IPSUM SEMPER</p>
+        <img class="info-box-image" src="images/img_03.jpg">
+        <p class="info-text text-box-r-l-margin">Facibus non, congue vel, arcu. Ut scelerisque hendrerit tellus. Integer sagittis. Vivamus a mauris eget arcu gravida tristique</p>
+        <a class="bold-text-info more-info-button text-box-r-l-margin" href="index.html">MORE INFO&nbsp<i class="fa fa-chevron-right red-color-for-chevron" aria-hidden="true"></i></a>
+    </div>
+
+    <hr class="single-line"/>
 
     <div class="main-info-block">
         <h1>NUNC DIGNISS</h1>
         <p class="main-text">Praesent dapibus, neque id cursus faucibus,<br>
             tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat<br>
             volutpat. Nam dui mi, tincidunt quis, accumsan porttitor</p>
-
-        <p class="p-products">OUR PRODUCTS</p>
+        <p class="products-red-style">OUR PRODUCTS</p>
     </div>
 
-    <div class="bottom-border">
-        <button class="gray-button">INTEGER VIT</button>
-        <button class="gray-button">DONCE AMETUNO</button><br>
-        <button class="gray-button">VOLUPTANIN</button>
-        <button class="gray-button">TINCIDUM</button>
-        <button class="gray-button">PORTTION SOUTI</button><br>
-        <button class="gray-button">NAMDUI SINOSI</button>
-        <button class="gray-button">FERMNUTIN</button>
-
+    <div class="buttons-wrap">
+        <a href="index.html" class="button-style gray-button">INTEGER VIT</a>
+        <a href="index.html" class="button-style gray-button">DONCE AMETUNO</a><br>
+        <a href="index.html" class="button-style gray-button">VOLUPTANIN</a>
+        <a href="index.html" class="button-style gray-button">TINCIDUM</a>
+        <a href="index.html" class="button-style gray-button">PORTTION SOUTI</a><br>
+        <a href="index.html" class="button-style gray-button">NAMDUI SINOSI</a>
+        <a href="index.html" class="button-style gray-button">FERMNUTIN</a>
     </div>
 
     <hr class="single-line"/>
     <hr class="double-line"/>
-    <div class="read-more">
-        <button class="red-button">VIEW MORE</button>
+    <div class="read-more-wrap">
+        <a href="index.html" class="button-style red-button">VIEW MORE</a>
     </div>
 </section>
     <footer>
