@@ -4,18 +4,15 @@ BODY {
     background-color: black;
     padding-top: 39px;
     font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
     text-align: center;
-}
-
-nav {
-    padding: 20px 0 20px 0 ;
 }
 
 h1{
     color: #373435;
     margin-top: 12px;
     margin-bottom: 7px;
-    font-size: 31px;
+    font-size: 2.2em;
     letter-spacing: 3px;
 }
 
@@ -23,7 +20,7 @@ p.main-text {
     color: #817e7f;
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 19px;
+    font-size: 1.3em;
     letter-spacing: 1px;
     line-height: 1.2;
 }
@@ -36,11 +33,12 @@ footer {
     color: #c5c5c5;
     text-align: center;
     margin-bottom: 50px;
+    font-size: 1.2em;
     line-height: 1.7;
 }
 
 div.read-more-wrap {
-    padding: 0 15px 0 15px;
+    padding: 0 15px 5px 15px;
     width: 120px;
     position: relative;
     margin: -31px auto 0 auto;
@@ -85,35 +83,44 @@ img + div.main-info-block {
     background-color: #ebebeb;
     box-shadow: -10px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    font-size: 40px;
+    font-size: 2.85em;
     font-weight: bold;
     letter-spacing: 3px;
-    z-index: 9999;
 }
 
 .gray-background {
     display: inline-block;
     text-align: center;
     max-width: 1230px;
-    min-width: 450px;
     width: 95%;
     background-color: #ebebeb;
     border-radius: 5px;
-    margin: 0 auto 35px auto;
-    padding: 82px 0 75px 0;
+    margin: 0 auto 31px auto;
+    padding: 82px 0 70px 0;
+}
+
+.menu-icon {
+    display: none;
+    float: right;
+    position: relative;
+    margin: -70px 30px 0 0;
+
+}
+
+.menu-bar {
+    padding: 20px 0 20px 0 ;
 }
 
 .menu-item {
-    margin-right: 22px;
-    margin-left: 22px;
-    padding-top: 9px;
-    padding-bottom: 9px;
+    margin: 0 22px 0 22px;
+    padding: 9px 0 9px 0;
     border-bottom: 1px solid #d2d2d2;
     border-top: 1px solid #d2d2d2;
     border-left: none;
     border-right: none;
     background-color: inherit;
     display: inline-block;
+    font-size: 1.1em;
     letter-spacing: 1px;
 }
 
@@ -135,7 +142,6 @@ img + div.main-info-block {
     display: inline-block;
     height: 36px;
     letter-spacing: 2px;
-    font-size: 14px;
     line-height: 36px;
 }
 
@@ -180,10 +186,12 @@ img + div.main-info-block {
     margin: 20px 0 0 0;
     color: #ed3237;
     font-weight: bold;
+    font-size: 1.1em;
+    letter-spacing: 2px;
 }
 
 .buttons-wrap {
-    margin-top: -25px;
+    margin-top: -17px;
 }
 
 .red-color-for-chevron {
@@ -202,7 +210,7 @@ img + div.main-info-block {
     display: inline-block;
     vertical-align: top;
     width: 370px;
-    margin-top: 13px;
+    margin-top: 15px;
     margin-bottom: 7px;
     text-align: left;
 }
@@ -210,7 +218,7 @@ img + div.main-info-block {
 .info-box-second-line {
     display: inline-block;
     width: 270px;
-    padding: 35px 0 27px 0;
+    padding: 39px 0 27px 0;
     margin-bottom: 20px;
     background-color: #e2e2e2;
     border-top-left-radius: 11px;
@@ -229,7 +237,7 @@ img + div.main-info-block {
 }
 
 .icon {
-    font-size: 25px;
+    font-size: 1.8em;
     color: #ebebeb;
     vertical-align: middle;
 }
@@ -256,6 +264,7 @@ img + div.main-info-block {
 .content-wrap {
     width: 270px;
 }
+
 .icon-background, .content-wrap {
     float: left;
     vertical-align: top;
@@ -263,14 +272,14 @@ img + div.main-info-block {
 }
 
 .bold-text-info {
+    height: 36px;
     margin: 0;
     font-weight: bold;
-    font-size: 14px;
     letter-spacing: 2px;
     color: #373435;
 }
+
 .info-text {
-    font-size: 14px;
     font-weight: normal;
     margin: 20px auto 17px auto;
     line-height: 1.7;
@@ -285,16 +294,85 @@ img + div.main-info-block {
     border: 0;
     background-color: transparent;
     padding: 0;
-    font-size: 15px;
     font-weight: bold;
     color: #373435;
 }
 
+.menu-bar-vertical {
+    display: none;
+    float: right;
+    margin: -30px 25px 0 0;
+    padding-top: 10px;
+    text-align: right;
+}
+
+.menu-icon:hover + .menu-bar-vertical, .menu-bar-vertical:hover {
+    display: inline-block;
+    visibility: visible;
+}
+
+.menu-item-vertical {
+    display: block;
+    position: relative;
+    margin: 5px;
+    padding: 2px;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+}
+
+.menu-item-vertical:hover {
+    color: red;
+}
+
 /*МЕДИА-ЗАПРОСЫ*/
+
+@media all and (max-width: 1260px){
+    .info-box-first-line
+    {
+        margin: 15px;
+    }
+}
+
+@media all and (max-width: 930px) {
+    .info-box-second-line {
+        margin: 0 10px 20px 10px;
+    }
+
+}
 
 /*скрывать менюбар и показывать кнопку открытия меню*/
 @media all and (max-width: 630px) {
     .menu-bar {
         display: none;
+    }
+
+    .menu-icon {
+        display: inline-block;
+    }
+
+    .main-image {
+        margin-right: 0;
+    }
+
+}
+
+@media all and (max-width: 480px) {
+    .logo {
+        margin: 5px auto -60px 20px;
+        padding: 20px;
+        width: 160px;
+        height: auto;
+        font-size: 2.3em;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .info-box-first-line {
+        width: 90%;
+    }
+    .content-wrap {
+        width: 60%;
     }
 }
