@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project 2</title>
+    <script src="task_1.js" async></script>
+    <style>
+        .maxWidth {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<section id="Task-1">
+    <h1>Task 1</h1>
+    <input type="text" id="t1_input_array" class="maxWidth">
+    <input type="button" id="t1_btn_sub_sum" value="Sub Sum">
+    <input type="button" id="t1_btn_search" value="Search">
+    <input type="button" id="t1_btn_max_grow" value="Selection Task">
+    <p id="t1_output">Pезультат</p>
+</section>
+<script>
+    t1_btn_sub_sum.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.getMaxSubSum(t1_input_array.value);
+    } );
+    t1_btn_search.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.Search(t1_input_array.value);
+    } );
+    t1_btn_max_grow.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.GetMaxGrowingArray(t1_input_array.value);
+    } );
+</script>
+<hr>
+
+<section id="Task-2">
+    <h1>Task 2</h1>
+</section>
+<hr>
+
+<section id="Task-3">
+    <h1>Task 3</h1>
+</section>
+<hr>
+
+<section id="Task-4">
+    <h1>Task 4</h1>
+</section>
+<hr>
+
+<section id="Task-5">
+    <h1>Task 5</h1>
+</section>
+<hr>
+
+<section id="Task-6">
+    <h1>Task 6</h1>
+</section>
+
+
+</body>
+</html>
