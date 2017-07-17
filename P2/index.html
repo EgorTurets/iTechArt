@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Project 2</title>
     <script src="task_1.js" async></script>
+    <script src="task_2.js" async></script>
     <style>
         .maxWidth {
             display: block;
@@ -14,7 +15,7 @@
 </head>
 <body>
 <section id="Task-1">
-    <h1>Task 1</h1>
+    <h1>Task 1 - Array Processing Tool</h1>
     <input type="text" id="t1_input_array" class="maxWidth">
     <input type="button" id="t1_btn_sub_sum" value="Sub Sum">
     <input type="button" id="t1_btn_search" value="Search">
@@ -35,27 +36,36 @@
 <hr>
 
 <section id="Task-2">
-    <h1>Task 2</h1>
+    <h1>Task 2 - Date Display Formatter</h1>
+    <input type="text" id="t2_input_text" class="maxWidth">
+    <input type="button" id="t2_btn_format" value="Format">
+    <p id="t2_output">Pезультат</p>
 </section>
+<script>
+    t2_btn_format.addEventListener('click', function () {
+        t2_output.innerHTML = DateDisplayFormatter.BasicReplacer(t2_input_text.value);
+    });
+
+</script>
 <hr>
 
 <section id="Task-3">
-    <h1>Task 3</h1>
+    <h1>Task 3 - Text Formatter</h1>
 </section>
 <hr>
 
 <section id="Task-4">
-    <h1>Task 4</h1>
+    <h1>Task 4 - String calculator</h1>
 </section>
 <hr>
 
 <section id="Task-5">
-    <h1>Task 5</h1>
+    <h1>Task 5 - Array Sorter</h1>
 </section>
 <hr>
 
 <section id="Task-6">
-    <h1>Task 6</h1>
+    <h1>Task 6 - Binary Converter</h1>
 </section>
 
 
