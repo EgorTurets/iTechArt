@@ -44,7 +44,7 @@
 </section>
 <script>
     t2_btn_format.addEventListener('click', function () {
-        t2_output.innerHTML = DateDisplayFormatter.BasicReplacer(t2_input_text.value);
+        t2_output.innerHTML = DateDisplayFormatter.ParseUsersString(t2_input_text.value);
     });
     t2_btn_test.addEventListener('click', function () {
         t2_output.innerHTML = DateDisplayFormatter.ParseUsersString(t2_input_text.value);
