@@ -4,7 +4,7 @@
 var DateDisplayFormatter;
 DateDisplayFormatter = {
     basicReg: /^(0[1-9]|[1-2][0-9]|[3][01])(0[1-9]|1[0-2])(\d{4})$/,  //DDMMYYYY
-    //для парсинга входных
+    //для парсинга входных пользовательских регулярок
     parserUsersRegExp: /^(d{1,2}|m{1,2}|y{1,4})([_\W])?(d{1,2}|m{1,2}|y{1,4})([_\W])?(d{1,2}|m{1,2}|y{1,4})\s*$/i,
 
     ParseUsersString: function (usersString) {

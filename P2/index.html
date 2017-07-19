@@ -24,7 +24,7 @@
 </section>
 <script>
     t1_btn_sub_sum.addEventListener('click', function () {
-        t1_output.innerHTML = ArrayProcessing.getMaxSubSum(t1_input_array.value);
+        t1_output.innerHTML = ArrayProcessing.GetMaxSubSum(t1_input_array.value);
     } );
     t1_btn_search.addEventListener('click', function () {
         t1_output.innerHTML = ArrayProcessing.Search(t1_input_array.value);
@@ -37,6 +37,19 @@
 
 <section id="Task-2">
     <h1>Task 2 - Date Display Formatter</h1>
+    <span>дата[, формат входной даты][, формат выходной даты]<br>
+        - без указания входного формата, устанавливается базовый (DDMMYYYY)<br>
+        - без указания выходного формата, устанавливается базовый (DD-MM-YYYY)<br>
+        - если входная дата не соответствует входному формату - ошибка<br>
+        - если во входном формате или дате не хватает значения - ошибка<br>
+        - во входном формате количество букв должно соответствовать количеству цифр, иначе - ошибка<br>
+        - во входном формате и дате должны соответствовать разделители<br>
+        - разделителями могут быть любые знаки и символы отступа (но не цифры или буквы)<br>
+        - в выходном формате допустимо отсутствие одного или нескольких значений (DD/MM)<br>
+        - в выходном формате не имеет значения количество символов каждого значения (D = DD = DDD)<br>
+        - пустой формат или формат имеющий цифры или буквы (кроме D, M, Y) недопустим<br>
+        - регист букв в формате не имеет значения<br>
+    </span>
     <input type="text" id="t2_input_text" class="maxWidth">
     <input type="button" id="t2_btn_format" value="Format">
     <p id="t2_output">Pезультат</p>

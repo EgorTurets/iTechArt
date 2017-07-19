@@ -3,17 +3,51 @@
  */
 var ArrayProcessing = {
 
-    getMaxSubSum: function (stringWithNumberArray) {
+    GetMaxSubSum: function (stringWithNumberArray) {
         var numberArray = ArrayProcessing.ToNumberArrConverter(stringWithNumberArray);
         if (numberArray === false) {
             return 'Invalid input!'
         }
         var maxSum = 0;     //зданичение для хранения максимальной суммы
-        var sum = 0;        //знач. для посчета текущей суммы
+        var i = 0;
 
-        for (var i = 0; i < array.length; i++){
+        while (i < numberArray.length) {
+            var firstSum = 0;        //знач. для посчета суммы до первого отрицательного числа
+            //пропуск всех начальных неположительных чисел
+            while (numberArray[i] < 0) {
+                i++;
+            }
 
+            //суммирование до первого отрицательного
+            while (numberArray[i] >= 0) {
+                firstSum += numberArray[i];
+                i++;
+            }
+            //numberArray[i] < 0
+            //определение суммы всех оставшихся символов
+            var secondSum = 0;
+            var maxSecondSum = 0;
+            for (j = i; j < numberArray.length; j++) {
+                secondSum += numberArray[j];
+                if (maxSecondSum < secondSum) {
+                    maxSecondSum = secondSum;
+                }
+            }
+            if (maxSecondSum > 0) {
+                if (maxSum < firstSum + maxSecondSum) {
+                    maxSum = firstSum + maxSecondSum;
+                }
+            }
+            else if (maxSum < firstSum) {
+                maxSum = firstSum;
+            }
+            //конец цикла проверки.
         }
+        return maxSum;
+    },
+    
+    Cycle1: function () {
+
     },
 
     Search: function (stringWithNumberArray) {
