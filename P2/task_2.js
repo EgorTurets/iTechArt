@@ -4,10 +4,8 @@
 var DateDisplayFormatter;
 DateDisplayFormatter = {
     basicReg: /^(0[1-9]|[1-2][0-9]|[3][01])(0[1-9]|1[0-2])(\d{4})$/,  //DDMMYYYY
-    //для парсинга входных и выходных регулярок
+    //для парсинга входных
     parserUsersRegExp: /^(d{1,2}|m{1,2}|y{1,4})([_\W])?(d{1,2}|m{1,2}|y{1,4})([_\W])?(d{1,2}|m{1,2}|y{1,4})\s*$/i,
-    //для парсинга всей строки на части
-    //fullStringParser: /^([^a-z]{1,10}),\s?([^0-9_]{1,10}),\s?([^0-9_]{1,10})/i,
 
     ParseUsersString: function (usersString) {
         var inputDate, inputFormat, outputFormat, outputDate;
@@ -30,9 +28,11 @@ DateDisplayFormatter = {
         }
         // ??? -> ???
         else {
-            inputFormat = DateDisplayFormatter.GetRegExpByUserFormat(inputFormat);
-            outputFormat = DateDisplayFormatter.GetRegExpByUserFormat(outputFormat);
-            //outputDate = DateDisplayFormatter.GetBasicDate(inputDate, inputFormat);
+            inputFormat = DateDisplayFormatter.GetRegExpByUserFormat(inputFormat, datePartsPosition);
+            if (DateDisplayFormatter.IsValidOutputFormat(outputFormat)) {
+                outputDate = DateDisplayFormatter.ReplaceWithInOutFormat(inputDate, inputFormat, datePartsPosition, outputFormat);
+
+            }
         }
 
 
@@ -92,7 +92,40 @@ DateDisplayFormatter = {
         return outStr;
     },
 
+    // ??? -> ???
+    ReplaceWithInOutFormat: function (inputDate, inputFormat, partsPosition, outputFormat) {
+        var outStr = undefined;
 
+        inputDate.replace(inputFormat, function (str, p1, p2, p3, offset, s) {
+            switch(partsPosition[0]) {
+                case 0: outputFormat = outputFormat.replace(/D+/i, p1);
+                    break;
+                case 1: outputFormat = outputFormat.replace(/D+/i, p2);
+                    break;
+                case 2: outputFormat = outputFormat.replace(/D+/i, p3);
+                    break;
+            }
+            switch(partsPosition[1]) {
+                case 0: outputFormat = outputFormat.replace(/M+/i, p1);
+                    break;
+                case 1: outputFormat = outputFormat.replace(/M+/i, p2);
+                    break;
+                case 2: outputFormat = outputFormat.replace(/M+/i, p3);
+                    break;
+            }
+            switch(partsPosition[2]) {
+                case 0: outputFormat = outputFormat.replace(/Y+/i, p1);
+                    break;
+                case 1: outputFormat = outputFormat.replace(/Y+/i, p2);
+                    break;
+                case 2: outputFormat = outputFormat.replace(/Y+/i, p3);
+                    break;
+            }
+            outStr = outputFormat;
+        });
+        return outStr;
+    },
+    
     GetRegExpByUserFormat: function (userRegExp, partsPosition) {
         var regExpResult;
         var dateParts = [/D/i, /M/i, /Y/i];
@@ -108,10 +141,6 @@ DateDisplayFormatter = {
                 if(dateParts[i].test(p1)) {partsPosition[i] = 0}
                 if(dateParts[i].test(p3)) {partsPosition[i] = 1}
                 if(dateParts[i].test(p5)) {partsPosition[i] = 2}
-
-                // if (~p1.indexOf(partsPosition[i])) {partsPosition[i] = 0}
-                // if (~p3.indexOf(partsPosition[i])) {partsPosition[i] = 1}
-                // if (~p5.indexOf(partsPosition[i])) {partsPosition[i] = 2}
             }
 
             regExpResult = str.replace(/dd/i, "(0[1-9]|[1-2][0-9]|[3][01])").replace(
@@ -122,5 +151,15 @@ DateDisplayFormatter = {
             regExpResult = new RegExp("^" + regExpResult + "$", "i");
         }
         return regExpResult;
+    },
+    
+    IsValidOutputFormat: function (outputFormat) {
+        //проверка на повторы символов в разных местах и на наличие недопустимых символов
+        if (/DD?[^D]+D/i.test(outputFormat)) {return false; };
+        if (/MM?[^M]+M/i.test(outputFormat)) {return false; };
+        if (/Y{1,4}[^Y]+Y/i.test(outputFormat)) {return false; };
+        if (/[^DMY_\W]/i.test(outputFormat)) {return false;} ;
+
+        return true;
     }
 };

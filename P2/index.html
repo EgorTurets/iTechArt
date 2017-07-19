@@ -39,17 +39,12 @@
     <h1>Task 2 - Date Display Formatter</h1>
     <input type="text" id="t2_input_text" class="maxWidth">
     <input type="button" id="t2_btn_format" value="Format">
-    <input type="button" id="t2_btn_test" value="Test Button">
     <p id="t2_output">Pезультат</p>
 </section>
 <script>
     t2_btn_format.addEventListener('click', function () {
         t2_output.innerHTML = DateDisplayFormatter.ParseUsersString(t2_input_text.value);
     });
-    t2_btn_test.addEventListener('click', function () {
-        t2_output.innerHTML = DateDisplayFormatter.ParseUsersString(t2_input_text.value);
-    })
-
 </script>
 <hr>
 
