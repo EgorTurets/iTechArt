@@ -1,4 +1,6 @@
 // JavaScript source code
+
+
 function Calculate(inputExpression) {
     var invInp = "Invalid input";
     inputExpression = inputExpression.replace(/\s+/g, "");
@@ -8,89 +10,135 @@ function Calculate(inputExpression) {
     if (/^\.|\D\.|\.\D|\.\d+\.|\.$/.test(inputExpression)) {
         return invInp;
     }
-    var openBrackets = inputExpression.match(/\(/g);
-    var closeBrackets = inputExpression.match(/\)/g);
-    if (openBrackets.length !== closeBrackets.length) {
+    var openBrackets = [], closeBrackets = [];
+    openBrackets = inputExpression.match(/\(/g);
+    closeBrackets = inputExpression.match(/\)/g);
+    if ((openBrackets === null || closeBrackets === null) && (openBrackets !== closeBrackets)) {
         return invInp;
     }
+    else if (!(openBrackets === null && closeBrackets === null)) {
+        if (openBrackets.length != closeBrackets.length) {
+            return invInp;
+        }
+    }
 
-    var smthBad = "Something is bad";
-    var RPN = [];
-    var tempStorage = [null];
-    var RPNi = 0, tStorLastIndex = 0;
+    var rg = /[+-/*()]/g;
+    var flag = rg.test("12.3");
+
+
+    var RPN = new Object()
+    RPN.storage = [];
+    RPN.index = 0;
+    var tempSymbols = new Object();
+    tempSymbols.symbolsArray = [null];
+    tempSymbols.lastIndex = 0;
     var response = 0;
     if (inputExpression[0] === "-") {
-        RPN[RPNi] = 0;
-        RPNi++;
+        RPN.storage[RPN.index] = 0;
+        RPN.index++;
     }
+
+    //create Reverse Polish notation
     for (i = 0; i<inputExpression.length; i++) {
-        if (/[0-9.]/.test(inputExpression[i])) {
-            RPN[RPNi] = inputExpression[i];
-            RPNi++;
-        }
-        else {
-            switch (inputExpression[i]) {
-                case "+":
-                case "-":
-                    switch (tempStorage[tStorLastIndex]) {
-                        case "+":
-                        case "-":
-                        case "*":
-                        case "/":
-                            RPN[RPNi] = tempStorage[tStorLastIndex];
-                            tStorLastIndex--;
-                            RPNi++;
-                            break;
-                        case null:
-                        case "(":
-                            tempStorage[tStorLastIndex+1] = inputExpression[i];
-                            tStorLastIndex++;
-                            break;
-                        default: return smthBad;
-                    }
-                    break;
-                case "/":
-                case "*": {
-                    switch (tempStorage[tStorLastIndex]) {
-                        case "+":
-                        case "-":
-                        case null:
-                        case "(":
-                            tempStorage[tStorLastIndex+1] = inputExpression[i];
-                            tStorLastIndex++;
-                            break;
-                        case "*":
-                        case "/":
-                            RPN[RPNi] = tempStorage[tStorLastIndex];
-                            tStorLastIndex--;
-                            RPNi++;
-                            break;
-                        default: return smthBad;
-                    }
-                } break;
-                case "(":
-                    tempStorage[tStorLastIndex+1] = inputExpression[i];
-                    tStorLastIndex++;
-                    break;
-                case ")":
-                    while (tempStorage[tStorLastIndex] !== "(") {
-                        RPN[RPNi] = tempStorage[tStorLastIndex];
-                        tStorLastIndex--;
-                        RPNi++;
-                    }
-                    tStorLastIndex--;
-                    break;
-                default: return smthBad;
+        // if (inputExpression[i] === ".") {
+        //     var regExp = /[+-/*()]/g;
+        //     regExp.lastIndex = i+1;
+        //     var endNumber = regExp.exec(inputExpression);
+        //     if (endNumber.index === null) {
+        //         RPN.storage[RPN.index-1] = +inputExpression.substring(i-1);
+        //         i = inputExpression.length;
+        //     }
+        //     else {
+        //         var endNumberIndex = endNumber.index;
+        //         RPN.storage[RPN.index-1] = +inputExpression.substring(i-1, endNumber);
+        //         i = endNumber;
+        //     }
+        // }
+        if (/[0-9]/.test(inputExpression[i])) {
+            var regExp = /[+\-/*()]/g;               //WHY does it find a point.
+            regExp.lastIndex = i;
+            var endNumber = regExp.exec(inputExpression);
+            if (!endNumber) {
+                RPN.storage[RPN.index] = +inputExpression.substring(i);
+                RPN.index++;
+                i = inputExpression.length;
+            }
+            else {
+                RPN.storage[RPN.index] = +inputExpression.substring(i, endNumber.index);
+                RPN.index++;
+                i = endNumber.index-1;
             }
         }
+        else { tempSymbols.symbolsArray = OperatorComparison (inputExpression[i], tempSymbols, RPN)
+        }
+        if (RPN.isBad)
+            return "Something is bad";
     }
-    while (tempStorage[tStorLastIndex] !== null) {
-        RPN[RPNi] = tempStorage[tStorLastIndex];
-        RPNi++;
-        tStorLastIndex--;
+    while (tempSymbols.symbolsArray[tempSymbols.lastIndex] !== null) {
+        RPN.storage[RPN.index] = tempSymbols.symbolsArray[tempSymbols.lastIndex];
+        RPN.index++;
+        tempSymbols.lastIndex--;
     }
 
+    return response = RPN.storage;
+}
 
-    return response = RPN;
+function OperatorComparison(currentOperator, symbStor, RPN) {
+    switch (currentOperator) {
+        case "+":
+        case "-":
+            switch (symbStor.symbolsArray[symbStor.lastIndex]) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                    RPN.storage[RPN.index] = symbStor.symbolsArray[symbStor.lastIndex];
+                    symbStor.lastIndex--;
+                    RPN.index++;
+                    OperatorComparison (currentOperator, symbStor, RPN);
+                    break;
+                case null:
+                case "(":
+                    symbStor.symbolsArray[symbStor.lastIndex+1] = currentOperator;
+                    symbStor.lastIndex++;
+                    break;
+                default: RPN.isBad = true;
+            }
+            break;
+        case "/":
+        case "*": {
+            switch (symbStor.symbolsArray[symbStor.lastIndex]) {
+                case "+":
+                case "-":
+                case null:
+                case "(":
+                    symbStor.symbolsArray[symbStor.lastIndex+1] = currentOperator;
+                    symbStor.lastIndex++;
+                    break;
+                case "*":
+                case "/":
+                    RPN.storage[RPN.index] = symbStor.symbolsArray[symbStor.lastIndex];
+                    symbStor.lastIndex--;
+                    RPN.index++;
+                    OperatorComparison (currentOperator, symbStor, RPN);
+                    break;
+                default: RPN.isBad = true;
+            }
+        } break;
+        case "(":
+            symbStor.symbolsArray[symbStor.lastIndex+1] = currentOperator;
+            symbStor.lastIndex++;
+            break;
+        case ")":
+            while (symbStor.symbolsArray[symbStor.lastIndex] !== "(") {
+                RPN.storage[RPN.index] = symbStor.symbolsArray[symbStor.lastIndex];
+                symbStor.lastIndex--;
+                RPN.index++;
+            }
+            symbStor.lastIndex--;
+            break;
+        default: RPN.isBad = true;
+    }
+    return symbStor.symbolsArray;
 }
 
