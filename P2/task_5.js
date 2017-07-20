@@ -2,17 +2,20 @@
  * Created by yahor.turets on 20.07.2017.
  */
 function Sort(inputString, sortType) {
-    var regExp = /[^0-9,. \-]/;
+    var regExp = /[^0-9, \-]/;
     if (regExp.test(inputString)) return "Invalid input!";
     var array = inputString.split(",");
     for (i=0; i < array.length; i++) {
-        if (!isNaN(array[i])) {array[i] = +array[i];}
+        if (!isNaN(array[i])) { array[i] = +array[i]; }
+        else {
+            return "Invalid input!";
+        }
     }
     switch (sortType) {
         case "Stupid": return StupidSort(array, 0); break;
         case "Bubble": return BubbleSort(array, array.length); break;
-        case "Solomon": return Solomon(array); break;
-        case "NoName2": return NoName2(array); break;
+        case "Solomon": return SolomonSort(array); break;
+        case "Spaghetti": return SpaghettiSort(array); break;
         default: return "Something is bad";
     }
 }
@@ -37,7 +40,7 @@ function BubbleSort(inputArray, lastSortedElement) {
     return inputArray;
 }
 
-function Solomon(inputArray) {
+function SolomonSort(inputArray) {
     var min = 0, max = 0;
     //find MIN and MAX values
     for (i = 0 ; i < inputArray.length; i++) {
@@ -72,8 +75,22 @@ function Solomon(inputArray) {
     return outputArray;
 }
 
-function NoName2(inputArray) {
-
+function SpaghettiSort(inputArray) {
+    var minNumber = 0, maxNumber = 0;
+    //find MIN and MAX values
+    for (i = 0 ; i < inputArray.length; i++) {
+        if (inputArray[i] > maxNumber) maxNumber = inputArray[i];
+        if (inputArray[i] < minNumber) minNumber = inputArray[i];
+    }
+    var outputArray = [];    
+    for (var currentNumber = minNumber; currentNumber <= maxNumber; currentNumber++) {
+        for (var i = 0; i < inputArray.length; i++) {
+            if (inputArray[i] == currentNumber) {
+                outputArray.push(inputArray[i]);
+            }
+        }
+    }
+    return outputArray;
 }
 
 function ReplaceElement(array, index1, index2) {
@@ -82,3 +99,4 @@ function ReplaceElement(array, index1, index2) {
     array[index2] = temp;
     return array;
 }
+
