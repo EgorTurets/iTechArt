@@ -4,18 +4,18 @@
 var DateDisplayFormatter;
 DateDisplayFormatter = {
     basicReg: /^(0[1-9]|[1-2][0-9]|[3][01])(0[1-9]|1[0-2])(\d{4})$/,  //DDMMYYYY
-    //для парсинга входных пользовательских регулярок
+    //for parsing users regular expression
     parserUsersRegExp: /^(d{1,2}|m{1,2}|y{1,4})([_\W])?(d{1,2}|m{1,2}|y{1,4})([_\W])?(d{1,2}|m{1,2}|y{1,4})\s*$/i,
 
     ParseUsersString: function (usersString) {
         var inputDate, inputFormat, outputFormat, outputDate;
 
-        //разбивка входной строки на части
+        //parsing the input string
         var subStrings = usersString.split(/,\s+/);
         inputDate = subStrings[0];
         inputFormat = subStrings[1];
         outputFormat = subStrings[2];
-        var datePartsPosition = [];         //хранит позиции дня месяца и года
+        var datePartsPosition = [];         //storage for day, month and year position
 
         //DDMMYYYY -> DD-MM-YYYY
         if (inputFormat === undefined) {
@@ -131,7 +131,7 @@ DateDisplayFormatter = {
         var dateParts = [/D/i, /M/i, /Y/i];
 
         userRegExp.replace(DateDisplayFormatter.parserUsersRegExp, function (str, p1, p2, p3, p4, p5, offset, s) {
-            //проверка, если в шаблоне неправильно указаны дни месяцы или года, кинуть ошибку
+            //Check for duplicate symbols
             if ((/d/i.test(p1)&&/d/i.test(p3))||(/d/i.test(p1)&&/d/i.test(p5))||(/d/i.test(p3)&&/d/i.test(p5)) ||
                 (/m/i.test(p1)&&/m/i.test(p3))||(/m/i.test(p1)&&/m/i.test(p5))||(/m/i.test(p3)&&/m/i.test(p5)) ||
                 (/y/i.test(p1)&&/y/i.test(p3))||(/y/i.test(p1)&&/y/i.test(p5))||(/y/i.test(p3)&&/y/i.test(p5))) {
@@ -154,7 +154,7 @@ DateDisplayFormatter = {
     },
     
     IsValidOutputFormat: function (outputFormat) {
-        //проверка на повторы символов в разных местах и на наличие недопустимых символов
+        //Check for duplicate and not valid symbols
         if (/DD?[^D]+D/i.test(outputFormat)) {return false; };
         if (/MM?[^M]+M/i.test(outputFormat)) {return false; };
         if (/Y{1,4}[^Y]+Y/i.test(outputFormat)) {return false; };

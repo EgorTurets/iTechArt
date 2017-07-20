@@ -8,23 +8,23 @@ var ArrayProcessing = {
         if (numberArray === false) {
             return 'Invalid input!'
         }
-        var maxSum = 0;     //зданичение для хранения максимальной суммы
+        var maxSum = 0;     //storage for max sum
         var i = 0;
 
         while (i < numberArray.length) {
-            var firstSum = 0;        //знач. для посчета суммы до первого отрицательного числа
-            //пропуск всех начальных неположительных чисел
+            var firstSum = 0;        //storage sum up to first negative number
+            //Pass all started negative number
             while (numberArray[i] < 0) {
                 i++;
             }
 
-            //суммирование до первого отрицательного
+            //summing up to first negative number
             while (numberArray[i] >= 0) {
                 firstSum += numberArray[i];
                 i++;
             }
             //numberArray[i] < 0
-            //определение суммы всех оставшихся символов
+            //Summing all remaining symbols
             var secondSum = 0;
             var maxSecondSum = 0;
             for (j = i; j < numberArray.length; j++) {
@@ -41,7 +41,6 @@ var ArrayProcessing = {
             else if (maxSum < firstSum) {
                 maxSum = firstSum;
             }
-            //конец цикла проверки.
         }
         return maxSum;
     },
@@ -112,13 +111,13 @@ var ArrayProcessing = {
     },
 
     ToNumberArrConverter: function (stringWithNumberArray) {
-        var array = stringWithNumberArray.split(',');       //получен массив элементов
+        var array = stringWithNumberArray.split(',');       //get symbols array
         var arrayWihtNumbers = [];
         for (i = 0; i < array.length; i++) {
             if (!isNaN(parseFloat(array[i])) && isFinite(array[i])) {
-                arrayWihtNumbers[i] = +array[i];            //если можно, преобразовать в число
+                arrayWihtNumbers[i] = +array[i];            //if is number
             }
-        else { return false; }                              //иначе вернуть false
+        else { return false; }
         }
         return arrayWihtNumbers;
     }
