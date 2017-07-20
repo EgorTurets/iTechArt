@@ -22,10 +22,6 @@ function Calculate(inputExpression) {
         }
     }
 
-    var rg = /[+-/*()]/g;
-    var flag = rg.test("12.3");
-
-
     var RPN = new Object()
     RPN.storage = [];
     RPN.index = 0;
@@ -40,22 +36,8 @@ function Calculate(inputExpression) {
 
     //create Reverse Polish notation
     for (i = 0; i<inputExpression.length; i++) {
-        // if (inputExpression[i] === ".") {
-        //     var regExp = /[+-/*()]/g;
-        //     regExp.lastIndex = i+1;
-        //     var endNumber = regExp.exec(inputExpression);
-        //     if (endNumber.index === null) {
-        //         RPN.storage[RPN.index-1] = +inputExpression.substring(i-1);
-        //         i = inputExpression.length;
-        //     }
-        //     else {
-        //         var endNumberIndex = endNumber.index;
-        //         RPN.storage[RPN.index-1] = +inputExpression.substring(i-1, endNumber);
-        //         i = endNumber;
-        //     }
-        // }
         if (/[0-9]/.test(inputExpression[i])) {
-            var regExp = /[+\-/*()]/g;               //WHY does it find a point.
+            var regExp = /[+\-/*()]/g;
             regExp.lastIndex = i;
             var endNumber = regExp.exec(inputExpression);
             if (!endNumber) {
@@ -78,6 +60,28 @@ function Calculate(inputExpression) {
         RPN.storage[RPN.index] = tempSymbols.symbolsArray[tempSymbols.lastIndex];
         RPN.index++;
         tempSymbols.lastIndex--;
+    }
+
+    //read Reverse Polish notation
+    for (i = 0; i < RPN.storage.length; i++) {
+        var t = RPN.storage[i];
+        while (!isNaN(RPN.storage[i])) { i++; }
+        switch (RPN.storage[i]) {
+            case "+":
+                RPN.storage[i-2] = RPN.storage[i-2] + RPN.storage[i-1];
+                break;
+            case "-":
+                RPN.storage[i-2] = RPN.storage[i-2] - RPN.storage[i-1];
+                break;
+            case "*":
+                RPN.storage[i-2] = RPN.storage[i-2] * RPN.storage[i-1];
+                break;
+            case "/":
+                RPN.storage[i-2] = RPN.storage[i-2] / RPN.storage[i-1];
+                break;
+        }
+        RPN.storage.splice(i-1, 2);
+        i = i-2;
     }
 
     return response = RPN.storage;
