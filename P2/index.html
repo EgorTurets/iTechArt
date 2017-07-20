@@ -5,7 +5,10 @@
     <title>Project 2</title>
     <script src="task_1.js" async></script>
     <script src="task_2.js" async></script>
+
     <script src="task_4.js" async></script>
+
+    <script src="task_6.js" async></script>
     <style>
         .maxWidth {
             display: block;
@@ -87,8 +90,26 @@
 
 <section id="Task-6">
     <h1>Task 6 - Binary Converter</h1>
+    <input type="text" id="t6_input_string" class="maxWidth">
+    <select id="t6_select_convert_type">
+        <option value="BinDec">Bin -> Dec</option>
+        <option value="DecBin">Dec -> Bin</option>
+    </select>
+    <input type="button" id="t6_btn_converte" value="Convert">
+    <p id="t6_output">Pезультат</p>
 </section>
+<script>
+    t6_btn_converte.addEventListener('click', function () {
+        var select = t6_select_convert_type;
+        for (var i = 0; i < select.length; i++) {
+            if (select.options[i].selected) {
+                t6_output.innerHTML = Calculate(t6_input_string.value, select.options[i].value);
 
+            }
+        }
+
+    } );
+</script>
 
 </body>
 </html>
