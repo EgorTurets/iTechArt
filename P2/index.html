@@ -5,11 +5,15 @@
     <title>Project 2</title>
     <script src="task_1.js" async></script>
     <script src="task_2.js" async></script>
-
+    <script src="task_3.js" async></script>
     <script src="task_4.js" async></script>
     <script src="task_5.js" async></script>
     <script src="task_6.js" async></script>
     <style>
+        textarea {
+            display: block;
+            min-width: 100px;
+        }
         .maxWidth {
             display: block;
             width: 100%;
@@ -67,7 +71,27 @@
 
 <section id="Task-3">
     <h1>Task 3 - Text Formatter</h1>
+    <textarea id="t3_text"></textarea>
+    <select id="t3_select_wrap_type">
+        <option value="NoWrap">No wrap</option>
+        <option value="SymbolWrap">Symbol wrap</option>
+        <option value="WordWrap">Word wrap</option>
+        <option value="ClauseWrap">Clause wrap</option>
+    </select>
+    <label>Line length: </label>
+    <input type="text" id="t3_line_length">
+    <input type="button" id="t3_btn_wrap" value="Wrap">
 </section>
+    <script>
+        t3_btn_wrap.addEventListener('click', function () {
+            var select = t3_select_wrap_type;
+            for (var i = 0; i < select.length; i++) {
+                if (select.options[i].selected) {
+                    t3_text.value = Wrap(t3_text.value, select.options[i].value, t3_line_length.value);
+                }
+            }
+        });
+    </script>
 <hr>
 
 <section id="Task-4">
