@@ -5,6 +5,7 @@
     <title>Project 2</title>
     <script src="task_1.js" async></script>
     <script src="task_2.js" async></script>
+    <script src="task_4.js" async></script>
     <style>
         .maxWidth {
             display: block;
@@ -68,7 +69,15 @@
 
 <section id="Task-4">
     <h1>Task 4 - String calculator</h1>
+    <input type="text" id="t4_input_string" class="maxWidth">
+    <input type="button" id="t4_btn_calculate" value="Calculate">
+    <p id="t4_output">Pезультат</p>
 </section>
+<script>
+    t4_btn_calculate.addEventListener('click', function () {
+        t4_output.innerHTML = Calculate(t4_input_string.value);
+    } );
+</script>
 <hr>
 
 <section id="Task-5">
