@@ -7,7 +7,7 @@
     <script src="task_2.js" async></script>
 
     <script src="task_4.js" async></script>
-
+    <script src="task_5.js" async></script>
     <script src="task_6.js" async></script>
     <style>
         .maxWidth {
@@ -85,7 +85,26 @@
 
 <section id="Task-5">
     <h1>Task 5 - Array Sorter</h1>
+    <input type="text" id="t5_input_string" class="maxWidth">
+    <select id="t5_select_sort_type">
+        <option value="Stupid">Stupid</option>
+        <option value="Bubble">Bubble</option>
+        <option value="Solomon">Solomon</option>
+        <option value="NoName2">NoName2</option>
+    </select>
+    <input type="button" id="t5_btn_sort" value="Sort">
+    <p id="t5_output">Pезультат</p>
 </section>
+<script>
+    t5_btn_sort.addEventListener('click', function () {
+        var select = t5_select_sort_type;
+        for (var i = 0; i < select.length; i++) {
+            if (select.options[i].selected) {
+                t5_output.innerHTML = Sort(t5_input_string.value, select.options[i].value);
+            }
+        }
+    } );
+</script>
 <hr>
 
 <section id="Task-6">
@@ -104,10 +123,8 @@
         for (var i = 0; i < select.length; i++) {
             if (select.options[i].selected) {
                 t6_output.innerHTML = Calculate(t6_input_string.value, select.options[i].value);
-
             }
         }
-
     } );
 </script>
 
