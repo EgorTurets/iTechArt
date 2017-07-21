@@ -2,7 +2,7 @@
  * Created by yahor.turets on 14.07.2017.
  */
 var ArrayProcessing = {
-
+    //O(N^2)
     GetMaxSubSum1: function (stringWithNumberArray) {
         var numberArray = ArrayProcessing.ToNumberArrConverter(stringWithNumberArray);
         if (numberArray === false) {
@@ -52,6 +52,7 @@ var ArrayProcessing = {
         return maxSum;
     },
 
+    //O(N^2) and don't using
     GetMaxSubSum2: function (stringWithNumberArray) {
         var numberArray = ArrayProcessing.ToNumberArrConverter(stringWithNumberArray);
         if (numberArray === false) {
@@ -73,6 +74,29 @@ var ArrayProcessing = {
                     maxSum = currentSum;
                 }
             }
+        }
+        //--------------------------------------------
+        var time2 = Date.now();
+        alert(time2 - time1);
+        //----------------------------------------------
+        return maxSum;
+    },
+
+    KadanesAlgorithm: function (stringWithNumberArray) {
+        var numberArray = ArrayProcessing.ToNumberArrConverter(stringWithNumberArray);
+        if (numberArray === false) {
+            return 'Invalid input!'
+        }
+        //---------------------------------------------
+        var time1 = Date.now();
+        //----------------------------------------------
+        var maxSum = 0;
+        var currentSum = 0;
+        var minSum = 0;
+        for (var i = 0; i < numberArray.length; i++) {
+            currentSum += numberArray[i];
+            maxSum = (currentSum-minSum > maxSum) ? currentSum-minSum : maxSum;
+            minSum = (currentSum < minSum) ? currentSum: minSum;
         }
         //--------------------------------------------
         var time2 = Date.now();

@@ -25,8 +25,8 @@
 <section id="Task-1">
     <h1>Task 1 - Array Processing Tool</h1>
     <input type="text" id="t1_input_array" class="maxWidth">
-    <input type="button" id="t1_btn_sub_sum" value="Sub Sum 1">
-    <input type="button" id="t2_btn_sub_sum" value="Sub Sum 2">
+    <input type="button" id="t1_btn_sub_sum" value="Sub Sum (N^2)">
+    <input type="button" id="t1_btn_kadane" value="Sub Sum (Kadane's)">
     <input type="button" id="t1_btn_search" value="Search">
     <input type="button" id="t1_btn_max_grow" value="Selection Task">
     <p id="t1_output">Pезультат</p>
@@ -35,8 +35,8 @@
     t1_btn_sub_sum.addEventListener('click', function () {
         t1_output.innerHTML = ArrayProcessing.GetMaxSubSum1(t1_input_array.value);
     } );
-    t2_btn_sub_sum.addEventListener('click', function () {
-        t1_output.innerHTML = ArrayProcessing.GetMaxSubSum2(t1_input_array.value);
+    t1_btn_kadane.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.KadanesAlgorithm(t1_input_array.value);
     } );
     t1_btn_search.addEventListener('click', function () {
         t1_output.innerHTML = ArrayProcessing.Search(t1_input_array.value);
