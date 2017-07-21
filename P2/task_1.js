@@ -3,7 +3,7 @@
  */
 var ArrayProcessing = {
 
-    GetMaxSubSum: function (stringWithNumberArray) {
+    GetMaxSubSum1: function (stringWithNumberArray) {
         var numberArray = ArrayProcessing.ToNumberArrConverter(stringWithNumberArray);
         if (numberArray === false) {
             return 'Invalid input!'
@@ -11,6 +11,9 @@ var ArrayProcessing = {
         var maxSum = 0;     //storage for max sum
         var i = 0;
 
+        //---------------------------------------------
+        var time1 = Date.now();
+        //----------------------------------------------
         while (i < numberArray.length) {
             var firstSum = 0;        //storage sum up to first negative number
             //Pass all started negative number
@@ -42,11 +45,40 @@ var ArrayProcessing = {
                 maxSum = firstSum;
             }
         }
+        //--------------------------------------------
+        var time2 = Date.now();
+        alert(time2 - time1);
+        //----------------------------------------------
         return maxSum;
     },
-    
-    Cycle1: function () {
 
+    GetMaxSubSum2: function (stringWithNumberArray) {
+        var numberArray = ArrayProcessing.ToNumberArrConverter(stringWithNumberArray);
+        if (numberArray === false) {
+            return 'Invalid input!'
+        }
+
+        //---------------------------------------------
+        var time1 = Date.now();
+        //----------------------------------------------
+        var maxSum = 0;
+        for (var i = 0; i < numberArray.length; i++) {
+            var currentSum = numberArray[i];
+            if (maxSum < currentSum) {
+                maxSum = currentSum;
+            }
+            for (var j = i+1; j < numberArray.length; j++) {
+                currentSum += numberArray[j];
+                if (maxSum < currentSum) {
+                    maxSum = currentSum;
+                }
+            }
+        }
+        //--------------------------------------------
+        var time2 = Date.now();
+        alert(time2 - time1);
+        //----------------------------------------------
+        return maxSum;
     },
 
     Search: function (stringWithNumberArray) {
