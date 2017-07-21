@@ -138,19 +138,31 @@
 <section id="Task-6">
     <h1>Task 6 - Binary Converter</h1>
     <input type="text" id="t6_input_string" class="maxWidth">
-    <select id="t6_select_convert_type">
-        <option value="BinDec">Bin -> Dec</option>
-        <option value="DecBin">Dec -> Bin</option>
+    <select id="t6_select_from">
+        <option value="Bin">Bin</option>
+        <option value="Dec">Dec</option>
+        <option value="Hex">Hex</option>
+    </select>
+    <label> => </label>
+    <select id="t6_select_to">
+        <option value="Bin">Bin</option>
+        <option value="Dec">Dec</option>
+        <option value="Hex">Hex</option>
     </select>
     <input type="button" id="t6_btn_converte" value="Convert">
     <p id="t6_output">Pезультат</p>
 </section>
 <script>
     t6_btn_converte.addEventListener('click', function () {
-        var select = t6_select_convert_type;
-        for (var i = 0; i < select.length; i++) {
-            if (select.options[i].selected) {
-                t6_output.innerHTML = Calculate(t6_input_string.value, select.options[i].value);
+        var selectFrom = t6_select_from;
+        var selectTo = t6_select_to;
+        for (var i = 0; i < selectFrom.length; i++) {
+            if (selectFrom.options[i].selected) {
+                for (var j = 0; j < selectTo.length; j++) {
+                    if (selectTo.options[j].selected) {
+                        t6_output.innerHTML = Convert(t6_input_string.value, selectFrom.options[i].value, selectTo.options[j].value);
+                    }
+                }
             }
         }
     } );
