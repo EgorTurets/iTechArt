@@ -7,6 +7,8 @@ function NewArrayCreator(func, array) {
     return newArr;
 }
 
+
+//functions for tests
 function Sqad(a) {
     return a**2;
 }

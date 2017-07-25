@@ -12,17 +12,23 @@ function G1(a1, a2, a3) {
     return "arg1: " + a1 + ", arg2: " + a2 + ", arg3: " + a3 + ", and " + args.length + " remaining arguments: " + args;
 }
 
-function F1() {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
+function F1(func) {
+    for (var _len2 = arguments.length, fixedArgs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        fixedArgs[_key2 - 1] = arguments[_key2];
     }
 
-    var partialFunc = G1.bind.apply(G1, [null].concat(args));
+    var partialFunc = func.bind.apply(func, [null].concat(fixedArgs));
     return partialFunc;
 }
 
-function H1() {
-    var partialFunc = G1.bind(null, "some arg");
-    return partialFunc.apply(undefined, arguments);
-}
+// not rigth functions
+// function F1 (...args) {
+//     var partialFunc = G1.bind(null, ...args);
+//     return partialFunc;
+// }
+//
+// function H1(...args) {
+//     var partialFunc = G1.bind(null, "some arg");
+//     return partialFunc(...args);
+// }
 //# sourceMappingURL=pr1_partialApp.js.map
