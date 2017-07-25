@@ -14,7 +14,7 @@ function Filter(array, callback) {
     return filteredArray;
 }
 
-//functions for tests
+//functions just for tests
 function TestParity(array) {
     return Filter(array, function (i) {
         return i % 2 === 0 ? true : false;

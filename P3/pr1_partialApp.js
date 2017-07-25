@@ -11,14 +11,3 @@ function F1(func, ...fixedArgs) {
     return partialFunc;
 }
 
-// not rigth functions
-// function F1 (...args) {
-//     var partialFunc = G1.bind(null, ...args);
-//     return partialFunc;
-// }
-//
-// function H1(...args) {
-//     var partialFunc = G1.bind(null, "some arg");
-//     return partialFunc(...args);
-// }
-

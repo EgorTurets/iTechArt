@@ -20,15 +20,4 @@ function F1(func) {
     var partialFunc = func.bind.apply(func, [null].concat(fixedArgs));
     return partialFunc;
 }
-
-// not rigth functions
-// function F1 (...args) {
-//     var partialFunc = G1.bind(null, ...args);
-//     return partialFunc;
-// }
-//
-// function H1(...args) {
-//     var partialFunc = G1.bind(null, "some arg");
-//     return partialFunc(...args);
-// }
 //# sourceMappingURL=pr1_partialApp.js.map

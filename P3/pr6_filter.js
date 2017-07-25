@@ -12,7 +12,7 @@ function Filter(array, callback) {
     return filteredArray;
 }
 
-//functions for tests
+//functions just for tests
 function TestParity(array) {
     return Filter(array, (i) => {return i%2 === 0 ? true : false})
 }
