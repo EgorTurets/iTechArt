@@ -11,9 +11,6 @@ var ArrayProcessing = {
         var maxSum = 0;     //storage for max sum
         var i = 0;
 
-        //---------------------------------------------
-        var time1 = Date.now();
-        //----------------------------------------------
         while (i < numberArray.length) {
             var firstSum = 0;        //storage sum up to first negative number
             //Pass all started negative number
@@ -45,10 +42,7 @@ var ArrayProcessing = {
                 maxSum = firstSum;
             }
         }
-        //--------------------------------------------
-        var time2 = Date.now();
-        alert(time2 - time1);
-        //----------------------------------------------
+
         return maxSum;
     },
 
@@ -59,9 +53,6 @@ var ArrayProcessing = {
             return 'Invalid input!'
         }
 
-        //---------------------------------------------
-        var time1 = Date.now();
-        //----------------------------------------------
         var maxSum = 0;
         for (var i = 0; i < numberArray.length; i++) {
             var currentSum = numberArray[i];
@@ -75,10 +66,7 @@ var ArrayProcessing = {
                 }
             }
         }
-        //--------------------------------------------
-        var time2 = Date.now();
-        alert(time2 - time1);
-        //----------------------------------------------
+
         return maxSum;
     },
 
@@ -87,9 +75,7 @@ var ArrayProcessing = {
         if (numberArray === false) {
             return 'Invalid input!'
         }
-        //---------------------------------------------
-        var time1 = Date.now();
-        //----------------------------------------------
+
         var maxSum = 0;
         var currentSum = 0;
         var minSum = 0;
@@ -98,10 +84,7 @@ var ArrayProcessing = {
             maxSum = (currentSum-minSum > maxSum) ? currentSum-minSum : maxSum;
             minSum = (currentSum < minSum) ? currentSum: minSum;
         }
-        //--------------------------------------------
-        var time2 = Date.now();
-        alert(time2 - time1);
-        //----------------------------------------------
+
         return maxSum;
     },
 
