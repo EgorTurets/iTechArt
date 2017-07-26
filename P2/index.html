@@ -128,7 +128,7 @@
         var select = t5_select_sort_type;
         for (var i = 0; i < select.length; i++) {
             if (select.options[i].selected) {
-                t5_output.innerHTML = Sort(t5_input_string.value, select.options[i].value);
+                t5_output.innerHTML = SortObj.Sort(t5_input_string.value, select.options[i].value);
             }
         }
     } );
@@ -139,15 +139,15 @@
     <h1>Task 6 - Binary Converter</h1>
     <input type="text" id="t6_input_string" class="maxWidth">
     <select id="t6_select_from">
-        <option value="Bin">Bin</option>
-        <option value="Dec">Dec</option>
-        <option value="Hex">Hex</option>
+        <option value="0">Bin</option>
+        <option value="1">Dec</option>
+        <option value="2">Hex</option>
     </select>
     <label> => </label>
     <select id="t6_select_to">
-        <option value="Bin">Bin</option>
-        <option value="Dec">Dec</option>
-        <option value="Hex">Hex</option>
+        <option value="0">Bin</option>
+        <option value="1">Dec</option>
+        <option value="2">Hex</option>
     </select>
     <input type="button" id="t6_btn_converte" value="Convert">
     <p id="t6_output">Pезультат</p>
@@ -160,7 +160,7 @@
             if (selectFrom.options[i].selected) {
                 for (var j = 0; j < selectTo.length; j++) {
                     if (selectTo.options[j].selected) {
-                        t6_output.innerHTML = Convert(t6_input_string.value, selectFrom.options[i].value, selectTo.options[j].value);
+                        t6_output.innerHTML = converter.Convert(t6_input_string.value.split(""), selectFrom.options[i].value, selectTo.options[j].value);
                     }
                 }
             }

@@ -1,11 +1,15 @@
 // JavaScript source code
 
 function Wrap(text, formatType, lineLength) {    
-    if (/[^0-9]/.test(lineLength) || lineLength.length == 0) {
+    if (/[^0-9]/.test(lineLength)) {
         alert("Length is not numeric");
         return text;
-    }    
-    else lineLength = +lineLength;
+    }
+    else lineLength = lineLength ? +lineLength : 100;
+    if (lineLength === 0) {
+        alert("Invalid length");
+        return text;
+    }
     switch (formatType) {
         case "NoWrap": text = NoWrap(text);
 		    break;
@@ -15,7 +19,9 @@ function Wrap(text, formatType, lineLength) {
 			break;
         case "ClauseWrap": text = ClauseWrap(text, lineLength);
             break;
-        default: alert("Something is bad");
+        default: throw {
+            message: "Something is bad"
+        };
     }
     return text;
 }

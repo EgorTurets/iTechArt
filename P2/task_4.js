@@ -1,6 +1,9 @@
 // JavaScript source code
 
 
+/**
+ * @return {string}
+ */
 function Calculate(inputExpression) {
     var invInp = "Invalid input";
     inputExpression = inputExpression.replace(/\s+/g, "");
@@ -51,10 +54,14 @@ function Calculate(inputExpression) {
                 i = endNumber.index-1;
             }
         }
-        else { tempSymbols.symbolsArray = OperatorComparison (inputExpression[i], tempSymbols, RPN)
+        else {
+            tempSymbols.symbolsArray = OperatorComparison (inputExpression[i], tempSymbols, RPN)
         }
-        if (RPN.isBad)
-            return "Something is bad";
+        if (RPN.isBad) {
+            throw {
+                message: "Inner exception"
+            };
+        }
     }
     while (tempSymbols.symbolsArray[tempSymbols.lastIndex] !== null) {
         RPN.storage[RPN.index] = tempSymbols.symbolsArray[tempSymbols.lastIndex];
