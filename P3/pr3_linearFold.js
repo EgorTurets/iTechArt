@@ -3,7 +3,7 @@
  */
 
 function LinearFold(array, callback, initalValue) {
-    var previousValue = initalValue ? initalValue : 0;
+    var previousValue = initalValue;
 
     for (let index = 0; index < array.length; index++) {
         previousValue = callback(previousValue, array[index], index, array)

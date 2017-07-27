@@ -1,48 +1,31 @@
 "use strict";
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /**
  * Created by yahor.turets on 24.07.2017.
  */
 
-var currying = function () {
-    function QuadraticEq(a, b, c, x) {
-        return a * Math.pow(x, 2) + b * x + c;
+function Curry(func) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
     }
 
-    function Curry() {
-        return AddA.bind(null);
-    }
+    return function (nextArg) {
+        var allArgs = args.concat(nextArg);
+        if (allArgs.length < func.length) {
 
-    function AddA() {
-        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+            return Curry.apply(undefined, [func].concat(_toConsumableArray(allArgs)));
+        } else {
 
-        var partFuncB = AddB.bind(null, a);
-        return partFuncB;
-    }
-
-    function AddB(a) {
-        var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
-
-        var partFuncC = AddC.bind(null, a, b);
-        return partFuncC;
-    }
-
-    function AddC(a, b) {
-        var c = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
-
-        var partFuncX = AddX.bind(null, a, b, c);
-        return partFuncX;
-    }
-
-    function AddX(a, b, c) {
-        var x = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 6;
-
-        return QuadraticEq(a, b, c, x);
-    }
-
-    return {
-        equation: QuadraticEq,
-        curry: Curry
+            return func.apply(undefined, _toConsumableArray(allArgs));
+        }
     };
-}();
+};
+
+//Just for test
+function QuadraticEq(a, b, c, x) {
+
+    return a * Math.pow(x, 2) + b * x + c;
+}
 //# sourceMappingURL=pr2_currying.js.map

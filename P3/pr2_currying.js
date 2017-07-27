@@ -2,38 +2,22 @@
  * Created by yahor.turets on 24.07.2017.
  */
 
-var currying = (function () {
-    function QuadraticEq(a, b, c, x) {
-        return a*(x**2) + b*x + c;
+function Curry(func, ...args) {
+
+    return (nextArg) => {
+        var allArgs = args.concat(nextArg);
+        if (allArgs.length < func.length) {
+
+            return Curry(func, ...allArgs);
+        } else {
+
+            return func(...allArgs);
+        }
     }
+};
 
-    function Curry() {
-        return AddA.bind(null);
-    }
+//Just for test
+function QuadraticEq(a, b, c, x) {
 
-    function AddA(a=1) {
-        var partFuncB = AddB.bind(null, a);
-        return partFuncB;
-    }
-
-    function AddB(a, b=3) {
-        var partFuncC = AddC.bind(null, a, b);
-        return partFuncC;
-    }
-
-    function AddC(a, b, c=4) {
-        var partFuncX = AddX.bind(null, a, b, c);
-        return partFuncX;
-    }
-
-    function AddX(a, b, c, x=6) {
-        return QuadraticEq(a, b, c, x);
-    }
-
-    return {
-        equation: QuadraticEq,
-        curry: Curry
-    }
-})();
-
-
+    return a*(x**2) + b*x + c;
+}
