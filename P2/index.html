@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project 2</title>
+    <script src="task_1.js" async></script>
+    <script src="task_2.js" async></script>
+    <script src="task_3.js" async></script>
+    <script src="task_4.js" async></script>
+    <script src="task_5.js" async></script>
+    <script src="task_6.js" async></script>
+    <style>
+        textarea {
+            display: block;
+            min-width: 100px;
+        }
+        .maxWidth {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<section id="Task-1">
+    <h1>Task 1 - Array Processing Tool</h1>
+    <input type="text" id="t1_input_array" class="maxWidth">
+    <input type="button" id="t1_btn_sub_sum" value="Sub Sum (N^2)">
+    <input type="button" id="t1_btn_kadane" value="Sub Sum (Kadane's)">
+    <input type="button" id="t1_btn_search" value="Search">
+    <input type="button" id="t1_btn_max_grow" value="Selection Task">
+    <p id="t1_output">Pезультат</p>
+</section>
+<script>
+    t1_btn_sub_sum.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.GetMaxSubSum1(t1_input_array.value);
+    } );
+    t1_btn_kadane.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.KadanesAlgorithm(t1_input_array.value);
+    } );
+    t1_btn_search.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.Search(t1_input_array.value);
+    } );
+    t1_btn_max_grow.addEventListener('click', function () {
+        t1_output.innerHTML = ArrayProcessing.GetMaxGrowingArray(t1_input_array.value);
+    } );
+</script>
+<hr>
+
+<section id="Task-2">
+    <h1>Task 2 - Date Display Formatter</h1>
+    <span>дата[, формат входной даты][, формат выходной даты]<br>
+        - без указания входного формата, устанавливается базовый (DDMMYYYY)<br>
+        - без указания выходного формата, устанавливается базовый (DD-MM-YYYY)<br>
+        - если входная дата не соответствует входному формату - ошибка<br>
+        - если во входном формате или дате не хватает значения - ошибка<br>
+        - во входном формате количество букв должно соответствовать количеству цифр, иначе - ошибка<br>
+        - во входном формате и дате должны соответствовать разделители<br>
+        - разделителями могут быть любые знаки и символы отступа (но не цифры или буквы)<br>
+        - в выходном формате допустимо отсутствие одного или нескольких значений (DD/MM)<br>
+        - в выходном формате не имеет значения количество символов каждого значения (D = DD = DDD)<br>
+        - пустой формат или формат имеющий цифры или буквы (кроме D, M, Y) недопустим<br>
+        - регист букв в формате не имеет значения<br>
+    </span>
+    <input type="text" id="t2_input_text" class="maxWidth">
+    <input type="button" id="t2_btn_format" value="Format">
+    <p id="t2_output">Pезультат</p>
+</section>
+<script>
+    t2_btn_format.addEventListener('click', function () {
+        t2_output.innerHTML = DateDisplayFormatter.ParseUsersString(t2_input_text.value);
+    });
+</script>
+<hr>
+
+<section id="Task-3">
+    <h1>Task 3 - Text Formatter</h1>
+    <textarea id="t3_text"></textarea>
+    <select id="t3_select_wrap_type">
+        <option value="NoWrap">No wrap</option>
+        <option value="SymbolWrap">Symbol wrap</option>
+        <option value="WordWrap">Word wrap</option>
+        <option value="ClauseWrap">Clause wrap</option>
+    </select>
+    <label>Line length: </label>
+    <input type="text" id="t3_line_length">
+    <input type="button" id="t3_btn_wrap" value="Wrap">
+</section>
+    <script>
+        t3_btn_wrap.addEventListener('click', function () {
+            var select = t3_select_wrap_type;
+            for (var i = 0; i < select.length; i++) {
+                if (select.options[i].selected) {
+                    t3_text.value = Wrap(t3_text.value, select.options[i].value, t3_line_length.value);
+                }
+            }
+        });
+    </script>
+<hr>
+
+<section id="Task-4">
+    <h1>Task 4 - String calculator</h1>
+    <input type="text" id="t4_input_string" class="maxWidth">
+    <input type="button" id="t4_btn_calculate" value="Calculate">
+    <p id="t4_output">Pезультат</p>
+</section>
+<script>
+    t4_btn_calculate.addEventListener('click', function () {
+        t4_output.innerHTML = Calculate(t4_input_string.value);
+    } );
+</script>
+<hr>
+
+<section id="Task-5">
+    <h1>Task 5 - Array Sorter</h1>
+    <input type="text" id="t5_input_string" class="maxWidth">
+    <select id="t5_select_sort_type">
+        <option value="Stupid">Stupid</option>
+        <option value="Bubble">Bubble</option>
+        <option value="Solomon">Solomon</option>
+        <option value="Spaghetti">Spaghetti</option>
+    </select>
+    <input type="button" id="t5_btn_sort" value="Sort">
+    <p id="t5_output">Pезультат</p>
+</section>
+<script>
+    t5_btn_sort.addEventListener('click', function () {
+        var select = t5_select_sort_type;
+        for (var i = 0; i < select.length; i++) {
+            if (select.options[i].selected) {
+                t5_output.innerHTML = SortObj.Sort(t5_input_string.value, select.options[i].value);
+            }
+        }
+    } );
+</script>
+<hr>
+
+<section id="Task-6">
+    <h1>Task 6 - Binary Converter</h1>
+    <input type="text" id="t6_input_string" class="maxWidth">
+    <select id="t6_select_from">
+        <option value="0">Bin</option>
+        <option value="1">Dec</option>
+        <option value="2">Hex</option>
+    </select>
+    <label> => </label>
+    <select id="t6_select_to">
+        <option value="0">Bin</option>
+        <option value="1">Dec</option>
+        <option value="2">Hex</option>
+    </select>
+    <input type="button" id="t6_btn_converte" value="Convert">
+    <p id="t6_output">Pезультат</p>
+</section>
+<script>
+    t6_btn_converte.addEventListener('click', function () {
+        var selectFrom = t6_select_from;
+        var selectTo = t6_select_to;
+        for (var i = 0; i < selectFrom.length; i++) {
+            if (selectFrom.options[i].selected) {
+                for (var j = 0; j < selectTo.length; j++) {
+                    if (selectTo.options[j].selected) {
+                        t6_output.innerHTML = converter.Convert(t6_input_string.value.split(""), selectFrom.options[i].value, selectTo.options[j].value);
+                    }
+                }
+            }
+        }
+    } );
+</script>
+
+</body>
+</html>
