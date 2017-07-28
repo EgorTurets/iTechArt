@@ -70,3 +70,14 @@ FROM Customer INNER JOIN (
 	GROUP BY OrderCustomerRelation.FK_CustomerID
 ) AS CustomerPurchases ON Customer.CustomerID = CustomerPurchases.CustomerID
 WHERE CustomerPurchases.OrderSum >= 1000000
+
+
+/*Problem 10*/
+UPDATE Product 
+SET Product.Price = Product.Price * 1.5
+WHERE Product.Price <= 100
+
+
+/*Problem 11*/
+DELETE FROM [Order]
+WHERE YEAR([Order].OrderDate) <= 2014
