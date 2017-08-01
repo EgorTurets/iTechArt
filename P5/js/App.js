@@ -1,10 +1,64 @@
-import React, { Component } from 'react';
-import { combineReducers } from 'redux';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+// import App from './containers/App';
 
-// import { createStore, renderDevTools } from '../utils/devTools';
+const store = createStore(() => {}, {});
 
-import FriendListApp from './FriendListApp';
-import * as reducers from '../reducers';
+//React test (log in markup)
 
-const reducer = combineReducers(reducers);
+var NewUserForm = React.createClass( {
+    render: function () {
+        return(
+            <form>
+                <ul>
+                    <li>
+                        <div>First Name: </div>
+                        <input id="first-name" type="text"/>
+                    </li>
+                    <li>
+                        <div>Last Name: </div>
+                        <input id="first-name" type="text"/>
+                    </li>
+                    <li>
+                        <div>Email: </div>
+                        <input id="first-name" type="email"/>
+                    </li>
+                    <li>
+                        <div>Password: </div>
+                        <input id="first-name" type="password"/>
+                    </li>
+                    <li>
+                        <div>Confirm password: </div>
+                        <input id="first-name" type="password"/>
+                    </li>
+                </ul>
+                <input type="submit" value="Register"/>
+            </form>
+        )
+    }
+});
+
+// ReactDOM.render(
+//     <NewUserForm/>,
+//     document.getElementById('content')
+//
+// );
+
+//end React test
+
+render(
+    <Provider store={store}>
+        <NewUserForm/>
+    </Provider>,
+    document.getElementById('content')
+)
+
+
+
+
+
+
+
