@@ -1,10 +1,8 @@
 import { Actions } from '../Actions'
 
 const initialState = {
-    user: {
         firstName: 'Unknown',
         lastName: 'User'
-    }
 };
 
 export default function userstate(state = initialState, action) {

@@ -2,10 +2,11 @@ import React, {Component} from 'react'
 
 export default class RegisterForm extends Component {
     render() {
+        console.log(this.props);
 
         return(
             <form>
-                <label>Hello {state.user.firstName}</label>
+                {/*<label>Hello {this.props.user.firstName}</label>*/}
                 <ul>
                     <li>
                         <div>First Name: </div>

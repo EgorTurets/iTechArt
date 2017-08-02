@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f8a35d463d66e1981784"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9855d1484de3938f493e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -35315,8 +35315,6 @@ var _reactRedux = __webpack_require__(129);
 
 var _redux = __webpack_require__(74);
 
-var _redux2 = _interopRequireDefault(_redux);
-
 var _RegisterView = __webpack_require__(324);
 
 var _RegisterView2 = _interopRequireDefault(_RegisterView);
@@ -35336,20 +35334,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     ConfirmUpdate,
     Register} from '../Model/ActionCreators'*/
 
+function mapDispatchToProps(dispatch) {
+    return {
+        FirstNameUpdate: (0, _redux.bindActionCreators)(ActionCreators.FirstNameUpdate, dispatch),
+        LastNameUpdate: (0, _redux.bindActionCreators)(ActionCreators.LastNameUpdate, dispatch),
+        EmailUpdate: (0, _redux.bindActionCreators)(ActionCreators.EmailUpdate, dispatch),
+        PasswordUpdate: (0, _redux.bindActionCreators)(ActionCreators.PasswordUpdate, dispatch),
+        ConfirmUpdate: (0, _redux.bindActionCreators)(ActionCreators.ConfirmUpdate, dispatch),
+        Register: (0, _redux.bindActionCreators)(ActionCreators.Register, dispatch)
+    };
+}
+
 exports.default = (0, _reactRedux.connect)(function (state) {
     return {
         user: state.user
     };
-}, function (dispatch) {
-    return (0, _redux2.default)({
-        FirstNameUpdate: FirstNameUpdate,
-        LastNameUpdate: LastNameUpdate,
-        EmailUpdate: EmailUpdate,
-        PasswordUpdate: PasswordUpdate,
-        ConfirmUpdate: ConfirmUpdate,
-        Register: Register
-    }, dispatch);
-})(_RegisterView2.default);
+}, mapDispatchToProps)(_RegisterView2.default);
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(77); if (makeExportsHot(module, __webpack_require__(15))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "RegisterFormController.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)(module)))
@@ -35392,16 +35392,11 @@ var RegisterForm = function (_Component) {
     _createClass(RegisterForm, [{
         key: "render",
         value: function render() {
+            console.log(this.props);
 
             return _react2.default.createElement(
                 "form",
                 null,
-                _react2.default.createElement(
-                    "label",
-                    null,
-                    "Hello ",
-                    state.user.firstName
-                ),
                 _react2.default.createElement(
                     "ul",
                     null,
@@ -35631,10 +35626,8 @@ exports.default = userstate;
 var _Actions = __webpack_require__(331);
 
 var initialState = {
-    user: {
-        firstName: 'Unknown',
-        lastName: 'User'
-    }
+    firstName: 'Unknown',
+    lastName: 'User'
 };
 
 function userstate() {
