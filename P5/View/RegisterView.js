@@ -6,14 +6,13 @@ export default class RegisterForm extends Component {
 
         return(
             <form>
-                {/*<label>Hello {this.props.user.firstName}</label>*/}
                 <ul>
                     <li>
                         <div>First Name: </div>
                         <input
                             id="first-name"
                             type="text"
-                            value={this.props.user.firstName}
+                            value={this.props.newUser.firstName}
                             onChange={this.props.FirstNameUpdate}/>
                     </li>
                     <li>
@@ -21,7 +20,7 @@ export default class RegisterForm extends Component {
                         <input
                             id="last-name"
                             type="text"
-                            value={this.props.user.lastName}
+                            value={this.props.newUser.lastName}
                             onChange={this.props.LastNameUpdate}/>
                     </li>
                     <li>
@@ -29,7 +28,7 @@ export default class RegisterForm extends Component {
                         <input
                             id="email"
                             type="email"
-                            value={this.props.user.email}
+                            value={this.props.newUser.email}
                             onChange={this.props.EmailUpdate}/>
                     </li>
                     <li>
@@ -37,7 +36,7 @@ export default class RegisterForm extends Component {
                         <input
                             id="password"
                             type="password"
-                            value={this.props.user.password}
+                            value={this.props.newUser.password}
                             onChange={this.props.PasswordUpdate}/>
                     </li>
                     <li>
@@ -45,7 +44,7 @@ export default class RegisterForm extends Component {
                         <input
                             id="confirm"
                             type="password"
-                            value={this.props.user.confirm}
+                            value={this.props.newUser.confirm}
                             onChange={this.props.ConfirmUpdate}/>
                     </li>
                 </ul>

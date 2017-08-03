@@ -6,7 +6,8 @@ import * as ActionCreators from '../Model/ActionCreators'
 
 function mapStateToPrors(state) {
     return {
-        user: state.userstate
+        newUser: state.newUserState,
+        currentUser : state.userInfoState
     }
 }
 

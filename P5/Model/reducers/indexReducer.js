@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import userstate from './newUserReducer'
+import newUserState from './newUserReducer'
+import userInfoState from './userInfoProducer'
 
 export default combineReducers({
-    userstate
+    newUserState,
+    userInfoState
 })

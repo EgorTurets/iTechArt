@@ -1,5 +1,8 @@
+import {Actions} from './Actions'
+
 export function FirstNameUpdate(event) {
 
+    debugger;
     return {
         type: Actions.FORM_REGISTER_FNAME_UPDATE,
         payload: event.target.value
@@ -40,6 +43,7 @@ export function ConfirmUpdate (event) {
 export function Register (event) {
 
     return function (dispatch, getState) {
+        debugger;
         const state = getState();
         if (state.user.password === state.user.confirm) {
             dispatch(reset());

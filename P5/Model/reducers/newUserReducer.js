@@ -1,44 +1,44 @@
 import { Actions } from '../Actions'
 
 const initialState = {
-        firstName: 'Unknown',
-        lastName: 'User'
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirm: '',
 };
 
-export default function userstate(state = initialState, action) {
+export default function newUserState(state = initialState, action) {
 
-    console.log('userstate:');
-    console.log(state);
-    console.log(action);
-
+    debugger;
     switch (action.type) {
         case Actions.FORM_REGISTER_FNAME_UPDATE:
             return Object.assign({}, state, {
-                user: {
+                newUserState: {
                     firstName: action.payload
                 }
             }); break;
         case Actions.FORM_REGISTER_LNAME_UPDATE:
             return Object.assign({}, state, {
-                user: {
+                newUserState: {
                     lastName: action.payload
                 }
             }); break;
         case Actions.FORM_REGISTER_EMAIL_UPDATE:
             return Object.assign({}, state, {
-                user: {
+                newUserState: {
                     email: action.payload
                 }
             }); break;
         case Actions.FORM_REGISTER_PASSWORD_UPDATE:
             return Object.assign({}, state, {
-                user: {
+                newUserState: {
                     password: action.payload
                 }
             }); break;
         case Actions.FORM_REGISTER_CONFIRM_UPDATE:
             return Object.assign({}, state, {
-                user: {
+                newUserState: {
                     confirm: action.payload
                 }
             });
