@@ -6,6 +6,11 @@ const initialState = {
 };
 
 export default function userstate(state = initialState, action) {
+
+    console.log('userstate:');
+    console.log(state);
+    console.log(action);
+
     switch (action.type) {
         case Actions.FORM_REGISTER_FNAME_UPDATE:
             return Object.assign({}, state, {
