@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "19cfa283d48ed2121f9a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3f393484a9bbfce3a9d5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -15527,7 +15527,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var Actions = exports.Actions = {
-    //REGISTER_SUBMIT: 'REGISTER',
+    FORM_REGISTER: 'FORM_REGISTER',
     FORM_REGISTER_FNAME_UPDATE: 'FORM_REGISTER_FNAME_UPDATE',
     FORM_REGISTER_LNAME_UPDATE: 'FORM_REGISTER_LNAME_UPDATE',
     FORM_REGISTER_EMAIL_UPDATE: 'FORM_REGISTER_EMAIL_UPDATE',
@@ -35560,28 +35560,35 @@ function ConfirmUpdate(event) {
 
 function Register(event) {
 
-    return function (dispatch, getState) {
-        debugger;
-        var state = getState();
-        if (state.user.password === state.user.confirm) {
-            dispatch(reset());
-            request('', { send: {
-                    user: {
-                        firstName: state.user.firstName,
-                        lastName: state.user.lastName,
-                        password: state.user.password,
-                        email: state.user.email
-                    }
-                } }).then(function () {
-                //router.push('/')
-                console.log('Current User: ' + state.user.firstName + ' ' + state.user.lastName);
-            }).catch(function () {
-                console.log('Error in Action Register');
-            });
-        } else {
-            window.alert("Password != Confirm");
-        }
+    return {
+        type: _Actions.Actions.FORM_REGISTER
     };
+
+    // return function (dispatch, getState) {
+    //     const state = getState();
+    //     if (state.user.password === state.user.confirm) {
+    //         dispatch(reset());
+    //         request('', {send:{
+    //             user: {
+    //                 firstName: state.firstName,
+    //                 lastName: state.lastName,
+    //                 password: state.password,
+    //                 email: state.email
+    //             }
+    //         }}).then(function () {
+    //             //router.push('/')
+    //             console.log('Current User: ' + state.user.firstName + ' ' + state.user.lastName)
+    //         }).catch(function () {
+    //             console.log('Error in Action Register')
+    //         })
+    //         console.log('register / state');
+    //         console.log(state)
+    //     }
+    //     else {
+    //         window.alert("Password != Confirm")
+    //     }
+    //
+    // }
 }
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(24); if (makeExportsHot(module, __webpack_require__(6))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "ActionCreators.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -35652,38 +35659,35 @@ function newUserState() {
     var action = arguments[1];
 
 
-    debugger;
     switch (action.type) {
         case _Actions.Actions.FORM_REGISTER_FNAME_UPDATE:
             return Object.assign({}, state, {
-                newUserState: {
-                    firstName: action.payload
-                }
+                firstName: action.payload
             });break;
         case _Actions.Actions.FORM_REGISTER_LNAME_UPDATE:
             return Object.assign({}, state, {
-                newUserState: {
-                    lastName: action.payload
-                }
+                lastName: action.payload
             });break;
         case _Actions.Actions.FORM_REGISTER_EMAIL_UPDATE:
             return Object.assign({}, state, {
-                newUserState: {
-                    email: action.payload
-                }
+                email: action.payload
             });break;
         case _Actions.Actions.FORM_REGISTER_PASSWORD_UPDATE:
             return Object.assign({}, state, {
-                newUserState: {
-                    password: action.payload
-                }
+                password: action.payload
             });break;
         case _Actions.Actions.FORM_REGISTER_CONFIRM_UPDATE:
             return Object.assign({}, state, {
-                newUserState: {
-                    confirm: action.payload
-                }
-            });
+                confirm: action.payload
+            });break;
+        case _Actions.Actions.FORM_REGISTER:
+            {
+                var curState = state;
+                console.log('Current State');
+                console.log(curState);
+                debugger;
+            }
+
         default:
             return state;
     }
@@ -35707,8 +35711,8 @@ exports.default = userInfoState;
 
 
 var initialState = {
-    firstName: '',
-    lastName: '',
+    firstName: 'Unknown',
+    lastName: 'User',
     email: '',
     notices: []
 };

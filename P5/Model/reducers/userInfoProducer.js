@@ -1,8 +1,8 @@
 
 
 const initialState = {
-    firstName: '',
-    lastName: '',
+    firstName: 'Unknown',
+    lastName: 'User',
     email: '',
     notices: []
 };

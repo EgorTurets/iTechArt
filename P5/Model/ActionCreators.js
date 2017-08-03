@@ -42,28 +42,33 @@ export function ConfirmUpdate (event) {
 
 export function Register (event) {
 
-    return function (dispatch, getState) {
-        debugger;
-        const state = getState();
-        if (state.user.password === state.user.confirm) {
-            dispatch(reset());
-            request('', {send:{
-                user: {
-                    firstName: state.user.firstName,
-                    lastName: state.user.lastName,
-                    password: state.user.password,
-                    email: state.user.email
-                }
-            }}).then(function () {
-                //router.push('/')
-                console.log('Current User: ' + state.user.firstName + ' ' + state.user.lastName)
-            }).catch(function () {
-                console.log('Error in Action Register')
-            })
-        }
-        else {
-            window.alert("Password != Confirm")
-        }
+    return {
+        type: Actions.FORM_REGISTER
+    };
 
-    }
+    // return function (dispatch, getState) {
+    //     const state = getState();
+    //     if (state.user.password === state.user.confirm) {
+    //         dispatch(reset());
+    //         request('', {send:{
+    //             user: {
+    //                 firstName: state.firstName,
+    //                 lastName: state.lastName,
+    //                 password: state.password,
+    //                 email: state.email
+    //             }
+    //         }}).then(function () {
+    //             //router.push('/')
+    //             console.log('Current User: ' + state.user.firstName + ' ' + state.user.lastName)
+    //         }).catch(function () {
+    //             console.log('Error in Action Register')
+    //         })
+    //         console.log('register / state');
+    //         console.log(state)
+    //     }
+    //     else {
+    //         window.alert("Password != Confirm")
+    //     }
+    //
+    // }
 }
