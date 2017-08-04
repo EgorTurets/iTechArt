@@ -1,8 +1,8 @@
 import {Actions} from './Actions'
+import { browserHistory } from 'react-router'
 
 export function FirstNameUpdate(event) {
 
-    debugger;
     return {
         type: Actions.FORM_REGISTER_FNAME_UPDATE,
         payload: event.target.value
@@ -58,11 +58,12 @@ export function Register (event) {
     //                 email: state.email
     //             }
     //         }}).then(function () {
-    //             //router.push('/')
+    //             browserHistory.push('/cabinet');
+    //             // router.push('/cabinet');
     //             console.log('Current User: ' + state.user.firstName + ' ' + state.user.lastName)
     //         }).catch(function () {
     //             console.log('Error in Action Register')
-    //         })
+    //         });
     //         console.log('register / state');
     //         console.log(state)
     //     }

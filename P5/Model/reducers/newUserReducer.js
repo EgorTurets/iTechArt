@@ -36,9 +36,8 @@ export default function newUserState(state = initialState, action) {
             console.log('Current State');
             console.log(curState);
             debugger;
-        }
-
-
+            return state;
+        }; break;
 
         default:
             return state;

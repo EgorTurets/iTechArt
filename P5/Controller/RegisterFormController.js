@@ -22,4 +22,8 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);
+var ret = function () {
+    return connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);
+};
+
+export default ret();
