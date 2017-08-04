@@ -1,19 +1,16 @@
 import React, {Component} from 'react'
+import RegisterFormController from '../Controller/RegisterFormController'
+import { Link }  from 'react-router-dom'
 
 export default class TopMenu extends Component {
     render() {
-        console.log(this.props);
 
         return (
-            <div id="menu-wrapper">
-                <div id="menu">
-                    <ul>
-                        <li class="current_page_item"><a href="#">Homepage</a></li>
-                        <li><a href="#">Find</a></li>
-                        <li><a href="#">Log In</a></li>
-                    </ul>
-                </div>
-            </div>
+            <ul>
+                <li className="current_page_item"><Link to="/">Homepage</Link></li>
+                <li><Link to="/">Find</Link></li>
+                <li><Link to="/temp2">Log In</Link></li>
+            </ul>
         )
     }
 }

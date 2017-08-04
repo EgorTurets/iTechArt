@@ -14,16 +14,18 @@ const store = configureStore();
 
 ReactDOM.render(
         <Provider store={store}>
-            <MainLayout>
+            {/*<MainLayout>*/}
                 <BrowserRouter>
-                    <Switch>
-                    {/*<Route path="" component={MainLayout}>*/}
-                        <Route path="" component={RegisterFormController}/>
-                        <Route path="/temp2" component={PersonalCabinet}/>
-                    {/*</Route>*/}
-                    </Switch>
+                    <MainLayout>
+                        {/*<Switch>*/}
+                        {/*<Route path="" component={MainLayout}>*/}
+                            <Route path="/" component={RegisterFormController}/>
+                            <Route path="/temp2" component={PersonalCabinet}/>
+                        {/*</Route>*/}
+                        {/*</Switch>*/}
+                    </MainLayout>
                 </BrowserRouter>
-            </MainLayout>
+            {/*</MainLayout>*/}
 
 
 

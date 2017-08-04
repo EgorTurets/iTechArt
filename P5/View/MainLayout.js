@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import RegisterFormController from '../Controller/RegisterFormController'
+import { BrowserRouter, Link }  from 'react-router-dom'
+import TopMenu from "./MenuView";
 
 export default class MainLayout extends Component {
     render() {
@@ -8,11 +10,7 @@ export default class MainLayout extends Component {
             <div>
                 <div id="menu-wrapper">
                     <div id="menu">
-                        <ul>
-                            <li className="current_page_item"><a href="#">Homepage</a></li>
-                            <li><a href="#">Find</a></li>
-                            <li><a href="#">Log In</a></li>
-                        </ul>
+                        <TopMenu/>
                     </div>
                 </div>
                 <div id="content">

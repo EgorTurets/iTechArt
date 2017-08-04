@@ -1,6 +1,8 @@
 import {Actions} from './Actions'
 import { browserHistory } from 'react-router'
 
+//------Registration actions------
+
 export function FirstNameUpdate(event) {
 
     return {
@@ -73,3 +75,7 @@ export function Register (event) {
     //
     // }
 }
+
+
+//------Personal cabinet actions------
+

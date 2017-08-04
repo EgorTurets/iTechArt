@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 export default class PersonalCabinet extends Component {
     render() {
+        console.log('PersonalCabinet:');
         console.log(this.props);
 
         return(
