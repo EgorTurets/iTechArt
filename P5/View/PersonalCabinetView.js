@@ -11,30 +11,27 @@ export default class PersonalCabinet extends Component {
                     <div>First Name: </div>
                     <label
                         id="first-name"
-                        type="text"
-                        value={this.props.newUser.firstName}
-                        onChange={this.props.FirstNameUpdate}/>
+                        type="text">{this.props.currentUser.firstName}</label>
                 </li>
                 <li>
                     <div>Last Name: </div>
                     <label
                         id="last-name"
-                        type="text"
-                        value={this.props.newUser.lastName}
-                        onChange={this.props.LastNameUpdate}/>
+                        type="text">{this.props.currentUser.lastName}</label>
                 </li>
                 <li>
                     <div>Email: </div>
                     <label
                         id="email"
-                        type="email"
-                        value={this.props.newUser.email}
-                        onChange={this.props.EmailUpdate}/>
+                        type="email">{this.props.currentUser.email}</label>
                 </li>
                 <li>
                     <div>Notices: </div>
 
                 </li>
+                <input type="submit" value="Test1" onClick={this.props.TestAction}/>
+                <input type="submit" value="Test2" onClick={this.props.Register}/>
+
             </ul>
         )
     }

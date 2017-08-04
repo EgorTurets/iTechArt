@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM, { render } from 'react-dom';
-import { Router, Route} from 'react-router'
-import { createStore } from 'redux';
+// import { Route } from 'react-router'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import { Provider } from 'react-redux';
-import RegisterFormController from "../Controller/RegisterFormController"
 import configureStore from "../store/configureStore";
 
-import PersonalCabinet from '../View/PersonalCabinetView'
 import MainLayout from "../View/MainLayout";
-import {BrowserRouter, Switch} from 'react-router-dom'
+import CabinetController from "../Controller/CabinetController";
+import RegisterFormController from "../Controller/RegisterFormController"
 
 const store = configureStore();
 
@@ -19,26 +18,14 @@ ReactDOM.render(
                     <MainLayout>
                         {/*<Switch>*/}
                         {/*<Route path="" component={MainLayout}>*/}
-                            <Route path="/" component={RegisterFormController}/>
-                            <Route path="/temp2" component={PersonalCabinet}/>
+                            <Route exact path="/" component={RegisterFormController}/>
+                        <Route path="/temp1" component={CabinetController}/>
+                            <Route path="/temp2" component={CabinetController}/>
                         {/*</Route>*/}
                         {/*</Switch>*/}
                     </MainLayout>
                 </BrowserRouter>
             {/*</MainLayout>*/}
-
-
-
-
-            {/*<RegisterFormController/>*/}
-
-
-            {/*<Router history={browserHistory}>*/}
-                {/*<Route path="/" component={RegisterFormController}>*/}
-                    {/*/!*<IndexRoute component={RegisterFormController} />*!/*/}
-                    {/*<Route path="/cabinet" component={PersonalCabinet}/>*/}
-                {/*</Route>*/}
-            {/*</Router>*/}
         </Provider>,
     document.getElementById('root')
 );

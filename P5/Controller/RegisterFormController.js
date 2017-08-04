@@ -22,7 +22,8 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-var ret = function () {
+let ret = function () {
+    debugger;
     return connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);
 };
 

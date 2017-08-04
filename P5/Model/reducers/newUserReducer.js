@@ -1,43 +1,52 @@
 import { Actions } from '../Actions'
 
 const initialState = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirm: '',
+    newUserFirstName: '',
+    newUserLastName: '',
+    newUserEmail: '',
+    newUserPassword: '',
+    newUserConfirm: '',
 };
 
 export default function newUserState(state = initialState, action) {
 
     switch (action.type) {
         case Actions.FORM_REGISTER_FNAME_UPDATE:
+            debugger;
             return Object.assign({}, state, {
-                firstName: action.payload
+                newUserFirstName: action.payload
             }); break;
         case Actions.FORM_REGISTER_LNAME_UPDATE:
             return Object.assign({}, state, {
-                lastName: action.payload
+                newUserLastName: action.payload
             }); break;
         case Actions.FORM_REGISTER_EMAIL_UPDATE:
             return Object.assign({}, state, {
-                email: action.payload
+                newUserEmail: action.payload
             }); break;
         case Actions.FORM_REGISTER_PASSWORD_UPDATE:
             return Object.assign({}, state, {
-                password: action.payload
+                newUserPassword: action.payload
             }); break;
         case Actions.FORM_REGISTER_CONFIRM_UPDATE:
             return Object.assign({}, state, {
-                confirm: action.payload
+                newUserConfirm: action.payload
             }); break;
-        case Actions.FORM_REGISTER:{
-            let curState = state;
-            console.log('Current State');
-            console.log(curState);
-            debugger;
-            return state;
-        }; break;
+        // case Actions.FORM_REGISTER:{
+        //     if (state.newUserPassword === state.newUserConfirm) {
+        //         debugger;
+        //         return Object.assign({}, state, {
+        //
+        //         })
+        //     }
+        //     else {
+        //         debugger;
+        //         return Object.assign({}, state, {
+        //             newUserPassword: '',
+        //             newUserConfirm: ''
+        //         });
+        //     }
+        // }; break;
 
         default:
             return state;

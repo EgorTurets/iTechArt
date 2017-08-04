@@ -1,6 +1,13 @@
 import {Actions} from './Actions'
 import { browserHistory } from 'react-router'
 
+export function TestAction(event) {
+
+    return {
+        type: Actions.TEST_ACTION
+    }
+}
+
 //------Registration actions------
 
 export function FirstNameUpdate(event) {
@@ -9,7 +16,7 @@ export function FirstNameUpdate(event) {
         type: Actions.FORM_REGISTER_FNAME_UPDATE,
         payload: event.target.value
     };
-};
+}
 
 export function LastNameUpdate (event) {
 
