@@ -2,18 +2,20 @@ import React, {Component} from 'react'
 import  {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as ActionCreators from '../Model/ActionCreators'
-import PersonalCabinet from '../View/PersonalCabinetView'
+import LogIn from '../View/LogInView'
 
 function mapStateToProps(state) {
     return {
-        currentUser : state.userInfoState,
+        logIn : state.logInState,
         test: state.newUserState
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        UserInit: bindActionCreators(ActionCreators.UserInit, dispatch)
+        LogIn: bindActionCreators(ActionCreators.LogIn, dispatch),
+        EmailUpdate: bindActionCreators(ActionCreators.LogInEmailUpd, dispatch),
+        PassUpdate: bindActionCreators(ActionCreators.LogInPassUpd, dispatch)
     }
 }
 
@@ -21,4 +23,4 @@ let ret = function () {
     return connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

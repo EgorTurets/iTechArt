@@ -388,3 +388,17 @@ a:hover {
 .user-info-red {
 	color: #B04840;
 }
+
+.button {
+	display: inline;
+	background-color: #D7D0C0;
+	border: solid #1C1C1C 1px;
+	border-radius: 2px;
+	text-align: center;
+	padding: 5px 10px;
+	margin-left: 40px;
+}
+
+.button:hover {
+	cursor: pointer;
+}

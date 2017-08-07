@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Redirect } from 'react-router'
 
 export default class RegisterForm extends Component {
     render() {

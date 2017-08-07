@@ -1,5 +1,4 @@
 import {Actions} from './Actions'
-import { browserHistory } from 'react-router'
 
 //------Registration actions------
 
@@ -48,6 +47,31 @@ export function Register (event) {
         type: Actions.FORM_REGISTER,
         payload: '/user'
     };
+}
+
+//------Log In actions------
+
+export function LogIn(event) {
+
+    return {
+        type: Actions.LOG_IN
+    }
+}
+
+export function LogInEmailUpd(event) {
+
+    return {
+        type: Actions.LOG_IN_EMAIL_UPDATE,
+        payload: event.target.value
+    }
+}
+
+export function LogInPassUpd(event) {
+
+    return {
+        type: Actions.LOG_IN_PASSWORD_UPDATE,
+        payload: event.target.value
+    }
 }
 
 

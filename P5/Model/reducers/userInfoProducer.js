@@ -4,7 +4,7 @@ import { Actions } from '../Actions'
 const initialState = {
     firstName: 'Unknown',
     lastName: 'User',
-    email: '',
+    email: 'test@mail.com',
     notices: []
 };
 
@@ -14,7 +14,7 @@ export default function userInfoState(state = initialState, action) {
         case Actions.USER_INIT: {
             debugger;
             let userFromStorage = window.localStorage.getItem('User');
-            if(!userFromStorage) {
+            if(userFromStorage) {
 
                 return Object.assign({}, state, {
                     firstName: userFromStorage.firstName,
