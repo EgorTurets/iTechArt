@@ -11,7 +11,7 @@ const initialState = {
 export default function userInfoState(state = initialState, action) {
 
     switch (action.type) {
-        case Actions.TEST_ACTION: {
+        case Actions.USER_INIT: {
             debugger;
             return state;
         }

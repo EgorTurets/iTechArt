@@ -27,4 +27,4 @@ let ret = function () {
     return connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);
 };
 
-export default ret();
+export default connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);

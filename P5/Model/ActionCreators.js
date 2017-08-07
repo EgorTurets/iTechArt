@@ -52,7 +52,8 @@ export function ConfirmUpdate (event) {
 export function Register (event) {
 
     return {
-        type: Actions.FORM_REGISTER
+        type: Actions.FORM_REGISTER,
+        payload: '/user'
     };
 
     // return function (dispatch, getState) {

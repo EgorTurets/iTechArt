@@ -7,7 +7,8 @@ import PersonalCabinet from '../View/PersonalCabinetView'
 
 function mapStateToPrors(state) {
     return {
-        currentUser : state.userInfoState
+        currentUser : state.userInfoState,
+        test: state.newUserState
     }
 }
 
