@@ -17,7 +17,7 @@ export default class LigIn extends Component {
                         <input
                             id="email"
                             type="email"
-                            value={this.props.email}
+                            value={this.props.logIn.email}
                             onChange={this.props.EmailUpdate}/>
                     </li>
                     <li>
@@ -25,11 +25,14 @@ export default class LigIn extends Component {
                         <input
                             id="password"
                             type="password"
-                            value={this.props.password}
+                            value={this.props.logIn.password}
                             onChange={this.props.PassUpdate}/>
                     </li>
                 </ul>
-                <p id="logIn-message">{this.props.message}</p>
+                <p id="logIn-message"
+                   className="message-paragraph">
+                    {this.props.logIn.message}
+                </p>
                 <div className="button" onClick={this.props.LogIn}>Log In</div>
             </form>
         )

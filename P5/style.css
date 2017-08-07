@@ -187,7 +187,7 @@ a:hover {
 	border: none;
 }
 
-#menu a:hover, #menu .current_page_item a {
+#menu a:hover, #menu .current_page_item {
 	text-decoration: none;
 	color: #FFFFFF;
 }
@@ -401,4 +401,10 @@ a:hover {
 
 .button:hover {
 	cursor: pointer;
+}
+
+.message-paragraph {
+	font-family: 'Arvo', serif;
+	margin-left: 40px;
+	color: #B04840;
 }

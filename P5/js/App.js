@@ -11,21 +11,11 @@ import LogInController from "../Controller/LogInController";
 
 const store = configureStore();
 
-// const history = createHistory();
-
 ReactDOM.render(
         <Provider store={store}>
             {/*<MainLayout>*/}
                 <BrowserRouter>
-                    <MainLayout>
-                        <Switch>
-                        {/*<Route path="" component={MainLayout}>*/}
-                        <Route exact path="/" component={RegisterFormController}/>
-                        <Route path="/user" component={CabinetController}/>
-                        <Route path="/login" component={LogInController}/>
-                        {/*</Route>*/}
-                        </Switch>
-                    </MainLayout>
+                    <MainLayout/>
                 </BrowserRouter>
             {/*</MainLayout>*/}
         </Provider>,

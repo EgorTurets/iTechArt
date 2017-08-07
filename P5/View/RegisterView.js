@@ -49,8 +49,12 @@ export default class RegisterForm extends Component {
                             onChange={this.props.ConfirmUpdate}/>
                     </li>
                 </ul>
-                <p id="register-message">{this.props.newUser.message}</p>
-                <input type="text" value="Register" onClick={this.props.Register}/>
+                <p
+                    id="register-message"
+                    className="message-paragraph">
+                    {this.props.newUser.message}
+                </p>
+                <div className="button" onClick={this.props.Register}>Register</div>
             </form>
         )
     }
