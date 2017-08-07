@@ -19,8 +19,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-let ret = function () {
-    return connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

@@ -22,9 +22,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-let ret = function () {
-    debugger;
-    return connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

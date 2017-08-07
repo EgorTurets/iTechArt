@@ -11,7 +11,7 @@ export default class LigIn extends Component {
 
         return(
             <form>
-                <ul className="user-info-list">
+                <ul className="input-form-list">
                     <li>
                         <div>Email: </div>
                         <input

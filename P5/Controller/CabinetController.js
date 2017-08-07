@@ -6,8 +6,7 @@ import PersonalCabinet from '../View/PersonalCabinetView'
 
 function mapStateToProps(state) {
     return {
-        currentUser : state.userInfoState,
-        test: state.newUserState
+        currentUser : state.userInfoState
     }
 }
 
@@ -16,9 +15,5 @@ function mapDispatchToProps(dispatch) {
         UserInit: bindActionCreators(ActionCreators.UserInit, dispatch)
     }
 }
-
-let ret = function () {
-    return connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);

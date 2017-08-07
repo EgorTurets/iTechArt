@@ -5,7 +5,8 @@ const initialState = {
     firstName: 'Unknown',
     lastName: 'User',
     email: 'test@mail.com',
-    notices: []
+    notifications: [],
+    currentPage: 1
 };
 
 export default function userInfoState(state = initialState, action) {
