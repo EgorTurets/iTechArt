@@ -1,5 +1,4 @@
 import { Actions } from '../Actions'
-import {push} from 'react-router-redux'
 
 const initialState = {
     newUserFirstName: '',
@@ -89,10 +88,12 @@ export default function newUserState(state = initialState, action) {
                 })
             }
             else {
-                debugger;
 
-                //doesn't work (Uncaught ReferenceError: dispatch is not defined)
-                store.dispatch(push('/user'));
+                //window.localStorage.setItem('User', '123');
+
+                return Object.assign({}, state, {
+                    message: 'Account was created!'
+                })
             }
         }; break;
 

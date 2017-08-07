@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import RegisterForm from '../View/RegisterView'
 import * as ActionCreators from '../Model/ActionCreators'
 
-function mapStateToPrors(state) {
+function mapStateToProps(state) {
     return {
         newUser: state.newUserState,
         currentUser : state.userInfoState
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
 
 let ret = function () {
     debugger;
-    return connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);
+    return connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
 };
 
-export default connect(mapStateToPrors, mapDispatchToProps)(RegisterForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

@@ -202,13 +202,14 @@ a:hover {
 	width: 1000px;
 	margin: 0px auto;
 	padding: 30px 0px;
+	border: solid #A0A0A0 2px;
 }
 
 /* Content */
 
 #content {
-	float: right;
-	width: 640px;
+	/*float: right;*/
+	/*width: 640px;*/
 }
 
 .post {
@@ -378,3 +379,12 @@ a:hover {
 }
 
 /*My Styles*/
+
+.user-info-list {
+	list-style-type: none;
+	font-family: 'Arvo', serif;
+}
+
+.user-info-red {
+	color: #B04840;
+}

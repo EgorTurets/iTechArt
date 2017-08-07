@@ -6,7 +6,7 @@ export default class RegisterForm extends Component {
 
         return(
             <form>
-                <ul>
+                <ul className="user-info-list">
                     <li>
                         <div>First Name: </div>
                         <input

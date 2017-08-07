@@ -4,11 +4,15 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import { Provider } from 'react-redux';
 import configureStore from "../store/configureStore";
 
+// import createHistory from 'history/createBrowserHistory'
+
 import MainLayout from "../View/MainLayout";
 import CabinetController from "../Controller/CabinetController";
 import RegisterFormController from "../Controller/RegisterFormController"
 
 const store = configureStore();
+
+// const history = createHistory();
 
 ReactDOM.render(
         <Provider store={store}>

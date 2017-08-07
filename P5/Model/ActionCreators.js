@@ -1,13 +1,6 @@
 import {Actions} from './Actions'
 import { browserHistory } from 'react-router'
 
-export function TestAction(event) {
-
-    return {
-        type: Actions.TEST_ACTION
-    }
-}
-
 //------Registration actions------
 
 export function FirstNameUpdate(event) {
@@ -55,35 +48,14 @@ export function Register (event) {
         type: Actions.FORM_REGISTER,
         payload: '/user'
     };
-
-    // return function (dispatch, getState) {
-    //     const state = getState();
-    //     if (state.user.password === state.user.confirm) {
-    //         dispatch(reset());
-    //         request('', {send:{
-    //             user: {
-    //                 firstName: state.firstName,
-    //                 lastName: state.lastName,
-    //                 password: state.password,
-    //                 email: state.email
-    //             }
-    //         }}).then(function () {
-    //             browserHistory.push('/cabinet');
-    //             // router.push('/cabinet');
-    //             console.log('Current User: ' + state.user.firstName + ' ' + state.user.lastName)
-    //         }).catch(function () {
-    //             console.log('Error in Action Register')
-    //         });
-    //         console.log('register / state');
-    //         console.log(state)
-    //     }
-    //     else {
-    //         window.alert("Password != Confirm")
-    //     }
-    //
-    // }
 }
 
 
 //------Personal cabinet actions------
 
+export function UserInit (event) {
+
+    return {
+        type: Actions.USER_INIT
+    };
+}

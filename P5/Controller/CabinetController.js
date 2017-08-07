@@ -5,7 +5,7 @@ import RegisterForm from '../View/RegisterView'
 import * as ActionCreators from '../Model/ActionCreators'
 import PersonalCabinet from '../View/PersonalCabinetView'
 
-function mapStateToPrors(state) {
+function mapStateToProps(state) {
     return {
         currentUser : state.userInfoState,
         test: state.newUserState
@@ -14,12 +14,12 @@ function mapStateToPrors(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        TestAction: bindActionCreators(ActionCreators.TestAction, dispatch)
+        UserInit: bindActionCreators(ActionCreators.UserInit, dispatch)
     }
 }
 
 let ret = function () {
-    return connect(mapStateToPrors, mapDispatchToProps)(PersonalCabinet);
+    return connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);
 };
 
-export default ret();
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalCabinet);

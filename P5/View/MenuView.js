@@ -8,7 +8,7 @@ export default class TopMenu extends Component {
         return (
             <ul>
                 <li className="current_page_item"><Link to="/">Homepage</Link></li>
-                <li><Link to="/temp1">Find</Link></li>
+                <li><Link to="/user">Find</Link></li>
                 <li><Link to="/temp2">Log In</Link></li>
             </ul>
         )

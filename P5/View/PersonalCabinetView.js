@@ -6,30 +6,27 @@ export default class PersonalCabinet extends Component {
         console.log(this.props);
 
         return(
-            <ul>
+            <ul className="user-info-list">
                 <li>
-                    <div>First Name: </div>
-                    <label
-                        id="first-name"
-                        type="text">{this.props.currentUser.firstName}</label>
+                    <span>First Name: </span>
+                    <span id="first-name"
+                        className="user-info-red">{this.props.currentUser.firstName}</span>
                 </li>
                 <li>
-                    <div>Last Name: </div>
-                    <label
-                        id="last-name"
-                        type="text">{this.props.currentUser.lastName}</label>
+                    <span>Last Name: </span>
+                    <label id="last-name"
+                       className="user-info-red">{this.props.currentUser.lastName}</label>
                 </li>
                 <li>
-                    <div>Email: </div>
-                    <label
-                        id="email"
-                        type="email">{this.props.currentUser.email}</label>
+                    <span>Email: </span>
+                    <label id="email"
+                       className="user-info-red">{this.props.currentUser.email}</label>
                 </li>
                 <li>
                     <div>Notices: </div>
 
                 </li>
-                <input type="submit" value="Test1" onClick={this.props.TestAction}/>
+                <input type="submit" value="Test1" onClick={this.props.UserInit}/>
                 <input type="submit" value="Test2" onClick={this.props.Register}/>
 
             </ul>
