@@ -4,6 +4,7 @@ import TopMenu from "./MenuView";
 import RegisterFormController from '../Controller/RegisterFormController'
 import CabinetController from '../Controller/CabinetController'
 import LogInController from '../Controller/LogInController'
+import AddNotificationController from "../Controller/AddNotificationController";
 
 export default class MainLayout extends Component {
     render() {
@@ -27,7 +28,8 @@ export default class MainLayout extends Component {
                     <div id="page">
                         <div id="content">
                             <Route exact path="/" component={RegisterFormController}/>
-                            <Route path="/user" component={CabinetController}/>
+                            <Route exact path="/user" component={CabinetController}/>
+                            <Route path="/user/add" component={AddNotificationController}/>
                             <Route path="/login" component={LogInController}/>
                         </div>
                     </div>

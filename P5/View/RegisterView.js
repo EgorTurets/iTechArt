@@ -6,7 +6,7 @@ export default class RegisterForm extends Component {
         console.log(this.props);
 
         return(
-            <form>
+            <form className="form-inner-center">
                 <ul className="input-form-list">
                     <li>
                         <div>First Name: </div>

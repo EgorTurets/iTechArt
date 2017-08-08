@@ -390,6 +390,7 @@ h4 {
 }
 
 .input-form-list {
+	padding-left: 0px;
 	list-style-type: none;
 	font-family: 'Arvo', serif;
 }
@@ -405,7 +406,7 @@ h4 {
 	border-radius: 5px;
 	text-align: center;
 	padding: 5px 10px;
-	margin-left: 40px;
+	/*margin-left: 40px;*/
 }
 
 .button:hover {
@@ -413,9 +414,13 @@ h4 {
 	color: #FFFFFF;
 }
 
+.button-left-margin {
+	margin-left: 40px;
+}
+
 .message-paragraph {
 	font-family: 'Arvo', serif;
-	margin-left: 40px;
+	/*margin-left: 40px;*/
 	color: #B04840;
 }
 
@@ -432,7 +437,6 @@ h4 {
 
 .notification-box-right-row {
 	display: inline-block;
-
 }
 
 .page-link {
@@ -452,4 +456,8 @@ h4 {
 .active-page {
 	color: #FFFFFF;
 	background-color: #323030;
+}
+
+.form-inner-center {
+	text-align: center;
 }

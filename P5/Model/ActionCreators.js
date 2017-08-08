@@ -86,9 +86,58 @@ export function UserInit (event) {
 
 export function Delete(event) {
 
-    debugger;
     return {
         type: Actions.USER_DELETE_NOTICE,
         payload: event.target.id
     };
+}
+
+
+//------Notice add actions------
+
+export function TitleUpdate(event) {
+
+    return {
+        type: Actions.NOTICE_TITLE_UPDATE,
+        payload: event.target.value
+    }
+}
+
+export function DescriptionUpdate(event) {
+
+    return {
+        type: Actions.NOTICE_DESCRIPTION_UPDATE,
+        payload: event.target.value
+    }
+}
+
+export function AddressUpdate(event) {
+
+    return {
+        type: Actions.NOTICE_ADDRESS_UPDATE,
+        payload: event.target.value
+    }
+}
+
+export function MetricUpdate(event) {
+
+    return {
+        type: Actions.NOTICE_METRIC_UPDATE,
+        payload: event.target.value
+    }
+}
+
+export function PriceUpdate(event) {
+
+    return {
+        type: Actions.NOTICE_PRICE_UPDATE,
+        payload: event.target.value
+    }
+}
+
+export function AddNotice(event) {
+
+    return {
+        type: Actions.NOTICE_ADD
+    }
 }

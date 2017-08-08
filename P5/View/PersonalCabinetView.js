@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
-import NotificationInfo from "./NotificationListView";
+import { NavLink, Redirect } from 'react-router-dom'
+import NotificationInfo from "./NotificationBoxView";
 
 export default class PersonalCabinet extends Component {
     render() {
@@ -24,8 +24,6 @@ export default class PersonalCabinet extends Component {
         //         {i}
         //     </NavLink>)
         // }
-
-
 
 
         let listOfNotices = this.props.currentUser.notifications.map((notice) =>
@@ -61,10 +59,10 @@ export default class PersonalCabinet extends Component {
                         <ul>{listOfNotices}</ul>
                     </li>
                 </ul>
-                <div className="button"
-                     onClick={this.props.NONE}>
+                <NavLink to={`${this.props.match.url}/add`}
+                    className="button button-left-margin">
                     Add notification
-                </div>
+                </NavLink>
             </div>
         )
     }

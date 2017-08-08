@@ -10,7 +10,7 @@ export default class LigIn extends Component {
         }
 
         return(
-            <form>
+            <form className="form-inner-center">
                 <ul className="input-form-list">
                     <li>
                         <div>Email: </div>

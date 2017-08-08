@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
 import newUserState from './newUserReducer'
-import userInfoState from './userInfoProducer'
+import userInfoState from './userInfoReducer'
 import logInState from './logInReducer'
-// import {routerReducer} from 'react-router-redux'
+import newNotificationState from './newNotificationReducer'
 
 export default combineReducers({
-    // routing: routerReducer,
     newUserState,
     userInfoState,
-    logInState
+    logInState,
+    newNotificationState
 })

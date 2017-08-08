@@ -2,6 +2,7 @@ import { Actions } from '../Actions'
 
 
 const initialState = {
+    id: 4,
     firstName: 'Unknown',
     lastName: 'User',
     email: 'test@mail.com',
@@ -48,7 +49,6 @@ const initialState = {
         address: 'Txr Uyt 10 Ioma',
         price: 3210000
     }],
-    currentPage: 1
 };
 
 export default function userInfoState(state = initialState, action) {
