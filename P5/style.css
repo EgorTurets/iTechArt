@@ -380,6 +380,15 @@ a:hover {
 
 /*My Styles*/
 
+body {
+	font-family: 'Arvo', serif;
+}
+
+h4 {
+	margin: 5px;
+	font-family: 'Arvo', serif;
+}
+
 .input-form-list {
 	list-style-type: none;
 	font-family: 'Arvo', serif;
@@ -393,7 +402,7 @@ a:hover {
 	display: inline;
 	background-color: #D7D0C0;
 	border: solid #1C1C1C 1px;
-	border-radius: 2px;
+	border-radius: 5px;
 	text-align: center;
 	padding: 5px 10px;
 	margin-left: 40px;
@@ -401,10 +410,27 @@ a:hover {
 
 .button:hover {
 	cursor: pointer;
+	color: #FFFFFF;
 }
 
 .message-paragraph {
 	font-family: 'Arvo', serif;
 	margin-left: 40px;
 	color: #B04840;
+}
+
+.notification-box {
+	margin: 5px 20px 5px 0;
+	padding: 5px;
+	border: dashed #D7D0C0 1px;
+}
+
+.notification-box-left-row {
+	display: inline-block;
+	width: 100px;
+}
+
+.notification-box-right-row {
+	display: inline-block;
+
 }

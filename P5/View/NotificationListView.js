@@ -4,27 +4,59 @@ import { render } from 'react-dom'
 export default class NotificationList extends Component {
     render(){
 
+        debugger;
         return (
-            <ul>
-                <li>
-                    <div>
+            <div className="notification-box">
+                <div>
+                    <div className="notification-box-left-row">
                         <lable>Title: </lable>
-                        <h3>{this.props.data.title}</h3>
-                        <label>Description: </label>
-                        <h4>{this.props.data.description}</h4>
-                        <label>Metric area: </label>
-                        <h4>{this.props.data.metric}</h4>
-                        <label>Address: </label>
-                        <h4>{this.props.data.address}</h4>
-                        <label>Price: </label>
-                        <h4>{this.props.data.price}</h4>
-                        <div className="button"
-                             onClick={this.props.NONE}>
-                            Delete notification
-                        </div>
                     </div>
-                </li>
-            </ul>
+                    <div className="notification-box-right-row">
+                        <h3>{this.props.data.title}</h3>
+                    </div>
+                </div>
+
+                <div>
+                    <div className="notification-box-left-row">
+                        <label>Description: </label>
+                    </div>
+                    <div className="notification-box-right-row">
+                        <h4>{this.props.data.description}</h4>
+                    </div>
+                </div>
+
+                <div>
+                    <div className="notification-box-left-row">
+                        <label>Metric area: </label>
+                    </div>
+                    <div className="notification-box-right-row">
+                        <h4>{this.props.data.metric}</h4>
+                    </div>
+                </div>
+
+                <div>
+                    <div className="notification-box-left-row">
+                        <label>Address: </label>
+                    </div>
+                    <div className="notification-box-right-row">
+                        <h4>{this.props.data.address}</h4>
+                    </div>
+                </div>
+
+                <div>
+                    <div className="notification-box-left-row">
+                        <label>Price: </label>
+                    </div>
+                    <div className="notification-box-right-row">
+                        <h4>{this.props.data.price}</h4>
+                    </div>
+                </div>
+
+                <div className="button"
+                     onClick={this.props.NONE}>
+                    Delete notification
+                </div>
+            </div>
         )
     }
 }

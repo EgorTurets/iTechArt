@@ -5,10 +5,13 @@ export default class PersonalCabinet extends Component {
     render() {
         console.log('PersonalCabinet:');
         console.log(this.props);
+        debugger;
 
         let sliceFrom = (this.props.currentUser.currentPage - 1) * 5;
         let sliceTo = this.props.currentUser.currentPage * 5;
         let noticesPart = this.props.currentUser.notifications.slice(sliceFrom, sliceTo);
+        let listOfNotices = noticesPart.map((noticesPart) =>
+            <li><NotificationList data={noticesPart}/></li>)
 
         return(
             <div>
@@ -30,7 +33,7 @@ export default class PersonalCabinet extends Component {
                     </li>
                     <li>
                         <div>Notifications: </div>
-                        <NotificationList data={noticesPart} />
+                        <ul>{listOfNotices}</ul>
 
                         <div>Place for pages</div>
                     </li>

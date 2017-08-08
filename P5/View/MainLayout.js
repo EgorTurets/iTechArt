@@ -19,7 +19,7 @@ export default class MainLayout extends Component {
                     <div id="header-wrapper">
                         <div id="header">
                             <div id="logo">
-                                <h1><Link to="/">iTech<span>Art</span> Task</Link></h1>
+                                <h1><Link to="/"><span>i</span>Tech<span>Art</span> Task</Link></h1>
                                 <p>Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a></p>
                             </div>
                         </div>
