@@ -1,17 +1,42 @@
-import React, {Component} from 'react'
-import NotificationList from "./NotificationListView";
+import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
+import NotificationInfo from "./NotificationListView";
 
 export default class PersonalCabinet extends Component {
     render() {
         console.log('PersonalCabinet:');
         console.log(this.props);
-        debugger;
 
-        let sliceFrom = (this.props.currentUser.currentPage - 1) * 5;
-        let sliceTo = this.props.currentUser.currentPage * 5;
-        let noticesPart = this.props.currentUser.notifications.slice(sliceFrom, sliceTo);
-        let listOfNotices = noticesPart.map((noticesPart) =>
-            <li><NotificationList data={noticesPart}/></li>)
+
+/*FOR SEARCH PAGE*/
+        // let sliceFrom = (this.props.currentUser.currentPage - 1) * 5;
+        // let sliceTo = this.props.currentUser.currentPage * 5;
+        // let noticesPart = this.props.currentUser.notifications.slice(sliceFrom, sliceTo);
+        //
+        // /*create pages list*/
+        // let pageCount = Math.ceil(this.props.currentUser.notifications.length / 5);
+        // let pages = [];
+        // for (let i = 1; i <= pageCount; i++) {
+        //     pages.push(<NavLink exact to={`${this.props.match.url}/${i}`}
+        //                         key={`page-${i}`}
+        //                         className="page-link"
+        //                         activeClassName="active-page">
+        //         {i}
+        //     </NavLink>)
+        // }
+
+
+
+
+        let listOfNotices = this.props.currentUser.notifications.map((notice) =>
+            <li key={`notice-${notice.id}`} className="notification-box">
+                <NotificationInfo data={notice}/>
+                <div className="button"
+                     id={notice.id}
+                     onClick={this.props.Delete}>
+                    Delete notification
+                </div>
+            </li>);
 
         return(
             <div>
@@ -34,8 +59,6 @@ export default class PersonalCabinet extends Component {
                     <li>
                         <div>Notifications: </div>
                         <ul>{listOfNotices}</ul>
-
-                        <div>Place for pages</div>
                     </li>
                 </ul>
                 <div className="button"

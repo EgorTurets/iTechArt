@@ -83,3 +83,12 @@ export function UserInit (event) {
         type: Actions.USER_INIT
     };
 }
+
+export function Delete(event) {
+
+    debugger;
+    return {
+        type: Actions.USER_DELETE_NOTICE,
+        payload: event.target.id
+    };
+}

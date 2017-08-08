@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import { render } from 'react-dom'
 
-export default class NotificationList extends Component {
+export default class NotificationInfo extends Component {
     render(){
 
-        debugger;
         return (
-            <div className="notification-box">
+            <div>
                 <div>
                     <div className="notification-box-left-row">
                         <lable>Title: </lable>
@@ -50,11 +49,6 @@ export default class NotificationList extends Component {
                     <div className="notification-box-right-row">
                         <h4>{this.props.data.price}</h4>
                     </div>
-                </div>
-
-                <div className="button"
-                     onClick={this.props.NONE}>
-                    Delete notification
                 </div>
             </div>
         )

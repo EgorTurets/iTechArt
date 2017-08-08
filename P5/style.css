@@ -33,7 +33,7 @@ h2 {
 }
 
 h3 {
-	font-size: 1.6em;
+	font-size: 1.3em;
 }
 
 p, ul, ol {
@@ -433,4 +433,23 @@ h4 {
 .notification-box-right-row {
 	display: inline-block;
 
+}
+
+.page-link {
+	display: inline;
+	margin: 5px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	border: solid #1C1C1C 1px;
+	color: black;
+	background-color: #D7D0C0;
+}
+
+.page-link:hover {
+	color: #FFFFFF;
+}
+
+.active-page {
+	color: #FFFFFF;
+	background-color: #323030;
 }

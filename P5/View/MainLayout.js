@@ -29,7 +29,6 @@ export default class MainLayout extends Component {
                             <Route exact path="/" component={RegisterFormController}/>
                             <Route path="/user" component={CabinetController}/>
                             <Route path="/login" component={LogInController}/>
-                            {/*{this.props.children}*/}
                         </div>
                     </div>
                 </div>
