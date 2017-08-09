@@ -69,6 +69,11 @@ export default function newNotificationState(state = initialState, action) {
                 })
             }
 
+
+    /*!!!!! NEW NOTIFICATION NOT SAVED IN STORE !!!!!*/
+
+            debugger;
+
             return Object.assign({}, state, {
                 message: 'Your notification is begin added!'
             })

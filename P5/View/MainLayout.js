@@ -5,6 +5,7 @@ import RegisterFormController from '../Controller/RegisterFormController'
 import CabinetController from '../Controller/CabinetController'
 import LogInController from '../Controller/LogInController'
 import AddNotificationController from "../Controller/AddNotificationController";
+import SearchController from "../Controller/SearchController";
 
 export default class MainLayout extends Component {
     render() {
@@ -31,6 +32,7 @@ export default class MainLayout extends Component {
                             <Route exact path="/user" component={CabinetController}/>
                             <Route path="/user/add" component={AddNotificationController}/>
                             <Route path="/login" component={LogInController}/>
+                            <Route path="/search" component={SearchController}/>
                         </div>
                     </div>
                 </div>

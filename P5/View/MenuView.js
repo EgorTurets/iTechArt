@@ -18,6 +18,10 @@ export default class TopMenu extends Component {
                     activeClassName="current_page_item">
                     Log In
                 </NavLink></li>
+                <li><NavLink to="/search"
+                    activeClassName="current_page_item">
+                    Search
+                </NavLink></li>
             </ul>
         )
     }

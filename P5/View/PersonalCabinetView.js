@@ -8,24 +8,6 @@ export default class PersonalCabinet extends Component {
         console.log(this.props);
 
 
-/*FOR SEARCH PAGE*/
-        // let sliceFrom = (this.props.currentUser.currentPage - 1) * 5;
-        // let sliceTo = this.props.currentUser.currentPage * 5;
-        // let noticesPart = this.props.currentUser.notifications.slice(sliceFrom, sliceTo);
-        //
-        // /*create pages list*/
-        // let pageCount = Math.ceil(this.props.currentUser.notifications.length / 5);
-        // let pages = [];
-        // for (let i = 1; i <= pageCount; i++) {
-        //     pages.push(<NavLink exact to={`${this.props.match.url}/${i}`}
-        //                         key={`page-${i}`}
-        //                         className="page-link"
-        //                         activeClassName="active-page">
-        //         {i}
-        //     </NavLink>)
-        // }
-
-
         let listOfNotices = this.props.currentUser.notifications.map((notice) =>
             <li key={`notice-${notice.id}`} className="notification-box">
                 <NotificationInfo data={notice}/>

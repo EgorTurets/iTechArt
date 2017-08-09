@@ -13,11 +13,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        TitleUpdate: bindActionCreators(ActionCreators.TitleUpdate, dispatch),
-        DescriptionUpdate: bindActionCreators(ActionCreators.DescriptionUpdate, dispatch),
-        AddressUpdate: bindActionCreators(ActionCreators.AddressUpdate, dispatch),
-        MetricUpdate: bindActionCreators(ActionCreators.MetricUpdate, dispatch),
-        PriceUpdate: bindActionCreators(ActionCreators.PriceUpdate, dispatch),
+        TitleUpdate: bindActionCreators(ActionCreators.AddTitleUpdate, dispatch),
+        DescriptionUpdate: bindActionCreators(ActionCreators.AddDescriptionUpdate, dispatch),
+        AddressUpdate: bindActionCreators(ActionCreators.AddAddressUpdate, dispatch),
+        MetricUpdate: bindActionCreators(ActionCreators.AddMetricUpdate, dispatch),
+        PriceUpdate: bindActionCreators(ActionCreators.AddPriceUpdate, dispatch),
         AddNotice: bindActionCreators(ActionCreators.AddNotice, dispatch)
     }
 }

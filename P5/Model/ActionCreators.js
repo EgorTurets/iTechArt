@@ -95,7 +95,7 @@ export function Delete(event) {
 
 //------Notice add actions------
 
-export function TitleUpdate(event) {
+export function AddTitleUpdate(event) {
 
     return {
         type: Actions.NOTICE_TITLE_UPDATE,
@@ -103,7 +103,7 @@ export function TitleUpdate(event) {
     }
 }
 
-export function DescriptionUpdate(event) {
+export function AddDescriptionUpdate(event) {
 
     return {
         type: Actions.NOTICE_DESCRIPTION_UPDATE,
@@ -111,7 +111,7 @@ export function DescriptionUpdate(event) {
     }
 }
 
-export function AddressUpdate(event) {
+export function AddAddressUpdate(event) {
 
     return {
         type: Actions.NOTICE_ADDRESS_UPDATE,
@@ -119,19 +119,19 @@ export function AddressUpdate(event) {
     }
 }
 
-export function MetricUpdate(event) {
+export function AddMetricUpdate(event) {
 
     return {
         type: Actions.NOTICE_METRIC_UPDATE,
-        payload: event.target.value
+        payload: +event.target.value
     }
 }
 
-export function PriceUpdate(event) {
+export function AddPriceUpdate(event) {
 
     return {
         type: Actions.NOTICE_PRICE_UPDATE,
-        payload: event.target.value
+        payload: +event.target.value
     }
 }
 
@@ -139,5 +139,63 @@ export function AddNotice(event) {
 
     return {
         type: Actions.NOTICE_ADD
+    }
+}
+
+//------Search actions------
+
+export function SearchInit() {
+
+    return {
+        type: Actions.SEARCH_INIT
+    }
+}
+
+export function SearchMinPriceUpdate(event) {
+
+    return {
+        type: Actions.SEARCH_MIN_PRICE_UPDATE,
+        payload: +event.target.value
+    }
+}
+
+export function SearchMaxPriceUpdate(event) {
+
+    return {
+        type: Actions.SEARCH_MAX_PRICE_UPDATE,
+        payload: +event.target.value
+    }
+}
+
+export function SearchMinMetricUpdate(event) {
+
+    return {
+        type: Actions.SEARCH_MIN_METRIC_UPDATE,
+        payload: +event.target.value
+    }
+}
+
+export function SearchMaxMetricUpdate(event) {
+
+    return {
+        type: Actions.SEARCH_MAX_METRIC_UPDATE,
+        payload: +event.target.value
+    }
+}
+
+export function SearchNotifications(event) {
+
+    return {
+        type: Actions.SEARCH,
+    }
+}
+
+export function SearchPageChange(event) {
+
+    debugger;
+
+    return {
+        type: Actions.SEARCH_PAGE_CHANGE,
+        payload: +event.target.innerText
     }
 }
