@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "19a6aa2f3dcd47151d9a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "45008d24ecf7396c2ed1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -6026,6 +6026,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var Actions = exports.Actions = {
+
     USER_INIT: 'USER_INIT',
     USER_DELETE_NOTICE: 'USER_DELETE_NOTICE',
 
@@ -7200,8 +7201,6 @@ function SearchNotifications(event) {
 }
 
 function SearchPageChange(event) {
-
-    debugger;
 
     return {
         type: _Actions.Actions.SEARCH_PAGE_CHANGE,
@@ -38994,15 +38993,28 @@ function newUserState() {
                         message: 'Password is not confirmed!'
                     });
                 } else {
+                    var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
 
-                    //window.localStorage.setItem('User', '123');
+                    var newUser = {
+                        id: +allUsers[allUsers.length - 1].id + 1,
+                        firstName: state.newUserFirstName,
+                        lastName: state.newUserLastName,
+                        email: state.newUserEmail,
+                        password: state.newUserPassword
+                    };
+                    allUsers.push(newUser);
+                    window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
 
                     return Object.assign({}, state, {
+                        newUserFirstName: '',
+                        newUserLastName: '',
+                        newUserEmail: '',
+                        newUserPassword: '',
+                        newUserConfirm: '',
                         message: 'Account was created!'
                     });
                 }
-            };break;
-
+            }
         default:
             return state;
     }
@@ -39044,53 +39056,12 @@ exports.default = userInfoState;
 var _Actions = __webpack_require__(41);
 
 var initialState = {
-    id: 4,
-    firstName: 'Unknown',
-    lastName: 'User',
-    email: 'test@mail.com',
-    notifications: [{
-        id: 1,
-        title: 'Title-1',
-        description: 'blah-blah-blau',
-        metric: 100,
-        address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
-        price: 1000000
-    }, {
-        id: 2,
-        title: 'Title-2',
-        description: 'ysdf;kb sldgjlk lglrg  lg;gk;fg swghf;wfd',
-        metric: 51245,
-        address: 'rtynvfgf sosgl 5 lskg',
-        price: 100000
-    }, {
-        id: 3,
-        title: 'Title-3',
-        description: 'blah-blah-blau',
-        metric: 100,
-        address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
-        price: 1000000
-    }, {
-        id: 4,
-        title: 'Title-4',
-        description: 'ubaba-ubaba-ubaba',
-        metric: 80,
-        address: 'sosgl 5 lskg',
-        price: 700000
-    }, {
-        id: 5,
-        title: 'Title-5',
-        description: 'blah-blah-blau',
-        metric: 7510,
-        address: '124 hful sosgl 5 lskg',
-        price: 652000
-    }, {
-        id: 6,
-        title: 'Title-6',
-        description: 'blah-blah-blau',
-        metric: 321,
-        address: 'Txr Uyt 10 Ioma',
-        price: 3210000
-    }]
+    id: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    notifications: [],
+    isCanRedirect: false
 };
 
 function userInfoState() {
@@ -39102,38 +39073,60 @@ function userInfoState() {
         case _Actions.Actions.USER_INIT:
             {
                 debugger;
-                var userFromStorage = window.localStorage.getItem('User');
-                if (userFromStorage) {
+                var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+                if (!currentUser) {
 
                     return Object.assign({}, state, {
-                        firstName: userFromStorage.firstName,
-                        lastName: userFromStorage.lastName,
-                        email: userFromStorage.email
+                        isCanRedirect: true
                     });
                 }
-                return state;
-            }
-        case _Actions.Actions.USER_DELETE_NOTICE:
-            {
-                debugger;
 
-                var indexOfElement = -1;
-                for (var i = 0; i < state.notifications.length; i++) {
-                    if (state.notifications[i].id === +action.payload) {
-                        indexOfElement = i;
-                        break;
+                var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+                var currentUserNotifications = [];
+                for (var i = 0; i < allNotifications.length; i++) {
+                    if (+allNotifications[i].user === currentUser.id) {
+                        currentUserNotifications.push(allNotifications[i]);
                     }
                 }
 
+                return Object.assign({}, state, {
+                    id: currentUser.id,
+                    firstName: currentUser.firstName,
+                    lastName: currentUser.lastName,
+                    email: currentUser.email,
+                    notifications: currentUserNotifications
+                });
+            }
+        case _Actions.Actions.USER_DELETE_NOTICE:
+            {
+
+                debugger;
+
+                var indexOfElement = -1;
+                var _allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+                for (var _i = 0; _i < _allNotifications.length; _i++) {
+                    if (_allNotifications[_i].id === +action.payload) {
+                        indexOfElement = _i;
+                        break;
+                    }
+                }
                 if (indexOfElement === -1) {
 
                     return state;
                 }
-                var notices = state.notifications;
-                notices.splice(indexOfElement, 1);
+
+                _allNotifications.splice(indexOfElement, 1);
+                window.sessionStorage.setItem('AllNotifications', JSON.stringify(_allNotifications));
+
+                var _currentUserNotifications = [];
+                for (var _i2 = 0; _i2 < _allNotifications.length; _i2++) {
+                    if (+_allNotifications[_i2].user === state.id) {
+                        _currentUserNotifications.push(_allNotifications[_i2]);
+                    }
+                }
 
                 return Object.assign({}, state, {
-                    notifications: notices
+                    notifications: _currentUserNotifications
                 });
             }
     }
@@ -39187,24 +39180,39 @@ function logInState() {
                     });
                 }
 
+                var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
+                for (var i = 0; i < allUsers.length; i++) {
+                    if (allUsers[i].email === state.email && allUsers[i].password === state.password) {
+                        var currentUser = allUsers[i];
+                        window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                        return Object.assign({}, state, {
+                            email: '',
+                            password: '',
+                            isCanRedirect: true
+                        });
+                    }
+                }
+
                 return Object.assign({}, state, {
-                    isCanRedirect: true
+                    password: '',
+                    message: 'Invalid email or password!'
                 });
-            };break;
+            }
         case _Actions.Actions.LOG_IN_EMAIL_UPDATE:
             {
 
                 return Object.assign({}, state, {
                     email: action.payload
                 });
-            };break;
+            }
         case _Actions.Actions.LOG_IN_PASSWORD_UPDATE:
             {
 
                 return Object.assign({}, state, {
                     password: action.payload
                 });
-            };break;
+            }
         default:
             return state;
     }
@@ -39594,6 +39602,95 @@ var MainLayout = function (_Component) {
     }
 
     _createClass(MainLayout, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+
+            //-------basic notification list init-------
+            var allNotifications = window.sessionStorage.getItem('AllNotifications');
+            if (!allNotifications) {
+                allNotifications = [{
+                    id: 1,
+                    title: 'Title-1',
+                    description: 'blah-blah-blau',
+                    metric: 100,
+                    address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
+                    price: 1000000,
+                    user: 1,
+                    isRent: false
+                }, {
+                    id: 2,
+                    title: 'Title-2',
+                    description: 'ysdf;kb sldgjlk lglrg  lg;gk;fg swghf;wfd',
+                    metric: 51245,
+                    address: 'rtynvfgf sosgl 5 lskg',
+                    price: 100000,
+                    user: 1,
+                    isRent: false
+                }, {
+                    id: 3,
+                    title: 'Title-3',
+                    description: 'blah-blah-blau',
+                    metric: 100,
+                    address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
+                    price: 1000000,
+                    user: 2,
+                    isRent: true
+                }, {
+                    id: 4,
+                    title: 'Title-4',
+                    description: 'ubaba-ubaba-ubaba',
+                    metric: 80,
+                    address: 'sosgl 5 lskg',
+                    price: 700000,
+                    user: 3,
+                    isRent: true
+                }, {
+                    id: 5,
+                    title: 'Title-5',
+                    description: 'blah-blah-blau',
+                    metric: 7510,
+                    address: '124 hful sosgl 5 lskg',
+                    price: 652000,
+                    user: 3,
+                    isRent: false
+                }, {
+                    id: 6,
+                    title: 'Title-6',
+                    description: 'blah-blah-blau',
+                    metric: 321,
+                    address: 'Txr Uyt 10 Ioma',
+                    price: 3210000,
+                    user: 3,
+                    isRent: true
+                }];
+                window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
+            }
+            //-------basic user list init-------
+            var allUsers = window.sessionStorage.getItem('allUsers');
+            if (!allUsers) {
+                allUsers = [{
+                    id: 1,
+                    firstName: 'Ivan',
+                    lastName: 'Gukov',
+                    email: 'vania@mail.com',
+                    password: 'ivan1234'
+                }, {
+                    id: 2,
+                    firstName: 'Baba',
+                    lastName: 'Yaha',
+                    email: 'babina@ggg.ru',
+                    password: 'myNewPass'
+                }, {
+                    id: 3,
+                    firstName: 'Tuta',
+                    lastName: 'Netute',
+                    email: 'tutNeTut@tam.com',
+                    password: '123456789'
+                }];
+                window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
 
@@ -39721,7 +39818,7 @@ var TopMenu = function (_Component) {
                         _reactRouterDom.NavLink,
                         { exact: true, to: '/',
                             activeClassName: 'current_page_item' },
-                        'Homepage'
+                        'Register'
                     )
                 ),
                 _react2.default.createElement(
@@ -40056,12 +40153,21 @@ var PersonalCabinet = function (_Component) {
     }
 
     _createClass(PersonalCabinet, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.UserInit();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
             console.log('PersonalCabinet:');
             console.log(this.props);
+
+            if (this.props.currentUser.isCanRedirect) {
+                return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
+            }
 
             var listOfNotices = this.props.currentUser.notifications.map(function (notice) {
                 return _react2.default.createElement(

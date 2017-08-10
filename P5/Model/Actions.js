@@ -1,4 +1,5 @@
 export const Actions = {
+
     USER_INIT: 'USER_INIT',
     USER_DELETE_NOTICE: 'USER_DELETE_NOTICE',
 

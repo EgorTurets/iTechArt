@@ -22,7 +22,8 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: './dist',
+        contentBase: __dirname + '/dist',
+        port: 8080,
         hot: true
     },
     plugins: [

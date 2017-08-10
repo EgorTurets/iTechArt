@@ -2,53 +2,12 @@ import { Actions } from '../Actions'
 
 
 const initialState = {
-    id: 4,
-    firstName: 'Unknown',
-    lastName: 'User',
-    email: 'test@mail.com',
-    notifications: [{
-        id: 1,
-        title: 'Title-1',
-        description: 'blah-blah-blau',
-        metric: 100,
-        address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
-        price: 1000000
-    }, {
-        id: 2,
-        title: 'Title-2',
-        description: 'ysdf;kb sldgjlk lglrg  lg;gk;fg swghf;wfd',
-        metric: 51245,
-        address: 'rtynvfgf sosgl 5 lskg',
-        price: 100000
-    }, {
-        id: 3,
-        title: 'Title-3',
-        description: 'blah-blah-blau',
-        metric: 100,
-        address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
-        price: 1000000
-    }, {
-        id: 4,
-        title: 'Title-4',
-        description: 'ubaba-ubaba-ubaba',
-        metric: 80,
-        address: 'sosgl 5 lskg',
-        price: 700000
-    }, {
-        id: 5,
-        title: 'Title-5',
-        description: 'blah-blah-blau',
-        metric: 7510,
-        address: '124 hful sosgl 5 lskg',
-        price: 652000
-    }, {
-        id: 6,
-        title: 'Title-6',
-        description: 'blah-blah-blau',
-        metric: 321,
-        address: 'Txr Uyt 10 Ioma',
-        price: 3210000
-    }],
+    id: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    notifications: [],
+    isCanRedirect: false
 };
 
 export default function userInfoState(state = initialState, action) {
@@ -56,37 +15,59 @@ export default function userInfoState(state = initialState, action) {
     switch (action.type) {
         case Actions.USER_INIT: {
             debugger;
-            let userFromStorage = window.localStorage.getItem('User');
-            if(userFromStorage) {
+            let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+            if(!currentUser) {
 
                 return Object.assign({}, state, {
-                    firstName: userFromStorage.firstName,
-                    lastName: userFromStorage.lastName,
-                    email: userFromStorage.email
+                    isCanRedirect: true
                 })
             }
-            return state;
+
+            let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+            let currentUserNotifications = [];
+            for (let i = 0; i < allNotifications.length; i++) {
+                if(+allNotifications[i].user === currentUser.id) {
+                    currentUserNotifications.push(allNotifications[i])
+                }
+            }
+
+            return Object.assign({}, state, {
+                id: currentUser.id,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName,
+                email: currentUser.email,
+                notifications: currentUserNotifications
+            })
         }
         case Actions.USER_DELETE_NOTICE: {
+
             debugger;
 
             let indexOfElement = -1;
-            for (let i = 0; i < state.notifications.length; i++) {
-                if(state.notifications[i].id === +action.payload) {
+            let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+            for (let i = 0; i < allNotifications.length; i++) {
+                if(allNotifications[i].id === +action.payload) {
                     indexOfElement = i;
                     break;
                 }
             }
-
             if (indexOfElement === -1) {
 
                 return state;
             }
-            let notices = state.notifications;
-            notices.splice(indexOfElement, 1);
+
+            allNotifications.splice(indexOfElement, 1);
+            window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
+
+            let currentUserNotifications = [];
+            for (let i = 0; i < allNotifications.length; i++) {
+                if(+allNotifications[i].user === state.id) {
+                    currentUserNotifications.push(allNotifications[i])
+                }
+            }
 
             return Object.assign({}, state, {
-                notifications: notices
+                notifications: currentUserNotifications
             })
         }
     }

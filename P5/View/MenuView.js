@@ -8,7 +8,7 @@ export default class TopMenu extends Component {
             <ul>
                 <li><NavLink exact to="/"
                     activeClassName="current_page_item">
-                    Homepage
+                    Register
                 </NavLink></li>
                 <li><NavLink exact to="/user"
                     activeClassName="current_page_item">

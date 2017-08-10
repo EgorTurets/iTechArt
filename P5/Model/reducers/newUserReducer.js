@@ -88,15 +88,28 @@ export default function newUserState(state = initialState, action) {
                 })
             }
             else {
+                let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
 
-                //window.localStorage.setItem('User', '123');
+                let newUser = {
+                    id: +allUsers[allUsers.length-1].id + 1,
+                    firstName: state.newUserFirstName,
+                    lastName: state.newUserLastName,
+                    email: state.newUserEmail,
+                    password: state.newUserPassword
+                };
+                allUsers.push(newUser);
+                window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
 
                 return Object.assign({}, state, {
+                    newUserFirstName: '',
+                    newUserLastName: '',
+                    newUserEmail: '',
+                    newUserPassword: '',
+                    newUserConfirm: '',
                     message: 'Account was created!'
                 })
             }
-        }; break;
-
+        }
         default:
             return state;
     }

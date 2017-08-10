@@ -26,23 +26,38 @@ export default function logInState(state = initialState, action) {
                 })
             }
 
+            let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
+            for(let i = 0; i < allUsers.length; i++) {
+                if ((allUsers[i].email === state.email) && (allUsers[i].password === state.password)) {
+                    let currentUser = allUsers[i];
+                    window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    return Object.assign({}, state, {
+                        email: '',
+                        password: '',
+                        isCanRedirect: true
+                    })
+                }
+            }
+
             return Object.assign({}, state, {
-                isCanRedirect: true
+                password: '',
+                message: 'Invalid email or password!'
             })
 
-        }; break;
+        }
         case Actions.LOG_IN_EMAIL_UPDATE: {
 
             return Object.assign({}, state, {
                 email: action.payload
             })
-        }; break;
+        }
         case Actions.LOG_IN_PASSWORD_UPDATE: {
 
             return Object.assign({}, state, {
                 password: action.payload
             })
-        }; break;
+        }
         default:
             return state;
     }

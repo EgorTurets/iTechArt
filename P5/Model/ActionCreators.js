@@ -192,8 +192,6 @@ export function SearchNotifications(event) {
 
 export function SearchPageChange(event) {
 
-    debugger;
-
     return {
         type: Actions.SEARCH_PAGE_CHANGE,
         payload: +event.target.innerText
