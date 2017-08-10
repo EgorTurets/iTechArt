@@ -406,7 +406,6 @@ h4 {
 	border-radius: 5px;
 	text-align: center;
 	padding: 5px 10px;
-	/*margin-left: 40px;*/
 }
 
 .button:hover {
@@ -420,7 +419,6 @@ h4 {
 
 .message-paragraph {
 	font-family: 'Arvo', serif;
-	/*margin-left: 40px;*/
 	color: #B04840;
 }
 
@@ -460,4 +458,21 @@ h4 {
 
 .form-inner-center {
 	text-align: center;
+}
+
+.description-area {
+	max-width: 900px;
+}
+
+.search-form {
+	margin: 0 20px 20px;
+}
+
+.search-input {
+	width: 100px;
+	margin-right: 20px;
+}
+
+.search-form + div {
+	margin-left: 40px;
 }

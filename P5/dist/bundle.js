@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e83c1c69250f5389b1c9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "19a6aa2f3dcd47151d9a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -40445,6 +40445,7 @@ var AddNotificationForm = function (_Component) {
                         ),
                         _react2.default.createElement('textarea', {
                             id: 'description',
+                            className: 'description-area',
                             value: this.props.newNotification.description,
                             onChange: this.props.DescriptionUpdate })
                     ),
@@ -40649,7 +40650,7 @@ var Search = function (_Component) {
                 null,
                 _react2.default.createElement(
                     'form',
-                    null,
+                    { className: 'form-inner-center search-form' },
                     _react2.default.createElement(
                         'label',
                         null,
@@ -40658,6 +40659,7 @@ var Search = function (_Component) {
                     _react2.default.createElement('input', {
                         id: 'minMetric',
                         type: 'number',
+                        className: 'search-input',
                         value: this.props.searchParams.minMetric,
                         onChange: this.props.MinMetricUpdate }),
                     _react2.default.createElement(
@@ -40668,6 +40670,7 @@ var Search = function (_Component) {
                     _react2.default.createElement('input', {
                         id: 'maxMetric',
                         type: 'number',
+                        className: 'search-input',
                         value: this.props.searchParams.maxMetric,
                         onChange: this.props.MaxMetricUpdate }),
                     _react2.default.createElement(
@@ -40678,6 +40681,7 @@ var Search = function (_Component) {
                     _react2.default.createElement('input', {
                         id: 'minPrice',
                         type: 'number',
+                        className: 'search-input',
                         value: this.props.searchParams.minPrice,
                         onChange: this.props.MinPriceUpdate }),
                     _react2.default.createElement(
@@ -40688,6 +40692,7 @@ var Search = function (_Component) {
                     _react2.default.createElement('input', {
                         id: 'maxPrice',
                         type: 'number',
+                        className: 'search-input',
                         value: this.props.searchParams.maxPrice,
                         onChange: this.props.MaxPriceUpdate }),
                     _react2.default.createElement(
@@ -40699,7 +40704,7 @@ var Search = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     null,
-                    'Notifications: '
+                    'Results: '
                 ),
                 _react2.default.createElement(
                     'ul',

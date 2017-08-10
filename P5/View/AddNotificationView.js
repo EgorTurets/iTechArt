@@ -20,6 +20,7 @@ export default class AddNotificationForm extends Component {
                         <div>Description: </div>
                         <textarea
                             id="description"
+                            className="description-area"
                             value={this.props.newNotification.description}
                             onChange={this.props.DescriptionUpdate}>
                         </textarea>
