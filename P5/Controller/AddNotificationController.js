@@ -18,7 +18,8 @@ function mapDispatchToProps(dispatch) {
         AddressUpdate: bindActionCreators(ActionCreators.AddAddressUpdate, dispatch),
         MetricUpdate: bindActionCreators(ActionCreators.AddMetricUpdate, dispatch),
         PriceUpdate: bindActionCreators(ActionCreators.AddPriceUpdate, dispatch),
-        AddNotice: bindActionCreators(ActionCreators.AddNotice, dispatch)
+        AddNotice: bindActionCreators(ActionCreators.AddNotice, dispatch),
+        setProprietor: bindActionCreators(ActionCreators.SetProprietor, dispatch)
     }
 }
 

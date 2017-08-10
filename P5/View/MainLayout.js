@@ -20,8 +20,8 @@ export default class MainLayout extends Component {
                 metric: 100,
                 address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
                 price: 1000000,
-                user: 1,
-                isRent: false
+                proprietor: 1,
+                isForRent: false
             }, {
                 id: 2,
                 title: 'Title-2',
@@ -29,8 +29,8 @@ export default class MainLayout extends Component {
                 metric: 51245,
                 address: 'rtynvfgf sosgl 5 lskg',
                 price: 100000,
-                user: 1,
-                isRent: false
+                proprietor: 1,
+                isForRent: false
             }, {
                 id: 3,
                 title: 'Title-3',
@@ -38,8 +38,8 @@ export default class MainLayout extends Component {
                 metric: 100,
                 address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
                 price: 1000000,
-                user: 2,
-                isRent: true
+                proprietor: 2,
+                isForRent: true
             }, {
                 id: 4,
                 title: 'Title-4',
@@ -47,8 +47,8 @@ export default class MainLayout extends Component {
                 metric: 80,
                 address: 'sosgl 5 lskg',
                 price: 700000,
-                user: 3,
-                isRent: true
+                proprietor: 3,
+                isForRent: true
             }, {
                 id: 5,
                 title: 'Title-5',
@@ -56,8 +56,8 @@ export default class MainLayout extends Component {
                 metric: 7510,
                 address: '124 hful sosgl 5 lskg',
                 price: 652000,
-                user: 3,
-                isRent: false
+                proprietor: 3,
+                isForRent: false
             }, {
                 id: 6,
                 title: 'Title-6',
@@ -65,8 +65,8 @@ export default class MainLayout extends Component {
                 metric: 321,
                 address: 'Txr Uyt 10 Ioma',
                 price: 3210000,
-                user: 3,
-                isRent: true
+                proprietor: 3,
+                isForRent: true
             }];
             window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
         }

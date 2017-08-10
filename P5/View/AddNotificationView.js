@@ -2,6 +2,12 @@ import React, {Component} from 'react'
 import { Redirect } from 'react-router'
 
 export default class AddNotificationForm extends Component {
+    componentWillMount(){
+        if(this.props.newNotification.proprietor === 0){
+            this.props.setProprietor(this.props.currentUser.id)
+        }
+    }
+
     render() {
         console.log(this.props);
 

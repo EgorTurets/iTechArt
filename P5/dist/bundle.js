@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "45008d24ecf7396c2ed1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ae60b7ff516da894cc4e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -6041,6 +6041,7 @@ var Actions = exports.Actions = {
     LOG_IN_PASSWORD_UPDATE: 'LOG_IN_PASSWORD_UPDATE',
     LOG_IN: 'LOG_IN',
 
+    NOTICE_SET_PROPRIETOR: 'NOTICE_SET_PROPRIETOR',
     NOTICE_TITLE_UPDATE: 'NOTICE_TITLE_UPDATE',
     NOTICE_DESCRIPTION_UPDATE: 'NOTICE_DESCRIPTION_UPDATE',
     NOTICE_METRIC_UPDATE: 'NOTICE_METRIC_UPDATE',
@@ -6996,6 +6997,7 @@ exports.LogInEmailUpd = LogInEmailUpd;
 exports.LogInPassUpd = LogInPassUpd;
 exports.UserInit = UserInit;
 exports.Delete = Delete;
+exports.SetProprietor = SetProprietor;
 exports.AddTitleUpdate = AddTitleUpdate;
 exports.AddDescriptionUpdate = AddDescriptionUpdate;
 exports.AddAddressUpdate = AddAddressUpdate;
@@ -7104,6 +7106,14 @@ function Delete(event) {
 }
 
 //------Notice add actions------
+
+function SetProprietor(id) {
+
+    return {
+        type: _Actions.Actions.NOTICE_SET_PROPRIETOR,
+        payload: id
+    };
+}
 
 function AddTitleUpdate(event) {
 
@@ -39084,7 +39094,7 @@ function userInfoState() {
                 var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
                 var currentUserNotifications = [];
                 for (var i = 0; i < allNotifications.length; i++) {
-                    if (+allNotifications[i].user === currentUser.id) {
+                    if (+allNotifications[i].proprietor === currentUser.id) {
                         currentUserNotifications.push(allNotifications[i]);
                     }
                 }
@@ -39120,7 +39130,7 @@ function userInfoState() {
 
                 var _currentUserNotifications = [];
                 for (var _i2 = 0; _i2 < _allNotifications.length; _i2++) {
-                    if (+_allNotifications[_i2].user === state.id) {
+                    if (+_allNotifications[_i2].proprietor === state.id) {
                         _currentUserNotifications.push(_allNotifications[_i2]);
                     }
                 }
@@ -39242,7 +39252,7 @@ var initialState = {
     metric: 0,
     address: '',
     price: 0,
-    isForRent: true,
+    isForRent: false,
     proprietor: 0
 };
 
@@ -39252,6 +39262,13 @@ function newNotificationState() {
 
 
     switch (action.type) {
+        case _Actions.Actions.NOTICE_SET_PROPRIETOR:
+            {
+
+                return Object.assign({}, state, {
+                    proprietor: action.payload
+                });
+            }
         case _Actions.Actions.NOTICE_TITLE_UPDATE:
             {
 
@@ -39311,7 +39328,11 @@ function newNotificationState() {
                     });
                 }
 
-                /*!!!!! NEW NOTIFICATION NOT SAVED IN STORE !!!!!*/
+                var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+
+                var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+                allNotifications.push(state);
+                window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
 
                 debugger;
 
@@ -39615,8 +39636,8 @@ var MainLayout = function (_Component) {
                     metric: 100,
                     address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
                     price: 1000000,
-                    user: 1,
-                    isRent: false
+                    proprietor: 1,
+                    isForRent: false
                 }, {
                     id: 2,
                     title: 'Title-2',
@@ -39624,8 +39645,8 @@ var MainLayout = function (_Component) {
                     metric: 51245,
                     address: 'rtynvfgf sosgl 5 lskg',
                     price: 100000,
-                    user: 1,
-                    isRent: false
+                    proprietor: 1,
+                    isForRent: false
                 }, {
                     id: 3,
                     title: 'Title-3',
@@ -39633,8 +39654,8 @@ var MainLayout = function (_Component) {
                     metric: 100,
                     address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
                     price: 1000000,
-                    user: 2,
-                    isRent: true
+                    proprietor: 2,
+                    isForRent: true
                 }, {
                     id: 4,
                     title: 'Title-4',
@@ -39642,8 +39663,8 @@ var MainLayout = function (_Component) {
                     metric: 80,
                     address: 'sosgl 5 lskg',
                     price: 700000,
-                    user: 3,
-                    isRent: true
+                    proprietor: 3,
+                    isForRent: true
                 }, {
                     id: 5,
                     title: 'Title-5',
@@ -39651,8 +39672,8 @@ var MainLayout = function (_Component) {
                     metric: 7510,
                     address: '124 hful sosgl 5 lskg',
                     price: 652000,
-                    user: 3,
-                    isRent: false
+                    proprietor: 3,
+                    isForRent: false
                 }, {
                     id: 6,
                     title: 'Title-6',
@@ -39660,8 +39681,8 @@ var MainLayout = function (_Component) {
                     metric: 321,
                     address: 'Txr Uyt 10 Ioma',
                     price: 3210000,
-                    user: 3,
-                    isRent: true
+                    proprietor: 3,
+                    isForRent: true
                 }];
                 window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
             }
@@ -40155,7 +40176,9 @@ var PersonalCabinet = function (_Component) {
     _createClass(PersonalCabinet, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.UserInit();
+            if (this.props.currentUser.id === 0) {
+                this.props.UserInit();
+            }
         }
     }, {
         key: 'render',
@@ -40470,7 +40493,8 @@ function mapDispatchToProps(dispatch) {
         AddressUpdate: (0, _redux.bindActionCreators)(ActionCreators.AddAddressUpdate, dispatch),
         MetricUpdate: (0, _redux.bindActionCreators)(ActionCreators.AddMetricUpdate, dispatch),
         PriceUpdate: (0, _redux.bindActionCreators)(ActionCreators.AddPriceUpdate, dispatch),
-        AddNotice: (0, _redux.bindActionCreators)(ActionCreators.AddNotice, dispatch)
+        AddNotice: (0, _redux.bindActionCreators)(ActionCreators.AddNotice, dispatch),
+        setProprietor: (0, _redux.bindActionCreators)(ActionCreators.SetProprietor, dispatch)
     };
 }
 
@@ -40517,6 +40541,13 @@ var AddNotificationForm = function (_Component) {
     }
 
     _createClass(AddNotificationForm, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            if (this.props.newNotification.proprietor === 0) {
+                this.props.setProprietor(this.props.currentUser.id);
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
             console.log(this.props);

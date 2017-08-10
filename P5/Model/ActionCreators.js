@@ -95,6 +95,14 @@ export function Delete(event) {
 
 //------Notice add actions------
 
+export  function SetProprietor(id) {
+
+    return {
+        type: Actions.NOTICE_SET_PROPRIETOR,
+        payload: id
+    }
+}
+
 export function AddTitleUpdate(event) {
 
     return {

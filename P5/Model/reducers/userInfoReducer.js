@@ -26,7 +26,7 @@ export default function userInfoState(state = initialState, action) {
             let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
             let currentUserNotifications = [];
             for (let i = 0; i < allNotifications.length; i++) {
-                if(+allNotifications[i].user === currentUser.id) {
+                if(+allNotifications[i].proprietor === currentUser.id) {
                     currentUserNotifications.push(allNotifications[i])
                 }
             }
@@ -61,7 +61,7 @@ export default function userInfoState(state = initialState, action) {
 
             let currentUserNotifications = [];
             for (let i = 0; i < allNotifications.length; i++) {
-                if(+allNotifications[i].user === state.id) {
+                if(+allNotifications[i].proprietor === state.id) {
                     currentUserNotifications.push(allNotifications[i])
                 }
             }

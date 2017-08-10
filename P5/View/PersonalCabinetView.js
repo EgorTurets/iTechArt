@@ -4,7 +4,9 @@ import NotificationInfo from "./NotificationBoxView";
 
 export default class PersonalCabinet extends Component {
     componentDidMount() {
-        this.props.UserInit();
+        if(this.props.currentUser.id === 0) {
+            this.props.UserInit();
+        }
     }
 
     render() {

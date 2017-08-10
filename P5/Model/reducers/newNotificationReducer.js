@@ -7,13 +7,19 @@ const initialState = {
         metric: 0,
         address: '',
         price: 0,
-        isForRent: true,
+        isForRent: false,
         proprietor: 0
 };
 
 export default function newNotificationState(state = initialState, action) {
 
     switch (action.type) {
+        case Actions.NOTICE_SET_PROPRIETOR: {
+
+            return Object.assign({}, state, {
+                proprietor: action.payload
+            })
+        }
         case Actions.NOTICE_TITLE_UPDATE: {
 
             return Object.assign({}, state, {
@@ -70,7 +76,12 @@ export default function newNotificationState(state = initialState, action) {
             }
 
 
-    /*!!!!! NEW NOTIFICATION NOT SAVED IN STORE !!!!!*/
+            let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+
+
+            let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+            allNotifications.push(state);
+            window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
 
             debugger;
 
