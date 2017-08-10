@@ -174,8 +174,8 @@ export default function searchState(state = initialState, action) {
 
             let allResults = JSON.parse(window.sessionStorage.getItem('SearchResults'));
 
-            let sliceFrom = (state.currentPage - 1) * 5;
-            let sliceTo = state.currentPage * 5;
+            let sliceFrom = (action.payload - 1) * 5;
+            let sliceTo = action.payload * 5;
             let partOfSearchResults = allResults.slice(sliceFrom, sliceTo);
 
             return Object.assign({}, state, {
