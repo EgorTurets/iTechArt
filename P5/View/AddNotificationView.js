@@ -9,7 +9,6 @@ export default class AddNotificationForm extends Component {
     }
 
     render() {
-        console.log(this.props);
 
         return(
             <form className="form-inner-center">

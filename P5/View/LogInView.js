@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 
 export default class LigIn extends Component {
     render() {
-        console.log(this.props);
 
         if (this.props.logIn.isCanRedirect) {
             return (<Redirect to="/user"/>)

@@ -14,7 +14,6 @@ export default function userInfoState(state = initialState, action) {
 
     switch (action.type) {
         case Actions.USER_INIT: {
-            debugger;
             let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
             if(!currentUser) {
 
@@ -40,8 +39,6 @@ export default function userInfoState(state = initialState, action) {
             })
         }
         case Actions.USER_DELETE_NOTICE: {
-
-            debugger;
 
             let indexOfElement = -1;
             let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));

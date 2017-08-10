@@ -10,8 +10,6 @@ export default class PersonalCabinet extends Component {
     }
 
     render() {
-        console.log('PersonalCabinet:');
-        console.log(this.props);
 
         if (this.props.currentUser.isCanRedirect) {
             return (<Redirect to="/login"/>)

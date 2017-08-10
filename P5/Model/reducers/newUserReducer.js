@@ -53,8 +53,6 @@ export default function newUserState(state = initialState, action) {
             }); break;
         case Actions.FORM_REGISTER:{
 
-            debugger;
-
             if(!state.newUserFirstName) {
 
                 return Object.assign({}, state, {

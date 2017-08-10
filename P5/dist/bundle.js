@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ae60b7ff516da894cc4e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "300cf95e38bcd06bfdef"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -38969,8 +38969,6 @@ function newUserState() {
         case _Actions.Actions.FORM_REGISTER:
             {
 
-                debugger;
-
                 if (!state.newUserFirstName) {
 
                     return Object.assign({}, state, {
@@ -39082,7 +39080,6 @@ function userInfoState() {
     switch (action.type) {
         case _Actions.Actions.USER_INIT:
             {
-                debugger;
                 var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
                 if (!currentUser) {
 
@@ -39109,8 +39106,6 @@ function userInfoState() {
             }
         case _Actions.Actions.USER_DELETE_NOTICE:
             {
-
-                debugger;
 
                 var indexOfElement = -1;
                 var _allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
@@ -39175,7 +39170,6 @@ function logInState() {
     switch (action.type) {
         case _Actions.Actions.LOG_IN:
             {
-                debugger;
                 var emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
                 if (!emailRegex.test(state.email)) {
 
@@ -39334,8 +39328,6 @@ function newNotificationState() {
                 allNotifications.push(state);
                 window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
 
-                debugger;
-
                 return Object.assign({}, state, {
                     message: 'Your notification is begin added!'
                 });
@@ -39382,8 +39374,6 @@ function searchState() {
     switch (action.type) {
         case _Actions.Actions.SEARCH_INIT:
             {
-
-                debugger;
 
                 var allNotifications = window.sessionStorage.getItem('AllNotifications');
                 if (!allNotifications) {
@@ -39979,7 +39969,6 @@ var RegisterForm = function (_Component) {
     _createClass(RegisterForm, [{
         key: 'render',
         value: function render() {
-            console.log(this.props);
 
             return _react2.default.createElement(
                 'form',
@@ -40185,9 +40174,6 @@ var PersonalCabinet = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log('PersonalCabinet:');
-            console.log(this.props);
-
             if (this.props.currentUser.isCanRedirect) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
             }
@@ -40383,7 +40369,6 @@ var LigIn = function (_Component) {
     _createClass(LigIn, [{
         key: 'render',
         value: function render() {
-            console.log(this.props);
 
             if (this.props.logIn.isCanRedirect) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/user' });
@@ -40550,7 +40535,6 @@ var AddNotificationForm = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.props);
 
             return _react2.default.createElement(
                 'form',
@@ -40760,8 +40744,6 @@ var Search = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log('Search:');
-            console.log(this.props);
 
             /*create pages list*/
             var pageCount = Math.ceil(this.props.resultsCount / 5);

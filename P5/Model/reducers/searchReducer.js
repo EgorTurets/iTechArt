@@ -18,8 +18,6 @@ export default function searchState(state = initialState, action) {
     switch (action.type) {
         case Actions.SEARCH_INIT: {
 
-            debugger;
-
             let allNotifications = window.sessionStorage.getItem('AllNotifications');
             if (!allNotifications) {
                 allNotifications = [{

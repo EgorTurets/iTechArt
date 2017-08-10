@@ -83,8 +83,6 @@ export default function newNotificationState(state = initialState, action) {
             allNotifications.push(state);
             window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
 
-            debugger;
-
             return Object.assign({}, state, {
                 message: 'Your notification is begin added!'
             })

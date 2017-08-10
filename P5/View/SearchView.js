@@ -8,8 +8,6 @@ export default class Search extends Component {
     }
 
     render() {
-        console.log('Search:');
-        console.log(this.props);
 
         /*create pages list*/
         let pageCount = Math.ceil(this.props.resultsCount / 5);

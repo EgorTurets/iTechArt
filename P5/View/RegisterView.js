@@ -3,7 +3,6 @@ import { Redirect } from 'react-router'
 
 export default class RegisterForm extends Component {
     render() {
-        console.log(this.props);
 
         return(
             <form className="form-inner-center">
