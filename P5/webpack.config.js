@@ -1,8 +1,10 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
+        // "../../client/index.js?http://localhost:8080/",
         'webpack/hot/only-dev-server',
         './js/App.js'
     ],
@@ -22,9 +24,10 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: __dirname + '/dist',
+        contentBase: __dirname,
         port: 8080,
-        hot: true
+        hot: true,
+        historyApiFallback: true
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin()
