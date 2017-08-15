@@ -35,7 +35,8 @@ export default function userInfoState(state = initialState, action) {
                 firstName: currentUser.firstName,
                 lastName: currentUser.lastName,
                 email: currentUser.email,
-                notifications: currentUserNotifications
+                notifications: currentUserNotifications,
+                canRedirect: false
             })
         }
         case Actions.USER_DELETE_NOTICE: {

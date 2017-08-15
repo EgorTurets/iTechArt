@@ -4,12 +4,23 @@ import NotificationInfo from "./NotificationBoxView";
 
 export default class PersonalCabinet extends Component {
     componentDidMount() {
+        debugger;
         if(this.props.currentUser.id === 0) {
             this.props.UserInit();
         }
     }
 
+    componentWillMount() {
+        debugger;
+    }
+
+    componentWillUnmount() {
+        debugger;
+    }
+
     render() {
+
+        debugger;
 
         if (this.props.currentUser.canRedirect) {
             return (<Redirect to="/login"/>)

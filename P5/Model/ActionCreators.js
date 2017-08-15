@@ -53,6 +53,9 @@ export function Register (event) {
 
 export function LogIn(event) {
 
+    debugger;
+    event.preventDefault();
+
     return {
         type: Actions.LOG_IN
     }

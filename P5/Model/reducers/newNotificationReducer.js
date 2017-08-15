@@ -36,7 +36,8 @@ export default function newNotificationState(state = initialState, action) {
 
             if(action.payload < 0) {
                 return Object.assign({}, state, {
-                    metric: 0
+                    metric: 0,
+                    message: "Metric can not be less than 0"
                 })
             }
             else {
@@ -54,7 +55,8 @@ export default function newNotificationState(state = initialState, action) {
         case Actions.NOTICE_PRICE_UPDATE: {
             if(action.payload < 0) {
                 return Object.assign({}, state, {
-                    price: 0
+                    price: 0,
+                    message: "Price can not be less than 0"
                 })
             }
             else {

@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1bade0ca8be9b4d9294b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "04fc5080bd6706d7ddae"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7070,6 +7070,9 @@ function Register(event) {
 //------Log In actions------
 
 function LogIn(event) {
+
+    debugger;
+    event.preventDefault();
 
     return {
         type: _Actions.Actions.LOG_IN
@@ -39160,7 +39163,8 @@ function userInfoState() {
                     firstName: currentUser.firstName,
                     lastName: currentUser.lastName,
                     email: currentUser.email,
-                    notifications: currentUserNotifications
+                    notifications: currentUserNotifications,
+                    canRedirect: false
                 });
             }
         case _Actions.Actions.USER_DELETE_NOTICE:
@@ -39341,7 +39345,8 @@ function newNotificationState() {
 
                 if (action.payload < 0) {
                     return Object.assign({}, state, {
-                        metric: 0
+                        metric: 0,
+                        message: "Metric can not be less than 0"
                     });
                 } else {
                     return Object.assign({}, state, {
@@ -39360,7 +39365,8 @@ function newNotificationState() {
             {
                 if (action.payload < 0) {
                     return Object.assign({}, state, {
-                        price: 0
+                        price: 0,
+                        message: "Price can not be less than 0"
                     });
                 } else {
                     return Object.assign({}, state, {
@@ -40222,14 +40228,27 @@ var PersonalCabinet = function (_Component) {
     _createClass(PersonalCabinet, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            debugger;
             if (this.props.currentUser.id === 0) {
                 this.props.UserInit();
             }
         }
     }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            debugger;
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            debugger;
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
+
+            debugger;
 
             if (this.props.currentUser.canRedirect) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
@@ -40413,18 +40432,35 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var LigIn = function (_Component) {
-    _inherits(LigIn, _Component);
+var LogIn = function (_Component) {
+    _inherits(LogIn, _Component);
 
-    function LigIn() {
-        _classCallCheck(this, LigIn);
+    function LogIn() {
+        _classCallCheck(this, LogIn);
 
-        return _possibleConstructorReturn(this, (LigIn.__proto__ || Object.getPrototypeOf(LigIn)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (LogIn.__proto__ || Object.getPrototypeOf(LogIn)).apply(this, arguments));
     }
 
-    _createClass(LigIn, [{
+    _createClass(LogIn, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            debugger;
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            debugger;
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            debugger;
+        }
+    }, {
         key: 'render',
         value: function render() {
+
+            debugger;
 
             if (this.props.logInState.canRedirect) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/user' });
@@ -40476,10 +40512,10 @@ var LigIn = function (_Component) {
         }
     }]);
 
-    return LigIn;
+    return LogIn;
 }(_react.Component);
 
-exports.default = LigIn;
+exports.default = LogIn;
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(11); if (makeExportsHot(module, __webpack_require__(1))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "LogInView.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))

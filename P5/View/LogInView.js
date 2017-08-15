@@ -1,8 +1,23 @@
 import React, {Component} from 'react'
 import { Redirect } from 'react-router-dom'
 
-export default class LigIn extends Component {
+export default class LogIn extends Component {
+    componentWillMount() {
+        debugger;
+
+    }
+
+    componentDidMount() {
+        debugger;
+    }
+
+    componentWillUnmount() {
+        debugger;
+    }
+
     render() {
+
+        debugger;
 
         if (this.props.logInState.canRedirect) {
             return (<Redirect to="/user"/>)
