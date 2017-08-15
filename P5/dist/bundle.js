@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "04fc5080bd6706d7ddae"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "eaf669b4592d349d63e6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -6029,6 +6029,7 @@ var Actions = exports.Actions = {
 
     USER_INIT: 'USER_INIT',
     USER_DELETE_NOTICE: 'USER_DELETE_NOTICE',
+    USER_LOG_OUT: 'USER_LOG_OUT',
 
     FORM_REGISTER: 'FORM_REGISTER',
     FORM_REGISTER_FNAME_UPDATE: 'FORM_REGISTER_FNAME_UPDATE',
@@ -6999,6 +7000,7 @@ exports.LogInEmailUpd = LogInEmailUpd;
 exports.LogInPassUpd = LogInPassUpd;
 exports.UserInit = UserInit;
 exports.Delete = Delete;
+exports.LogOut = LogOut;
 exports.SetProprietor = SetProprietor;
 exports.AddTitleUpdate = AddTitleUpdate;
 exports.AddDescriptionUpdate = AddDescriptionUpdate;
@@ -7074,8 +7076,35 @@ function LogIn(event) {
     debugger;
     event.preventDefault();
 
+    var message = void 0;
+    var canRedirect = false;
+    var emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(event.target.email.value)) {
+        message = 'Invalid Email!';
+    }
+    if (event.target.password.value.length < 8) {
+        message = 'Password must be longer than 8 characters!';
+    }
+
+    var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
+    for (var i = 0; i < allUsers.length; i++) {
+        if (allUsers[i].email === event.target.email.value && allUsers[i].password === event.target.password.value) {
+            var currentUser = allUsers[i];
+            window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            canRedirect = true;
+            break;
+        }
+    }
+    if (!canRedirect) {
+        message = 'Invalid email or password!';
+    }
+
     return {
-        type: _Actions.Actions.LOG_IN
+        type: _Actions.Actions.LOG_IN,
+        payload: {
+            message: message,
+            canRedirect: canRedirect
+        }
     };
 }
 
@@ -7109,6 +7138,14 @@ function Delete(event) {
     return {
         type: _Actions.Actions.USER_DELETE_NOTICE,
         payload: event.target.id
+    };
+}
+
+function LogOut() {
+    window.sessionStorage.removeItem('currentUser');
+
+    return {
+        type: _Actions.Actions.USER_LOG_OUT
     };
 }
 
@@ -39169,7 +39206,6 @@ function userInfoState() {
             }
         case _Actions.Actions.USER_DELETE_NOTICE:
             {
-
                 var indexOfElement = -1;
                 var _allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
                 for (var _i = 0; _i < _allNotifications.length; _i++) {
@@ -39197,8 +39233,21 @@ function userInfoState() {
                     notifications: _currentUserNotifications
                 });
             }
+        case _Actions.Actions.USER_LOG_OUT:
+            {
+
+                return Object.assign({}, state, {
+                    id: 0,
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    notifications: [],
+                    canRedirect: true
+                });
+            }
+        default:
+            return state;
     }
-    return state;
 }
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(11); if (makeExportsHot(module, __webpack_require__(1))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "userInfoReducer.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -39233,37 +39282,11 @@ function logInState() {
     switch (action.type) {
         case _Actions.Actions.LOG_IN:
             {
-                var emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-                if (!emailRegex.test(state.email)) {
-
-                    return Object.assign({}, state, {
-                        message: 'Invalid Email!'
-                    });
-                }
-                if (state.password.length < 8) {
-
-                    return Object.assign({}, state, {
-                        message: 'Password must be longer than 8 characters!'
-                    });
-                }
-
-                var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
-                for (var i = 0; i < allUsers.length; i++) {
-                    if (allUsers[i].email === state.email && allUsers[i].password === state.password) {
-                        var currentUser = allUsers[i];
-                        window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                        return Object.assign({}, state, {
-                            email: '',
-                            password: '',
-                            canRedirect: true
-                        });
-                    }
-                }
 
                 return Object.assign({}, state, {
                     password: '',
-                    message: 'Invalid email or password!'
+                    message: action.payload.message,
+                    canRedirect: action.payload.canRedirect
                 });
             }
         case _Actions.Actions.LOG_IN_EMAIL_UPDATE:
@@ -39278,6 +39301,14 @@ function logInState() {
 
                 return Object.assign({}, state, {
                     password: action.payload
+                });
+            }
+        case _Actions.Actions.USER_LOG_OUT:
+            {
+
+                return Object.assign({}, state, {
+                    email: '',
+                    canRedirect: false
                 });
             }
         default:
@@ -39438,54 +39469,6 @@ function searchState() {
         case _Actions.Actions.SEARCH_INIT:
             {
 
-                var allNotifications = window.sessionStorage.getItem('AllNotifications');
-                if (!allNotifications) {
-                    allNotifications = [{
-                        id: 1,
-                        title: 'Title-1',
-                        description: 'blah-blah-blau',
-                        metric: 100,
-                        address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
-                        price: 1000000
-                    }, {
-                        id: 2,
-                        title: 'Title-2',
-                        description: 'ysdf;kb sldgjlk lglrg  lg;gk;fg swghf;wfd',
-                        metric: 51245,
-                        address: 'rtynvfgf sosgl 5 lskg',
-                        price: 100000
-                    }, {
-                        id: 3,
-                        title: 'Title-3',
-                        description: 'blah-blah-blau',
-                        metric: 100,
-                        address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
-                        price: 1000000
-                    }, {
-                        id: 4,
-                        title: 'Title-4',
-                        description: 'ubaba-ubaba-ubaba',
-                        metric: 80,
-                        address: 'sosgl 5 lskg',
-                        price: 700000
-                    }, {
-                        id: 5,
-                        title: 'Title-5',
-                        description: 'blah-blah-blau',
-                        metric: 7510,
-                        address: '124 hful sosgl 5 lskg',
-                        price: 652000
-                    }, {
-                        id: 6,
-                        title: 'Title-6',
-                        description: 'blah-blah-blau',
-                        metric: 321,
-                        address: 'Txr Uyt 10 Ioma',
-                        price: 3210000
-                    }];
-                    window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
-                }
-
                 return state;
             }
         case _Actions.Actions.SEARCH:
@@ -39493,8 +39476,8 @@ function searchState() {
 
                 debugger;
 
-                var _allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-                var searchResults = _allNotifications.filter(function (item) {
+                var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+                var searchResults = allNotifications.filter(function (item) {
                     return item.price >= state.searchParams.minPrice && item.price <= state.searchParams.maxPrice && item.metric >= state.searchParams.minMetric && item.metric <= state.searchParams.maxMetric;
                 });
 
@@ -39685,7 +39668,7 @@ var MainLayout = function (_Component) {
                 allNotifications = [{
                     id: 1,
                     title: 'Title-1',
-                    description: 'blah-blah-blau',
+                    description: 'blah-blan-blau',
                     metric: 100,
                     address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
                     price: 1000000,
@@ -39821,11 +39804,11 @@ var MainLayout = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { id: 'content' },
-                            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _RegisterFormController2.default }),
+                            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _SearchController2.default }),
                             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/user', component: _CabinetController2.default }),
                             _react2.default.createElement(_reactRouterDom.Route, { path: '/user/add', component: _AddNotificationController2.default }),
                             _react2.default.createElement(_reactRouterDom.Route, { path: '/login', component: _LogInController2.default }),
-                            _react2.default.createElement(_reactRouterDom.Route, { path: '/search', component: _SearchController2.default })
+                            _react2.default.createElement(_reactRouterDom.Route, { path: '/register', component: _RegisterFormController2.default })
                         )
                     )
                 )
@@ -39892,6 +39875,16 @@ var TopMenu = function (_Component) {
                         _reactRouterDom.NavLink,
                         { exact: true, to: '/',
                             activeClassName: 'current_page_item' },
+                        'Search'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                        _reactRouterDom.NavLink,
+                        { exact: true, to: '/register',
+                            activeClassName: 'current_page_item' },
                         'Register'
                     )
                 ),
@@ -39913,16 +39906,6 @@ var TopMenu = function (_Component) {
                         { exact: true, to: '/login',
                             activeClassName: 'current_page_item' },
                         'Log In'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _reactRouterDom.NavLink,
-                        { to: '/search',
-                            activeClassName: 'current_page_item' },
-                        'Search'
                     )
                 )
             );
@@ -40175,7 +40158,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         UserInit: (0, _redux.bindActionCreators)(ActionCreators.UserInit, dispatch),
-        Delete: (0, _redux.bindActionCreators)(ActionCreators.Delete, dispatch)
+        Delete: (0, _redux.bindActionCreators)(ActionCreators.Delete, dispatch),
+        LogOut: (0, _redux.bindActionCreators)(ActionCreators.LogOut, dispatch)
     };
 }
 
@@ -40272,6 +40256,12 @@ var PersonalCabinet = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'log-out' },
+                    _react2.default.createElement('input', { type: 'button', className: 'button', value: 'Log Out',
+                        onClick: this.props.LogOut })
+                ),
                 _react2.default.createElement(
                     'ul',
                     { className: 'user-info-list' },

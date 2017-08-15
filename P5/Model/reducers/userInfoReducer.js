@@ -40,7 +40,6 @@ export default function userInfoState(state = initialState, action) {
             })
         }
         case Actions.USER_DELETE_NOTICE: {
-
             let indexOfElement = -1;
             let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
             for (let i = 0; i < allNotifications.length; i++) {
@@ -68,6 +67,19 @@ export default function userInfoState(state = initialState, action) {
                 notifications: currentUserNotifications
             })
         }
+        case Actions.USER_LOG_OUT: {
+
+            return Object.assign({}, state, {
+                id: 0,
+                firstName: '',
+                lastName: '',
+                email: '',
+                notifications: [],
+                canRedirect: true
+            })
+        }
+        default:
+            return state;
     }
-    return state;
+
 }

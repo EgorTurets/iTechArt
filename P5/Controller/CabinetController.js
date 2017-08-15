@@ -13,7 +13,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         UserInit: bindActionCreators(ActionCreators.UserInit, dispatch),
-        Delete: bindActionCreators(ActionCreators.Delete, dispatch)
+        Delete: bindActionCreators(ActionCreators.Delete, dispatch),
+        LogOut: bindActionCreators(ActionCreators.LogOut, dispatch)
     }
 }
 

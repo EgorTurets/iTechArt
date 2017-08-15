@@ -16,7 +16,7 @@ export default class MainLayout extends Component {
             allNotifications = [{
                 id: 1,
                 title: 'Title-1',
-                description: 'blah-blah-blau',
+                description: 'blah-blan-blau',
                 metric: 100,
                 address: 'fhsdklnsdpgjgpf sosgl 5 lskg',
                 price: 1000000,

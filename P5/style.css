@@ -406,6 +406,7 @@ h4 {
 	border-radius: 5px;
 	text-align: center;
 	padding: 5px 10px;
+	font-family: 'Arvo', serif;
 }
 
 .button:hover {
@@ -475,4 +476,9 @@ h4 {
 
 .search-form + div {
 	margin-left: 40px;
+}
+
+.log-out {
+	float: right;
+	margin-right: 40px;
 }

@@ -38,6 +38,10 @@ export default class PersonalCabinet extends Component {
 
         return(
             <div>
+                <div className="log-out">
+                    <input type="button" className="button" value="Log Out"
+                        onClick={this.props.LogOut}/>
+                </div>
                 <ul className="user-info-list">
                     <li>
                         <span>First Name: </span>

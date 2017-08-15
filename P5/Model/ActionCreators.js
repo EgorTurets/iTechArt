@@ -56,8 +56,36 @@ export function LogIn(event) {
     debugger;
     event.preventDefault();
 
+    let message;
+    let canRedirect = false;
+    let emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(event.target.email.value)) {
+        message = 'Invalid Email!'
+    }
+    if (event.target.password.value.length < 8) {
+        message = 'Password must be longer than 8 characters!'
+    }
+
+    let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
+    for(let i = 0; i < allUsers.length; i++) {
+        if ((allUsers[i].email === event.target.email.value) &&
+            (allUsers[i].password === event.target.password.value)) {
+            let currentUser = allUsers[i];
+            window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            canRedirect = true;
+            break;
+        }
+    }
+    if(!canRedirect) {
+        message = 'Invalid email or password!'
+    }
+
     return {
-        type: Actions.LOG_IN
+        type: Actions.LOG_IN,
+        payload: {
+            message,
+            canRedirect
+        }
     }
 }
 
@@ -95,6 +123,13 @@ export function Delete(event) {
     };
 }
 
+export function LogOut() {
+    window.sessionStorage.removeItem('currentUser');
+
+    return {
+        type: Actions.USER_LOG_OUT
+    }
+}
 
 //------Notice add actions------
 
