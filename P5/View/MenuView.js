@@ -6,6 +6,10 @@ export default class TopMenu extends Component {
 
         return (
             <ul>
+                <li><NavLink to="/search"
+                             activeClassName="current_page_item">
+                    Search
+                </NavLink></li>
                 <li><NavLink exact to="/"
                     activeClassName="current_page_item">
                     Register
@@ -17,10 +21,6 @@ export default class TopMenu extends Component {
                 <li><NavLink exact to="/login"
                     activeClassName="current_page_item">
                     Log In
-                </NavLink></li>
-                <li><NavLink to="/search"
-                    activeClassName="current_page_item">
-                    Search
                 </NavLink></li>
             </ul>
         )

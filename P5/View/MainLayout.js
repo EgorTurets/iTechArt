@@ -116,11 +116,11 @@ export default class MainLayout extends Component {
                     </div>
                     <div id="page">
                         <div id="content">
-                            <Route exact path="/" component={RegisterFormController}/>
+                            <Route exact path="/" component={SearchController}/>
                             <Route exact path="/user" component={CabinetController}/>
                             <Route path="/user/add" component={AddNotificationController}/>
                             <Route path="/login" component={LogInController}/>
-                            <Route path="/search" component={SearchController}/>
+                            <Route path="/register" component={RegisterFormController}/>
                         </div>
                     </div>
                 </div>
