@@ -63,25 +63,20 @@ export default function newNotificationState(state = initialState, action) {
                 })
             }
         }
+        case Actions.NOTICE_FOR_RENT_CHANGE : {
+
+            debugger;
+            return Object.assign({}, state, {
+                isForRent: action.payload
+            })
+        }
         case Actions.NOTICE_ADD: {
-            if (state.title.length === 0) {
+
+            if (action.payload.formIsValid === false || action.payload.addedSuccessfully === false) {
                 return Object.assign({}, state, {
-                    message: 'The title can not be empty!'
+                    message: action.payload.message
                 })
             }
-            if (state.address.length === 0) {
-                return Object.assign({}, state, {
-                    message: 'The address can not be empty!'
-                })
-            }
-
-
-            let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-
-
-            let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-            allNotifications.push(state);
-            window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
 
             return Object.assign({}, state, {
                 message: 'Your notification is begin added!'
