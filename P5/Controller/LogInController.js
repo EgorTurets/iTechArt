@@ -6,8 +6,7 @@ import LogIn from '../View/LogInView'
 
 function mapStateToProps(state) {
     return {
-        logIn : state.logInState,
-        test: state.newUserState
+        logInState : state.logInState,
     }
 }
 

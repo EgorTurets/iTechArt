@@ -4,7 +4,7 @@ import { Actions } from '../Actions'
 const initialState = {
     email: '',
     password: '',
-    isCanRedirect: false
+    canRedirect: false
 };
 
 export default function logInState(state = initialState, action) {
@@ -34,7 +34,7 @@ export default function logInState(state = initialState, action) {
                     return Object.assign({}, state, {
                         email: '',
                         password: '',
-                        isCanRedirect: true
+                        canRedirect: true
                     })
                 }
             }

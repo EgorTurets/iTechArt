@@ -143,10 +143,57 @@ export function AddPriceUpdate(event) {
     }
 }
 
-export function AddNotice(event) {
+export function AddForRentChange(event) {
 
     return {
-        type: Actions.NOTICE_ADD
+        type: Actions.NOTICE_FOR_RENT_CHANGE,
+        payload: event.target.value
+    }
+}
+
+export function AddNotice(event) {
+
+    debugger;
+
+    event.preventDefault();
+    let formIsValid = false;
+    let addedSuccessfully = false;
+    let message;
+
+    if (event.target.title.value === 0) {
+        message = 'The title can not be empty!'
+    }
+    if (event.target.address.value === 0) {
+        message = 'The address can not be empty!'
+    }
+    formIsValid = true;
+
+    if (formIsValid) {
+        let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+        let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+
+        let newNoticeForm = {
+            id: allNotifications[allNotifications.length-1].id + 1,
+            title: event.target.title.value,
+            description: event.target.description.value,
+            metric: event.target.metric.value,
+            address: event.target.address.value,
+            price: event.target.price.value,
+            proprietor: currentUser.id
+        };
+
+        allNotifications.push(newNoticeForm);
+        window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
+        addedSuccessfully = true;
+    }
+
+    return {
+        type: Actions.NOTICE_ADD,
+        payload: {
+            formIsValid,
+            addedSuccessfully,
+            message
+        }
     }
 }
 
@@ -203,5 +250,13 @@ export function SearchPageChange(event) {
     return {
         type: Actions.SEARCH_PAGE_CHANGE,
         payload: +event.target.innerText
+    }
+}
+
+export function SearchFirRentChange(event) {
+
+    return {
+        type: Actions.SEARCH_FOR_RENT_CHANGE,
+        payload: event.target.value
     }
 }

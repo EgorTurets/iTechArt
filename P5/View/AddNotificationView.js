@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { findDOMNode } from 'react-dom'
 import { Redirect } from 'react-router'
 
 export default class AddNotificationForm extends Component {
@@ -8,10 +9,16 @@ export default class AddNotificationForm extends Component {
         }
     }
 
+    componentDidMount() {
+        debugger;
+        let elem = findDOMNode(this.refs.radioNotRent);
+        elem.checked = 'checked';
+    }
+
     render() {
 
         return(
-            <form className="form-inner-center">
+            <form className="form-inner-center" onSubmit={this.props.AddNotice}>
                 <ul className="input-form-list">
                     <li>
                         <div>Title: </div>
@@ -55,12 +62,27 @@ export default class AddNotificationForm extends Component {
                             onChange={this.props.PriceUpdate}/>
                     </li>
                 </ul>
+                <div>
+                    <input type="radio" name='isForRent'
+                           id="forRent"
+                           value={true}
+                           onClick={this.props.ForRentChange}/>
+                    For Rent
+                </div>
+                <div>
+                    <input type="radio" name='isForRent'
+                           id="notForRent"
+                           value={false}
+                           onClick={this.props.ForRentChange}
+                           ref="radioNotRent"/>
+                    Housing needs
+                </div>
                 <p
                     id="register-message"
                     className="message-paragraph">
                     {this.props.newNotification.message}
                 </p>
-                <div className="button" onClick={this.props.AddNotice}>Register</div>
+                <input type="submit" className="button" value="Add"/>
             </form>
         )
     }

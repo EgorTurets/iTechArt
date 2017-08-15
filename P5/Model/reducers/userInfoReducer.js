@@ -7,7 +7,7 @@ const initialState = {
     lastName: '',
     email: '',
     notifications: [],
-    isCanRedirect: false
+    canRedirect: false
 };
 
 export default function userInfoState(state = initialState, action) {
@@ -18,7 +18,7 @@ export default function userInfoState(state = initialState, action) {
             if(!currentUser) {
 
                 return Object.assign({}, state, {
-                    isCanRedirect: true
+                    canRedirect: true
                 })
             }
 
