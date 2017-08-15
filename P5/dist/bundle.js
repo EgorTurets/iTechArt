@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "eaf669b4592d349d63e6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9d2c627fc697cbd7cbe7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7128,16 +7128,68 @@ function LogInPassUpd(event) {
 
 function UserInit(event) {
 
+    var canRedirect = false;
+    var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+    if (!currentUser) {
+
+        return {
+            type: _Actions.Actions.USER_INIT,
+            payload: { canRedirect: true }
+        };
+    }
+
+    var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+    var currentUserNotifications = [];
+    for (var i = 0; i < allNotifications.length; i++) {
+        if (+allNotifications[i].proprietor === currentUser.id) {
+            currentUserNotifications.push(allNotifications[i]);
+        }
+    }
+
     return {
-        type: _Actions.Actions.USER_INIT
+        type: _Actions.Actions.USER_INIT,
+        payload: {
+            canRedirect: canRedirect,
+            currentUser: currentUser,
+            currentUserNotifications: currentUserNotifications
+        }
     };
 }
 
 function Delete(event) {
 
+    var elementNotFound = false;
+    var successfullyDeleted = false;
+    var indexOfElement = -1;
+    var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+    for (var i = 0; i < allNotifications.length; i++) {
+        if (allNotifications[i].id === +event.target.id) {
+            indexOfElement = i;
+            break;
+        }
+    }
+    if (indexOfElement === -1) {
+        elementNotFound = true;
+    }
+
+    allNotifications.splice(indexOfElement, 1);
+    window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
+    successfullyDeleted = true;
+
+    var currentUserNotifications = [];
+    for (var _i = 0; _i < allNotifications.length; _i++) {
+        if (+allNotifications[_i].proprietor === state.id) {
+            currentUserNotifications.push(allNotifications[_i]);
+        }
+    }
+
     return {
         type: _Actions.Actions.USER_DELETE_NOTICE,
-        payload: event.target.id
+        payload: {
+            elementNotFound: elementNotFound,
+            successfullyDeleted: successfullyDeleted,
+            currentUserNotifications: currentUserNotifications
+        }
     };
 }
 
@@ -39179,58 +39231,36 @@ function userInfoState() {
     switch (action.type) {
         case _Actions.Actions.USER_INIT:
             {
-                var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-                if (!currentUser) {
 
+                if (action.payload.canRedirect) {
                     return Object.assign({}, state, {
                         canRedirect: true
                     });
                 }
 
-                var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-                var currentUserNotifications = [];
-                for (var i = 0; i < allNotifications.length; i++) {
-                    if (+allNotifications[i].proprietor === currentUser.id) {
-                        currentUserNotifications.push(allNotifications[i]);
-                    }
-                }
-
                 return Object.assign({}, state, {
-                    id: currentUser.id,
-                    firstName: currentUser.firstName,
-                    lastName: currentUser.lastName,
-                    email: currentUser.email,
-                    notifications: currentUserNotifications,
+                    id: action.payload.currentUser.id,
+                    firstName: action.payload.currentUser.firstName,
+                    lastName: action.payload.currentUser.lastName,
+                    email: action.payload.currentUser.email,
+                    notifications: action.payload.currentUserNotifications,
                     canRedirect: false
                 });
             }
         case _Actions.Actions.USER_DELETE_NOTICE:
             {
-                var indexOfElement = -1;
-                var _allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-                for (var _i = 0; _i < _allNotifications.length; _i++) {
-                    if (_allNotifications[_i].id === +action.payload) {
-                        indexOfElement = _i;
-                        break;
-                    }
+
+                var message = void 0;
+                if (action.payload.elementNotFound) {
+                    message = 'Notification not found';
                 }
-                if (indexOfElement === -1) {
-
-                    return state;
-                }
-
-                _allNotifications.splice(indexOfElement, 1);
-                window.sessionStorage.setItem('AllNotifications', JSON.stringify(_allNotifications));
-
-                var _currentUserNotifications = [];
-                for (var _i2 = 0; _i2 < _allNotifications.length; _i2++) {
-                    if (+_allNotifications[_i2].proprietor === state.id) {
-                        _currentUserNotifications.push(_allNotifications[_i2]);
-                    }
+                if (!action.payload.successfullyDeleted) {
+                    message = 'Error during deleting';
                 }
 
                 return Object.assign({}, state, {
-                    notifications: _currentUserNotifications
+                    message: message,
+                    notifications: action.payload.currentUserNotifications
                 });
             }
         case _Actions.Actions.USER_LOG_OUT:

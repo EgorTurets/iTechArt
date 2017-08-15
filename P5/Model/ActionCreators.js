@@ -110,16 +110,68 @@ export function LogInPassUpd(event) {
 
 export function UserInit (event) {
 
+    let canRedirect = false;
+    let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+    if(!currentUser) {
+
+        return {
+            type: Actions.USER_INIT,
+            payload: { canRedirect: true }
+        }
+    }
+
+    let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+    let currentUserNotifications = [];
+    for (let i = 0; i < allNotifications.length; i++) {
+        if(+allNotifications[i].proprietor === currentUser.id) {
+            currentUserNotifications.push(allNotifications[i])
+        }
+    }
+
     return {
-        type: Actions.USER_INIT
+        type: Actions.USER_INIT,
+        payload: {
+            canRedirect,
+            currentUser,
+            currentUserNotifications
+        }
     };
 }
 
 export function Delete(event) {
 
+    let elementNotFound = false;
+    let successfullyDeleted = false;
+    let indexOfElement = -1;
+    let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+    for (let i = 0; i < allNotifications.length; i++) {
+        if(allNotifications[i].id === +event.target.id) {
+            indexOfElement = i;
+            break;
+        }
+    }
+    if (indexOfElement === -1) {
+        elementNotFound = true;
+    }
+
+    allNotifications.splice(indexOfElement, 1);
+    window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
+    successfullyDeleted = true;
+
+    let currentUserNotifications = [];
+    for (let i = 0; i < allNotifications.length; i++) {
+        if(+allNotifications[i].proprietor === state.id) {
+            currentUserNotifications.push(allNotifications[i])
+        }
+    }
+
     return {
         type: Actions.USER_DELETE_NOTICE,
-        payload: event.target.id
+        payload: {
+            elementNotFound,
+            successfullyDeleted,
+            currentUserNotifications
+        }
     };
 }
 

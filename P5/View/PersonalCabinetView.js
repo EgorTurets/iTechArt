@@ -8,23 +8,14 @@ export default class PersonalCabinet extends Component {
         if(this.props.currentUser.id === 0) {
             this.props.UserInit();
         }
-    }
-
-    componentWillMount() {
-        debugger;
-    }
-
-    componentWillUnmount() {
-        debugger;
+        if (this.props.currentUser.canRedirect) {
+            return (<Redirect to="/login"/>)
+        }
     }
 
     render() {
 
         debugger;
-
-        if (this.props.currentUser.canRedirect) {
-            return (<Redirect to="/login"/>)
-        }
 
         let listOfNotices = this.props.currentUser.notifications.map((notice) =>
             <li key={`notice-${notice.id}`} className="notification-box">
