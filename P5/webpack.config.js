@@ -4,9 +4,8 @@ var path = require('path');
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
-        // "../../client/index.js?http://localhost:8080/",
         'webpack/hot/only-dev-server',
-        './js/App.js'
+        './src/Common/App.js'
     ],
     module: {
         loaders: [{
@@ -16,7 +15,7 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: [/*"",*/ ".js", ".jsx"]
+        extensions: [ ".js", ".jsx"]
     },
     output: {
         path: __dirname + '/dist',
