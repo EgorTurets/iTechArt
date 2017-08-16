@@ -15,7 +15,9 @@ export default function userInfoState(state = initialState, action) {
     switch (action.type) {
         case Actions.USER_INIT: {
 
-            if(action.payload.canRedirect) {
+            debugger;
+
+            if(action.payload.unknownUser) {
                 return Object.assign({}, state, {
                     canRedirect: true
                 })

@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9d2c627fc697cbd7cbe7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7d183800cbaa66c16ccc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7062,10 +7062,91 @@ function ConfirmUpdate(event) {
 }
 
 function Register(event) {
+    event.preventDefault();
+
+    var message = void 0;
+    var isValidForm = false;
+    var isSuccessfullyAdded = false;
+
+    if (!event.target.firstName.value) {
+
+        return {
+            type: _Actions.Actions.FORM_REGISTER,
+            payload: {
+                message: 'Invalid first name!',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: isSuccessfullyAdded
+            }
+        };
+    }
+    if (!event.target.lastName.value) {
+
+        return {
+            type: _Actions.Actions.FORM_REGISTER,
+            payload: {
+                message: 'Invalid last name!',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: isSuccessfullyAdded
+            }
+        };
+    }
+
+    var emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(event.target.email.value)) {
+
+        return {
+            type: _Actions.Actions.FORM_REGISTER,
+            payload: {
+                message: 'Invalid Email!',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: isSuccessfullyAdded
+            }
+        };
+    }
+    if (event.target.password.value.length < 8) {
+
+        return {
+            type: _Actions.Actions.FORM_REGISTER,
+            payload: {
+                message: 'Password must be longer than 8 characters!',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: isSuccessfullyAdded
+            }
+        };
+    }
+    if (event.target.password.value !== event.target.confirm.value) {
+
+        return {
+            type: _Actions.Actions.FORM_REGISTER,
+            payload: {
+                message: 'Password is not confirmed!',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: isSuccessfullyAdded
+            }
+        };
+    }
+
+    isValidForm = true;
+    var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
+
+    var newUser = {
+        id: +allUsers[allUsers.length - 1].id + 1,
+        firstName: event.target.firstName.value,
+        lastName: event.target.lastName.value,
+        email: event.target.email.value,
+        password: event.target.password.value
+    };
+    allUsers.push(newUser);
+    window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
+    isSuccessfullyAdded = true;
 
     return {
         type: _Actions.Actions.FORM_REGISTER,
-        payload: '/user'
+        payload: {
+            message: 'All right',
+            isValidForm: isValidForm,
+            isSuccessfullyAdded: isSuccessfullyAdded
+        }
     };
 }
 
@@ -7128,15 +7209,18 @@ function LogInPassUpd(event) {
 
 function UserInit(event) {
 
-    var canRedirect = false;
+    debugger;
+
+    var unknownUser = true;
     var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
     if (!currentUser) {
 
         return {
             type: _Actions.Actions.USER_INIT,
-            payload: { canRedirect: true }
+            payload: { unknownUser: unknownUser }
         };
     }
+    unknownUser = false;
 
     var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
     var currentUserNotifications = [];
@@ -7149,7 +7233,7 @@ function UserInit(event) {
     return {
         type: _Actions.Actions.USER_INIT,
         payload: {
-            canRedirect: canRedirect,
+            unknownUser: unknownUser,
             currentUser: currentUser,
             currentUserNotifications: currentUserNotifications
         }
@@ -39119,60 +39203,31 @@ function newUserState() {
             });break;
         case _Actions.Actions.FORM_REGISTER:
             {
-
-                if (!state.newUserFirstName) {
-
-                    return Object.assign({}, state, {
-                        message: 'Invalid first name!'
-                    });
-                }
-                if (!state.newUserLastName) {
+                if (!action.payload.isValidForm) {
 
                     return Object.assign({}, state, {
-                        message: 'Invalid last name!'
-                    });
-                }
-
-                var emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-                if (!emailRegex.test(state.newUserEmail)) {
-
-                    return Object.assign({}, state, {
-                        message: 'Invalid Email!'
-                    });
-                }
-                if (state.newUserPassword.length < 8) {
-
-                    return Object.assign({}, state, {
-                        message: 'Password must be longer than 8 characters!'
-                    });
-                }
-                if (state.newUserPassword !== state.newUserConfirm) {
-
-                    return Object.assign({}, state, {
-                        message: 'Password is not confirmed!'
-                    });
-                } else {
-                    var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
-
-                    var newUser = {
-                        id: +allUsers[allUsers.length - 1].id + 1,
-                        firstName: state.newUserFirstName,
-                        lastName: state.newUserLastName,
-                        email: state.newUserEmail,
-                        password: state.newUserPassword
-                    };
-                    allUsers.push(newUser);
-                    window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
-
-                    return Object.assign({}, state, {
-                        newUserFirstName: '',
-                        newUserLastName: '',
-                        newUserEmail: '',
                         newUserPassword: '',
                         newUserConfirm: '',
-                        message: 'Account was created!'
+                        message: action.payload.message
                     });
                 }
+                if (!action.payload.isSuccessfullyAdded) {
+
+                    return Object.assign({}, state, {
+                        newUserPassword: '',
+                        newUserConfirm: '',
+                        message: 'Error during registration. Please try again later.'
+                    });
+                }
+
+                return Object.assign({}, state, {
+                    newUserFirstName: '',
+                    newUserLastName: '',
+                    newUserEmail: '',
+                    newUserPassword: '',
+                    newUserConfirm: '',
+                    message: 'Account was created!'
+                });
             }
         default:
             return state;
@@ -39232,7 +39287,9 @@ function userInfoState() {
         case _Actions.Actions.USER_INIT:
             {
 
-                if (action.payload.canRedirect) {
+                debugger;
+
+                if (action.payload.unknownUser) {
                     return Object.assign({}, state, {
                         canRedirect: true
                     });
@@ -40048,7 +40105,7 @@ var RegisterForm = function (_Component) {
 
             return _react2.default.createElement(
                 'form',
-                { className: 'form-inner-center' },
+                { className: 'form-inner-center', onSubmit: this.props.Register },
                 _react2.default.createElement(
                     'ul',
                     { className: 'input-form-list' },
@@ -40061,7 +40118,7 @@ var RegisterForm = function (_Component) {
                             'First Name: '
                         ),
                         _react2.default.createElement('input', {
-                            id: 'first-name',
+                            id: 'firstName',
                             type: 'text',
                             value: this.props.newUser.firstName,
                             onChange: this.props.FirstNameUpdate })
@@ -40075,7 +40132,7 @@ var RegisterForm = function (_Component) {
                             'Last Name: '
                         ),
                         _react2.default.createElement('input', {
-                            id: 'last-name',
+                            id: 'lastName',
                             type: 'text',
                             value: this.props.newUser.lastName,
                             onChange: this.props.LastNameUpdate })
@@ -40130,11 +40187,7 @@ var RegisterForm = function (_Component) {
                         className: 'message-paragraph' },
                     this.props.newUser.message
                 ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'button', onClick: this.props.Register },
-                    'Register'
-                )
+                _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Register' })
             );
         }
     }]);
@@ -40240,22 +40293,12 @@ var PersonalCabinet = function (_Component) {
     }
 
     _createClass(PersonalCabinet, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
             debugger;
             if (this.props.currentUser.id === 0) {
                 this.props.UserInit();
             }
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            debugger;
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            debugger;
         }
     }, {
         key: 'render',
@@ -40462,21 +40505,6 @@ var LogIn = function (_Component) {
     }
 
     _createClass(LogIn, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            debugger;
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            debugger;
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            debugger;
-        }
-    }, {
         key: 'render',
         value: function render() {
 

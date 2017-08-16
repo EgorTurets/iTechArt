@@ -5,12 +5,12 @@ export default class RegisterForm extends Component {
     render() {
 
         return(
-            <form className="form-inner-center">
+            <form className="form-inner-center" onSubmit={this.props.Register}>
                 <ul className="input-form-list">
                     <li>
                         <div>First Name: </div>
                         <input
-                            id="first-name"
+                            id="firstName"
                             type="text"
                             value={this.props.newUser.firstName}
                             onChange={this.props.FirstNameUpdate}/>
@@ -18,7 +18,7 @@ export default class RegisterForm extends Component {
                     <li>
                         <div>Last Name: </div>
                         <input
-                            id="last-name"
+                            id="lastName"
                             type="text"
                             value={this.props.newUser.lastName}
                             onChange={this.props.LastNameUpdate}/>
@@ -53,7 +53,7 @@ export default class RegisterForm extends Component {
                     className="message-paragraph">
                     {this.props.newUser.message}
                 </p>
-                <div className="button" onClick={this.props.Register}>Register</div>
+                <input type="submit" className="button" value="Register"/>
             </form>
         )
     }

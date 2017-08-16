@@ -3,19 +3,20 @@ import { NavLink, Redirect } from 'react-router-dom'
 import NotificationInfo from "./NotificationBoxView";
 
 export default class PersonalCabinet extends Component {
-    componentDidMount() {
+    componentWillMount() {
         debugger;
         if(this.props.currentUser.id === 0) {
             this.props.UserInit();
-        }
-        if (this.props.currentUser.canRedirect) {
-            return (<Redirect to="/login"/>)
         }
     }
 
     render() {
 
         debugger;
+
+        if (this.props.currentUser.canRedirect) {
+            return (<Redirect to="/login"/>)
+        }
 
         let listOfNotices = this.props.currentUser.notifications.map((notice) =>
             <li key={`notice-${notice.id}`} className="notification-box">

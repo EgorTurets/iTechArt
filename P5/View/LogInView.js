@@ -2,18 +2,6 @@ import React, {Component} from 'react'
 import { Redirect } from 'react-router-dom'
 
 export default class LogIn extends Component {
-    componentWillMount() {
-        debugger;
-
-    }
-
-    componentDidMount() {
-        debugger;
-    }
-
-    componentWillUnmount() {
-        debugger;
-    }
 
     render() {
 

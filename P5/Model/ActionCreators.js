@@ -42,11 +42,92 @@ export function ConfirmUpdate (event) {
 }
 
 export function Register (event) {
+    event.preventDefault();
+
+    let message;
+    let isValidForm = false;
+    let isSuccessfullyAdded = false;
+
+    if(!event.target.firstName.value) {
+
+        return {
+            type: Actions.FORM_REGISTER,
+            payload: {
+                message: 'Invalid first name!',
+                isValidForm,
+                isSuccessfullyAdded
+            }
+        }
+    }
+    if(!event.target.lastName.value) {
+
+        return {
+            type: Actions.FORM_REGISTER,
+            payload: {
+                message: 'Invalid last name!',
+                isValidForm,
+                isSuccessfullyAdded
+            }
+        }
+    }
+
+    let emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(event.target.email.value)) {
+
+        return {
+            type: Actions.FORM_REGISTER,
+            payload: {
+                message: 'Invalid Email!',
+                isValidForm,
+                isSuccessfullyAdded
+            }
+        }
+    }
+    if (event.target.password.value.length < 8) {
+
+        return {
+            type: Actions.FORM_REGISTER,
+            payload: {
+                message: 'Password must be longer than 8 characters!',
+                isValidForm,
+                isSuccessfullyAdded
+            }
+        }
+    }
+    if (event.target.password.value !== event.target.confirm.value) {
+
+        return {
+            type: Actions.FORM_REGISTER,
+            payload: {
+                message: 'Password is not confirmed!',
+                isValidForm,
+                isSuccessfullyAdded
+            }
+        }
+    }
+
+    isValidForm = true;
+    let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
+
+    let newUser = {
+        id: +allUsers[allUsers.length - 1].id + 1,
+        firstName: event.target.firstName.value,
+        lastName: event.target.lastName.value,
+        email: event.target.email.value,
+        password: event.target.password.value
+    };
+    allUsers.push(newUser);
+    window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
+    isSuccessfullyAdded = true;
 
     return {
         type: Actions.FORM_REGISTER,
-        payload: '/user'
-    };
+        payload: {
+            message: 'All right',
+            isValidForm,
+            isSuccessfullyAdded
+        }
+    }
 }
 
 //------Log In actions------
@@ -110,15 +191,18 @@ export function LogInPassUpd(event) {
 
 export function UserInit (event) {
 
-    let canRedirect = false;
+    debugger;
+
+    let unknownUser = true;
     let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
     if(!currentUser) {
 
         return {
             type: Actions.USER_INIT,
-            payload: { canRedirect: true }
+            payload: { unknownUser: unknownUser }
         }
     }
+    unknownUser = false;
 
     let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
     let currentUserNotifications = [];
@@ -131,7 +215,7 @@ export function UserInit (event) {
     return {
         type: Actions.USER_INIT,
         payload: {
-            canRedirect,
+            unknownUser,
             currentUser,
             currentUserNotifications
         }

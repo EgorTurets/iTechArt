@@ -52,61 +52,31 @@ export default function newUserState(state = initialState, action) {
                 newUserConfirm: action.payload
             }); break;
         case Actions.FORM_REGISTER:{
-
-            if(!state.newUserFirstName) {
-
-                return Object.assign({}, state, {
-                    message: 'Invalid first name!'
-                });
-            }
-            if(!state.newUserLastName) {
+            if(!action.payload.isValidForm) {
 
                 return Object.assign({}, state, {
-                    message: 'Invalid last name!'
-                });
-            }
-
-            let emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-            if (!emailRegex.test(state.newUserEmail)) {
-
-                return Object.assign({}, state, {
-                    message: 'Invalid Email!'
-                });
-            }
-            if (state.newUserPassword.length < 8) {
-
-                return Object.assign({}, state, {
-                    message: 'Password must be longer than 8 characters!'
-                })
-            }
-            if (state.newUserPassword !== state.newUserConfirm) {
-
-                return Object.assign({}, state, {
-                    message: 'Password is not confirmed!'
-                })
-            }
-            else {
-                let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
-
-                let newUser = {
-                    id: +allUsers[allUsers.length-1].id + 1,
-                    firstName: state.newUserFirstName,
-                    lastName: state.newUserLastName,
-                    email: state.newUserEmail,
-                    password: state.newUserPassword
-                };
-                allUsers.push(newUser);
-                window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
-
-                return Object.assign({}, state, {
-                    newUserFirstName: '',
-                    newUserLastName: '',
-                    newUserEmail: '',
                     newUserPassword: '',
                     newUserConfirm: '',
-                    message: 'Account was created!'
+                    message: action.payload.message
                 })
             }
+            if(!action.payload.isSuccessfullyAdded) {
+
+                return Object.assign({}, state, {
+                    newUserPassword: '',
+                    newUserConfirm: '',
+                    message: 'Error during registration. Please try again later.'
+                })
+            }
+
+            return Object.assign({}, state, {
+                newUserFirstName: '',
+                newUserLastName: '',
+                newUserEmail: '',
+                newUserPassword: '',
+                newUserConfirm: '',
+                message: 'Account was created!'
+            })
         }
         default:
             return state;
