@@ -356,6 +356,7 @@ export function AddNotice(event) {
             metric: event.target.metric.value,
             address: event.target.address.value,
             price: event.target.price.value,
+            isForRent: event.target.isForRent.value === 'true',
             proprietor: currentUser.id
         };
 
@@ -377,6 +378,8 @@ export function AddNotice(event) {
 //------Search actions------
 
 export function SearchInit() {
+
+
 
     return {
         type: Actions.SEARCH_INIT
@@ -416,9 +419,27 @@ export function SearchMaxMetricUpdate(event) {
 }
 
 export function SearchNotifications(event) {
+    event.preventDefault();
+
+    debugger;
+    let isForRent = event.target.isForRent.value === 'true';
+
+    let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+    let searchResults = allNotifications.filter((item) => {
+        return ((item.price >= +event.target.minPrice.value) && (item.price <= +event.target.maxPrice.value) &&
+            (item.metric >= +event.target.minMetric.value) && (item.metric <= +event.target.maxMetric.value) &&
+            (item.isForRent === isForRent))
+    });
+
+    window.sessionStorage.setItem('SearchResults', JSON.stringify(searchResults));
+    let firstPartOfResults = searchResults.slice(0, 5);
 
     return {
         type: Actions.SEARCH,
+        payload: {
+            firstPartOfResults,
+            resultsCount: searchResults.length
+        }
     }
 }
 
@@ -430,7 +451,7 @@ export function SearchPageChange(event) {
     }
 }
 
-export function SearchFirRentChange(event) {
+export function SearchForRentChange(event) {
 
     return {
         type: Actions.SEARCH_FOR_RENT_CHANGE,

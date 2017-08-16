@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+import { findDOMNode } from 'react-dom'
 import NotificationInfo from "./NotificationBoxView";
 
 export default class Search extends Component {
     componentDidMount() {
         this.props.SearchInit();
+
+        let elem = findDOMNode(this.refs.radioNotRent);
+        elem.checked = 'checked';
     }
 
     render() {
@@ -13,7 +16,7 @@ export default class Search extends Component {
         let pageCount = Math.ceil(this.props.resultsCount / 5);
         let pages = [];
         for (let i = 1; i <= pageCount; i++) {
-            pages.push(<div key={`pageLink-${i}`} className="button page-link" onClick={this.props.PageChange}>
+            pages.push(<div key={`pageLink-${i}`} className={i === this.props.currentPage? "button button page-link active-page" : "button page-link"} onClick={this.props.PageChange}>
                 {i}
             </div>)
         }
@@ -25,7 +28,7 @@ export default class Search extends Component {
 
         return(
             <div>
-                <form className="form-inner-center search-form">
+                <form className="form-inner-center search-form" onSubmit={this.props.Search}>
                     <label>Min Metric: </label>
                     <input
                         id="minMetric"
@@ -55,8 +58,24 @@ export default class Search extends Component {
                         className="search-input"
                         value={this.props.searchParams.maxPrice}
                         onChange={this.props.MaxPriceUpdate}/>
-
-                    <div className="button" onClick={this.props.Search}>Search</div>
+                    <div>
+                        <div className="radio-button-box">
+                            <input type="radio" name='isForRent'
+                                   id="forRent"
+                                   value={true}
+                                   onClick={this.props.ForRentChange}/>
+                            For Rent
+                        </div>
+                        <div className="radio-button-box">
+                            <input type="radio" name='isForRent'
+                                   id="notForRent"
+                                   value={false}
+                                   onClick={this.props.ForRentChange}
+                                   ref="radioNotRent"/>
+                            Housing needs
+                        </div>
+                    </div>
+                    <input type="submit" className="button" value="Search"/>
                 </form>
                 <div>Results: </div>
                 <ul>{listOfNotices}</ul>

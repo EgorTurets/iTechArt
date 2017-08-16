@@ -482,3 +482,8 @@ h4 {
 	float: right;
 	margin-right: 40px;
 }
+
+.radio-button-box {
+	display: inline-block;
+	margin: 10px 20px;
+}

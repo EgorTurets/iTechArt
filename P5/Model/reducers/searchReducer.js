@@ -6,7 +6,8 @@ const initialState = {
         minPrice: 0,
         maxPrice: 0,
         minMetric: 0,
-        maxMetric: 0
+        maxMetric: 0,
+        isForRent: false
     },
     searchResultPart: [],
     resultsCount: 0,
@@ -22,19 +23,9 @@ export default function searchState(state = initialState, action) {
         }
         case Actions.SEARCH: {
 
-            debugger;
-
-            let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-            let searchResults = allNotifications.filter((item) => {
-                return ((item.price >= state.searchParams.minPrice) && (item.price <= state.searchParams.maxPrice) &&
-                        (item.metric >= state.searchParams.minMetric) && (item.metric <= state.searchParams.maxMetric))
-            });
-
-            window.sessionStorage.setItem('SearchResults', JSON.stringify(searchResults));
-
             return Object.assign({}, state, {
-                resultsCount: searchResults.length,
-                searchResultPart: searchResults.slice(0, 5)
+                resultsCount: action.payload.resultsCount,
+                searchResultPart: action.payload.firstPartOfResults
             })
 
         }
@@ -131,6 +122,14 @@ export default function searchState(state = initialState, action) {
             return Object.assign({}, state, {
                 currentPage: action.payload,
                 searchResultPart: partOfSearchResults
+            })
+        }
+        case Actions.SEARCH_FOR_RENT_CHANGE: {
+
+            return Object.assign({}, state, {
+                searchParams: Object.assign({}, state.searchParams, {
+                    isForRent: action.payload
+                })
             })
         }
 

@@ -67,7 +67,6 @@ export default function newNotificationState(state = initialState, action) {
         }
         case Actions.NOTICE_FOR_RENT_CHANGE : {
 
-            debugger;
             return Object.assign({}, state, {
                 isForRent: action.payload
             })

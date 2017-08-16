@@ -21,7 +21,8 @@ function mapDispatchToProps(dispatch) {
         MinMetricUpdate: bindActionCreators(ActionCreators.SearchMinMetricUpdate, dispatch),
         MaxMetricUpdate: bindActionCreators(ActionCreators.SearchMaxMetricUpdate, dispatch),
         Search: bindActionCreators(ActionCreators.SearchNotifications, dispatch),
-        PageChange: bindActionCreators(ActionCreators.SearchPageChange, dispatch)
+        PageChange: bindActionCreators(ActionCreators.SearchPageChange, dispatch),
+        ForRentChange: bindActionCreators(ActionCreators.SearchForRentChange, dispatch)
     }
 }
 

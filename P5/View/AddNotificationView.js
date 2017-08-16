@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { findDOMNode } from 'react-dom'
-import { Redirect } from 'react-router'
 
 export default class AddNotificationForm extends Component {
     componentWillMount(){
@@ -10,7 +9,6 @@ export default class AddNotificationForm extends Component {
     }
 
     componentDidMount() {
-        debugger;
         let elem = findDOMNode(this.refs.radioNotRent);
         elem.checked = 'checked';
     }
