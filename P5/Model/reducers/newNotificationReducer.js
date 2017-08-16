@@ -81,6 +81,13 @@ export default function newNotificationState(state = initialState, action) {
             }
 
             return Object.assign({}, state, {
+                title: '',
+                description: '',
+                metric: 0,
+                address: '',
+                price: 0,
+                isForRent: false,
+                proprietor: 0,
                 message: 'Your notification is begin added!'
             })
         }

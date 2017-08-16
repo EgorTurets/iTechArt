@@ -330,17 +330,20 @@ export function AddNotice(event) {
     debugger;
 
     event.preventDefault();
-    let formIsValid = false;
+    let formIsValid = true;
     let addedSuccessfully = false;
     let message;
 
-    if (event.target.title.value === 0) {
-        message = 'The title can not be empty!'
+    if (event.target.title.value.length === 0) {
+        message = 'The title can not be empty!';
+        formIsValid = false;
     }
-    if (event.target.address.value === 0) {
-        message = 'The address can not be empty!'
+    else {
+        if (event.target.address.value.length === 0) {
+            message = 'The address can not be empty!';
+            formIsValid = false;
+        }
     }
-    formIsValid = true;
 
     if (formIsValid) {
         let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));

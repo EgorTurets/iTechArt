@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7d183800cbaa66c16ccc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f9c6dfdad78c98192fe1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7348,17 +7348,19 @@ function AddNotice(event) {
     debugger;
 
     event.preventDefault();
-    var formIsValid = false;
+    var formIsValid = true;
     var addedSuccessfully = false;
     var message = void 0;
 
-    if (event.target.title.value === 0) {
+    if (event.target.title.value.length === 0) {
         message = 'The title can not be empty!';
+        formIsValid = false;
+    } else {
+        if (event.target.address.value.length === 0) {
+            message = 'The address can not be empty!';
+            formIsValid = false;
+        }
     }
-    if (event.target.address.value === 0) {
-        message = 'The address can not be empty!';
-    }
-    formIsValid = true;
 
     if (formIsValid) {
         var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
@@ -39510,6 +39512,13 @@ function newNotificationState() {
                 }
 
                 return Object.assign({}, state, {
+                    title: '',
+                    description: '',
+                    metric: 0,
+                    address: '',
+                    price: 0,
+                    isForRent: false,
+                    proprietor: 0,
                     message: 'Your notification is begin added!'
                 });
             }
@@ -40295,17 +40304,12 @@ var PersonalCabinet = function (_Component) {
     _createClass(PersonalCabinet, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            debugger;
-            if (this.props.currentUser.id === 0) {
-                this.props.UserInit();
-            }
+            this.props.UserInit();
         }
     }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
-
-            debugger;
 
             if (this.props.currentUser.canRedirect) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
