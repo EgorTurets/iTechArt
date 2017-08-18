@@ -21,6 +21,7 @@ namespace EstateAgencyModels.Models
             set => throw new ApplicationException("You can not set a UserName. Use FirstName and LastName");
         }
 
+
         [Required]
         public string FirstName { get; set; }
 
@@ -34,7 +35,7 @@ namespace EstateAgencyModels.Models
         public string PasswordHash { get; set; }
 
         //Foreign Key
-        public int UserRole { get; set; }
+        public int UserRoleID { get; set; }
 
         //Navigation propertie
         [Required]
