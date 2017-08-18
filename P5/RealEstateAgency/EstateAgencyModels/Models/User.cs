@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,10 +8,18 @@ using System.Threading.Tasks;
 
 namespace EstateAgencyModels.Models
 {
-    public class User
+    public class User : IUser
     {
         [Key]
-        public int IserID { get; set; }
+        public int GetIntID { get => Int32.Parse(Id); }
+
+
+        public string Id { get; }
+        public string UserName
+        {
+            get => FirstName + " " + LastName;
+            set => throw new ApplicationException("You can not set a UserName. Use FirstName and LastName");
+        }
 
         [Required]
         public string FirstName { get; set; }
@@ -37,6 +46,9 @@ namespace EstateAgencyModels.Models
         {
             Notifications = new HashSet<Notification>();
         }
+
+
+
 
     }
 }
