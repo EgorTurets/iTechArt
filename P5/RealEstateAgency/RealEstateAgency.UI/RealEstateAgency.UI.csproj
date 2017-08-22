@@ -156,6 +156,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWeb.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Global.asax.cs">
@@ -184,6 +185,10 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EstateAgencyBusinessLayer\RealEstateAgency.BusinessLayer.csproj">
+      <Project>{29555A4E-18FF-414F-98A4-14D72E1B221D}</Project>
+      <Name>RealEstateAgency.BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EstateAgencyDBLayer\RealEstateAgency.DBLayer.csproj">
       <Project>{0AC150D1-AC57-4594-B1F9-22B32C2F41F2}</Project>
       <Name>RealEstateAgency.DBLayer</Name>
