@@ -1,4 +1,4 @@
-﻿using EstateAgencyModels.Models;
+﻿using RealEstateAgency.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EstateAgencyDBLayer.Mapping
+namespace RealEstateAgency.DBLayer.Mapping
 {
     class NotificationConfig : EntityTypeConfiguration<Notification>
     {
@@ -20,8 +20,6 @@ namespace EstateAgencyDBLayer.Mapping
             Property(n => n.Price).IsRequired().HasColumnType("money").HasColumnName("Price");
             Property(n => n.ProprietorID).IsRequired().HasColumnType("int").HasColumnName("ProprietorID");
             Property(n => n.Title).IsRequired().HasColumnType("nvarchar").HasMaxLength(50).HasColumnName("Title");
-
-            HasRequired(n => n.Proprietor).WithMany(p => p.Notifications).HasForeignKey(n => n.ProprietorID);
         }
     }
 }

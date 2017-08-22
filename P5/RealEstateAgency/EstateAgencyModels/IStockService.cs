@@ -1,11 +1,11 @@
-﻿using EstateAgencyModels.Models;
+﻿using RealEstateAgency.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EstateAgencyModels
+namespace RealEstateAgency.Models
 {
     public interface IStockService
     {

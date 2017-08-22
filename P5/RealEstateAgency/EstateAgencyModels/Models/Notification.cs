@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EstateAgencyModels.Models
+namespace RealEstateAgency.Models.Models
 {
     public class Notification
     {
@@ -28,11 +28,9 @@ namespace EstateAgencyModels.Models
         [Range(0, double.MaxValue)]
         public double Metric { get; set; }
 
-        //Foreign Key
+        //Foreign Key to Users db
+        [Required]
         public int ProprietorID { get; set; }
 
-        //Navigation propertie
-        [Required]
-        public User Proprietor { get; set; }
     }
 }
