@@ -28,6 +28,9 @@ namespace RealEstateAgency.Models.Models
         [Range(0, double.MaxValue)]
         public double Metric { get; set; }
 
+        [Required]
+        public bool ForRent { get; set; }
+
         //Foreign Key to Users db
         [Required]
         public int ProprietorID { get; set; }
