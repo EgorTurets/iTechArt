@@ -14,6 +14,7 @@ namespace RealEstateAgency.UI.App_Start
     using RealEstateAgency.DBLayer;
     using RealEstateAgency.BusinessLayer;
     using System.Web.Http;
+    using System.Web.Mvc;
 
     public static class NinjectWebCommon 
     {
@@ -67,6 +68,8 @@ namespace RealEstateAgency.UI.App_Start
         {
             kernel.Bind<IStockRepository>().To<StockRepository>().InRequestScope();
             kernel.Bind<IStockService>().To<StockService>().InRequestScope();
+
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }        
     }
 }
