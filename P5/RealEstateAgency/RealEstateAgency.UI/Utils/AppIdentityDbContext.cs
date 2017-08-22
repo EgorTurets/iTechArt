@@ -10,21 +10,14 @@ using System.Data.Entity;
 
 namespace RealEstateAgency.UI.Utils
 {
-    class AppIdentityDbContext : IdentityDbContext<CustomUser, IdentityRole<int, IdentityUserRole<int>>, int, IdentityUserLogin<int>, IdentityUserRole<int>, IdentityUserClaim<int>>
+    public class AppIdentityDbContext : IdentityDbContext<CustomUser, IdentityRole<int, IdentityUserRole<int>>, int, IdentityUserLogin<int>, IdentityUserRole<int>, IdentityUserClaim<int>>
     {
-        public AppIdentityDbContext() : base ("name=EstateAgencyDB")
+        public AppIdentityDbContext() : base ("DefaultConnection")
         {
 
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-
-
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public AppIdentityDbContext Create ()
+        public static AppIdentityDbContext Create ()
         {
             return new AppIdentityDbContext();
         }

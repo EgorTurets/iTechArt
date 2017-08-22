@@ -6,60 +6,15 @@ using System.Threading.Tasks;
 using RealEstateAgency.Models;
 using RealEstateAgency.Models.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
-namespace RealEstateAgency.DBLayer
+namespace RealEstateAgency.UI.Utils
 {
-    public class CustomUserStore : IUserStore<User, int>
+    public class CustomUserStore : UserStore<CustomUser, IdentityRole<int, IdentityUserRole<int>>, int, IdentityUserLogin<int>, IdentityUserRole<int>, IdentityUserClaim<int>>
     {
-        static readonly List<User> Users = new List<User>();
-
-        public Task CreateAsync(User user)
+        public CustomUserStore(AppIdentityDbContext context) : base(context)
         {
-            return Task.Factory.StartNew(() => Users.Add(user));
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task DeleteAsync(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Task<User> FindByIdAsync(int userId)
-        {
-            return Task.Factory.StartNew(() => Users.FirstOrDefault(u => u.Id == userId));
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public Task<User> FindByNameAsync(string userName)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task UpdateAsync(User user)
-        {
-            throw new NotImplementedException();
         }
     }
 }

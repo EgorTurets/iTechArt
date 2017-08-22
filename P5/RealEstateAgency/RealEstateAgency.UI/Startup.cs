@@ -5,6 +5,7 @@ using System.Web;
 using Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using RealEstateAgency.UI.Utils;
 
 namespace RealEstateAgency.UI
 {
@@ -12,6 +13,9 @@ namespace RealEstateAgency.UI
     {
         public void Configuration(IAppBuilder appBuilder)
         {
+            appBuilder.CreatePerOwinContext(AppIdentityDbContext.Create);
+            appBuilder.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create);
+
             appBuilder.UseCookieAuthentication(new CookieAuthenticationOptions
             {
 
