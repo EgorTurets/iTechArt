@@ -11,17 +11,17 @@ namespace RealEstateAgency.DBLayer
 {
     public class StockRepository : IStockRepository
     {
-        private EstateAgencyDbContext notificationContext;
+        private EstateAgencyDbContext _notificationContext;
 
         public StockRepository()
         {
-            notificationContext = new EstateAgencyDbContext();
+            _notificationContext = new EstateAgencyDbContext();
         }
 
         public Notification AddNotification(Notification notification)
         {
-            notificationContext.Set<Notification>().Add(notification);
-            notificationContext.SaveChanges();
+            _notificationContext.Set<Notification>().Add(notification);
+            _notificationContext.SaveChanges();
             return notification;
         }
 
@@ -32,7 +32,7 @@ namespace RealEstateAgency.DBLayer
 
         public IEnumerable<Notification> GetAllUserNotifications(int userID)
         {
-            return notificationContext.Notifications.Where(n => n.ProprietorID == userID);
+            return _notificationContext.Notifications.Where(n => n.ProprietorID == userID);
         }
 
         public Task<IEnumerable<Notification>> GetAllUserNotificationsAsync(int userID)
@@ -42,7 +42,7 @@ namespace RealEstateAgency.DBLayer
 
         public Notification GetNotification(int id)
         {
-            return notificationContext.Notifications.FirstOrDefault(n => n.NoticeID == id);
+            return _notificationContext.Notifications.FirstOrDefault(n => n.NoticeID == id);
         }
 
         public Task<Notification> GetNotificationAsync(int id)
@@ -57,8 +57,8 @@ namespace RealEstateAgency.DBLayer
                 try
                 {
                     Notification notice = GetNotification(id);
-                    notificationContext.Notifications.Remove(notice);
-                    notificationContext.SaveChanges();
+                    _notificationContext.Notifications.Remove(notice);
+                    _notificationContext.SaveChanges();
                     return true;
                 }
                 catch (Exception)
@@ -71,7 +71,7 @@ namespace RealEstateAgency.DBLayer
 
         public IEnumerable<Notification> SearchNotifications(decimal minPrice, decimal maxPrice, double minMetric, double maxMetric, bool forRent)
         {
-            return notificationContext.Notifications.Where(n => (n.Price >= minPrice) && (n.Price <= maxPrice) &&
+            return _notificationContext.Notifications.Where(n => (n.Price >= minPrice) && (n.Price <= maxPrice) &&
                                                                 (n.Metric >= minMetric) && (n.Metric <= maxMetric) && (n.ForRent == forRent));
         }
 
@@ -82,7 +82,7 @@ namespace RealEstateAgency.DBLayer
 
         public void Dispose()
         {
-            notificationContext.Dispose();
+            _notificationContext.Dispose();
         }
     }
 }
