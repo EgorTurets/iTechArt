@@ -15,12 +15,5 @@ namespace RealEstateAgency.UI.Utils
 
         [Required]
         public string LastName { get; set; }
-
-        public ICollection<Notification> Notifications { get; set; }
-
-        public CustomUser() : base()
-        {
-            Notifications = new HashSet<Notification>();
-        }
     }
 }
