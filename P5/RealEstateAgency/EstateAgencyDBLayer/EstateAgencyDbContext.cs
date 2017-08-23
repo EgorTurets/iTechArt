@@ -13,6 +13,7 @@ namespace RealEstateAgency.DBLayer
     public class EstateAgencyDbContext : DbContext
     {
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
         public EstateAgencyDbContext() : base("name=EstateAgencyDB")
         {
@@ -27,6 +28,7 @@ namespace RealEstateAgency.DBLayer
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Configurations.Add(new NotificationConfig());
+            modelBuilder.Configurations.Add(new AppUserConfig());
 
             base.OnModelCreating(modelBuilder);
         }

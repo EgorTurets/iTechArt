@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using RealEstateAgency.DBLayer;
 using RealEstateAgency.Models;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.Utils;
@@ -12,18 +13,20 @@ using System.Threading.Tasks;
 
 namespace RealEstateAgency.UI.Utils
 {
-    public class CustomUserManager : UserManager<CustomUser, int>
+    public class CustomUserManager : UserManager<AppUser, int>
     {
-        private IUserStore<CustomUser, int> _store;
+        private IUserStore<AppUser, int> _store;
 
-        public CustomUserManager(IUserStore<CustomUser, int> store) : base(store)
+        public CustomUserManager(IUserStore<AppUser, int> store) : base(store)
         {
             _store = store;
         }
 
         public static CustomUserManager Create(IdentityFactoryOptions<CustomUserManager> options, IOwinContext context)
-        {            
-            var manager = new CustomUserManager(new CustomUserStore(context.Get<AppIdentityDbContext>()));
+        {
+            //TODO
+            //Here DI will return the instance. Make the right constructor for AppUserStore.
+            var manager = new CustomUserManager(new AppUserStore(/*context.Get<AppIdentityDbContext>()*/));
 
             manager.PasswordValidator = new PasswordValidator
             {
@@ -37,19 +40,19 @@ namespace RealEstateAgency.UI.Utils
 
         //=======Redefinition of necessary methods=======
 
-        public override Task<CustomUser> FindByIdAsync(int userId)
+        public override Task<AppUser> FindByIdAsync(int userId)
         {
 
             return Task.Factory.StartNew(() => this.Users.FirstOrDefault(u => u.Id == userId));
         }
 
-        public override Task<CustomUser> FindByNameAsync(string userName)
+        public override Task<AppUser> FindByNameAsync(string userName)
         {
 
             return Task.Factory.StartNew(() => this.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)));
         }
 
-        public override Task<bool> CheckPasswordAsync(CustomUser user, string password)
+        public override Task<bool> CheckPasswordAsync(AppUser user, string password)
         {
             string passwordHash = this.PasswordHasher.HashPassword(password);
 
@@ -58,7 +61,7 @@ namespace RealEstateAgency.UI.Utils
 
 
         //===Add an add-on result check===
-        public override Task<IdentityResult> CreateAsync(CustomUser user, string password)
+        public override Task<IdentityResult> CreateAsync(AppUser user, string password)
         {
             if (this.Users.FirstOrDefault(u => u.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase)) != null)
             {
@@ -75,7 +78,7 @@ namespace RealEstateAgency.UI.Utils
 
         public override Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
         {
-            CustomUser user = FindByIdAsync(userId).Result;
+            AppUser user = FindByIdAsync(userId).Result;
             if (CheckPasswordAsync(user, currentPassword).Result)
             {
                 user.PasswordHash = this.PasswordHasher.HashPassword(newPassword);
@@ -86,7 +89,21 @@ namespace RealEstateAgency.UI.Utils
             return Task.FromResult(new IdentityResult("Invalid password"));
         }
 
+        public override Task<IdentityResult> DeleteAsync(AppUser user)
+        {
 
+
+
+            return base.DeleteAsync(user);
+        }
+
+
+        //===You will not need after the removal of the field _store.===
+        protected override void Dispose(bool disposing)
+        {
+            _store.Dispose();
+            base.Dispose(disposing);
+        }
 
     }
 }

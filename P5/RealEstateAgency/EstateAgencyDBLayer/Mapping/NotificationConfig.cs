@@ -21,6 +21,8 @@ namespace RealEstateAgency.DBLayer.Mapping
             Property(n => n.ProprietorID).IsRequired().HasColumnType("int").HasColumnName("ProprietorID");
             Property(n => n.Title).IsRequired().HasColumnType("nvarchar").HasMaxLength(50).HasColumnName("Title");
             Property(n => n.ForRent).IsRequired().HasColumnType("bit").HasColumnName("ForRent");
+
+            HasRequired(n => n.Proprietor).WithMany(p => p.Notifications).HasForeignKey(n => n.ProprietorID);
         }
     }
 }

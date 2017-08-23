@@ -31,9 +31,11 @@ namespace RealEstateAgency.Models.Models
         [Required]
         public bool ForRent { get; set; }
 
-        //Foreign Key to Users table
-        [Required]
+        //Foreign Key
         public int ProprietorID { get; set; }
 
+        //Navigation propertie
+        [Required]
+        public AppUser Proprietor { get; set; }
     }
 }
