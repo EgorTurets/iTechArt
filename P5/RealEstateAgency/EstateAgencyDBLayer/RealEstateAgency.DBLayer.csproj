@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppUserStore.cs" />
     <Compile Include="EstateAgencyDbContext.cs" />
     <Compile Include="Mapping\AppUserConfig.cs" />
     <Compile Include="Mapping\NotificationConfig.cs" />
