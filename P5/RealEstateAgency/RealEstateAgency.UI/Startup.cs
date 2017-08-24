@@ -14,7 +14,8 @@ namespace RealEstateAgency.UI
         public void Configuration(IAppBuilder appBuilder)
         {
             appBuilder.CreatePerOwinContext(AppIdentityDbContext.Create);
-            appBuilder.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create);
+            appBuilder.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create /*Need to get constructor from DI*/);
+            appBuilder.CreatePerOwinContext<CustomSingInManager>(/*Get constructor from DI*/);
 
             appBuilder.UseCookieAuthentication(new CookieAuthenticationOptions
             {

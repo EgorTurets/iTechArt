@@ -15,9 +15,9 @@ namespace RealEstateAgency.UI.Utils
 {
     public class CustomUserManager : UserManager<AppUser, int>
     {
-        private IUserStore<AppUser, int> _store;
+        private ICustomUserStore _store;
 
-        public CustomUserManager(IUserStore<AppUser, int> store) : base(store)
+        public CustomUserManager(ICustomUserStore store) : base(store)
         {
             _store = store;
         }
@@ -38,7 +38,7 @@ namespace RealEstateAgency.UI.Utils
         }
 
 
-        //=======Redefinition of necessary methods=======
+        //======= Redefinition of necessary methods =======
 
         public override Task<AppUser> FindByIdAsync(int userId)
         {
@@ -59,8 +59,20 @@ namespace RealEstateAgency.UI.Utils
             return Task<bool>.Factory.StartNew((() => passwordHash.Equals(user.PasswordHash)));
         }
 
+        public override Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
+        {
+            AppUser user = FindByIdAsync(userId).Result;
+            if (CheckPasswordAsync(user, currentPassword).Result)
+            {
+                user.PasswordHash = this.PasswordHasher.HashPassword(newPassword);
 
-        //===Add an add-on result check===
+                return Task.FromResult(IdentityResult.Success);
+            }
+
+            return Task.FromResult(new IdentityResult("Invalid password"));
+        }
+
+        //=== Add an add-on result check ===
         public override Task<IdentityResult> CreateAsync(AppUser user, string password)
         {
             if (this.Users.FirstOrDefault(u => u.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase)) != null)
@@ -76,29 +88,52 @@ namespace RealEstateAgency.UI.Utils
             return Task.FromResult(IdentityResult.Success);
         }
 
-        public override Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
-        {
-            AppUser user = FindByIdAsync(userId).Result;
-            if (CheckPasswordAsync(user, currentPassword).Result)
-            {
-                user.PasswordHash = this.PasswordHasher.HashPassword(newPassword);
-
-                return Task.FromResult(IdentityResult.Success);
-            }
-
-            return Task.FromResult(new IdentityResult("Invalid password"));
-        }
-
         public override Task<IdentityResult> DeleteAsync(AppUser user)
         {
+            if (this.Store.FindByNameAsync(user.UserName).Result == null)
+            {
+                IdentityResult falledResult = new IdentityResult("User not found");
 
+                return Task.FromResult(falledResult);
+            }
 
+            this.Store.DeleteAsync(user);
 
-            return base.DeleteAsync(user);
+            return Task.FromResult(IdentityResult.Success);
         }
 
+        public override Task<IdentityResult> UpdateAsync(AppUser user)
+        {
+            if (this.Store.FindByNameAsync(user.UserName).Result == null)
+            {
+                IdentityResult falledResult = new IdentityResult("User not found");
 
-        //===You will not need after the removal of the field _store.===
+                return Task.FromResult(falledResult);
+            }
+
+            this.Store.UpdateAsync(user);
+
+            return Task.FromResult(IdentityResult.Success);
+        }
+
+        public override Task<AppUser> FindAsync(string userName, string password)
+        {
+            AppUser user = this.Store.FindByNameAsync(userName).Result;
+            if (user == null)
+            {
+
+                return null;
+            }
+
+            string passHash = this.PasswordHasher.HashPassword(password);
+
+            return user.PasswordHash.Equals(passHash) ? Task.FromResult(user) : null;
+        }
+
+        public override IQueryable<AppUser> Users => _store.Users;
+
+
+        //=== You will not need after the removal of the field _store ===
         protected override void Dispose(bool disposing)
         {
             _store.Dispose();

@@ -11,17 +11,17 @@ namespace RealEstateAgency.DBLayer
 {
     public class StockRepository : IStockRepository
     {
-        private EstateAgencyDbContext _notificationContext;
+        private EstateAgencyDbContext _context;
 
         public StockRepository()
         {
-            _notificationContext = new EstateAgencyDbContext();
+            _context = new EstateAgencyDbContext();
         }
 
         public Notification AddNotification(Notification notification)
         {
-            _notificationContext.Set<Notification>().Add(notification);
-            _notificationContext.SaveChanges();
+            _context.Set<Notification>().Add(notification);
+            _context.SaveChanges();
             return notification;
         }
 
@@ -32,7 +32,7 @@ namespace RealEstateAgency.DBLayer
 
         public IEnumerable<Notification> GetAllUserNotifications(int userID)
         {
-            return _notificationContext.Notifications.Where(n => n.ProprietorID == userID);
+            return _context.Notifications.Where(n => n.ProprietorID == userID);
         }
 
         public Task<IEnumerable<Notification>> GetAllUserNotificationsAsync(int userID)
@@ -42,7 +42,7 @@ namespace RealEstateAgency.DBLayer
 
         public Notification GetNotification(int id)
         {
-            return _notificationContext.Notifications.FirstOrDefault(n => n.NoticeID == id);
+            return _context.Notifications.FirstOrDefault(n => n.NoticeID == id);
         }
 
         public Task<Notification> GetNotificationAsync(int id)
@@ -57,8 +57,8 @@ namespace RealEstateAgency.DBLayer
                 try
                 {
                     Notification notice = GetNotification(id);
-                    _notificationContext.Notifications.Remove(notice);
-                    _notificationContext.SaveChanges();
+                    _context.Notifications.Remove(notice);
+                    _context.SaveChanges();
                     return true;
                 }
                 catch (Exception)
@@ -71,7 +71,7 @@ namespace RealEstateAgency.DBLayer
 
         public IEnumerable<Notification> SearchNotifications(decimal minPrice, decimal maxPrice, double minMetric, double maxMetric, bool forRent)
         {
-            return _notificationContext.Notifications.Where(n => (n.Price >= minPrice) && (n.Price <= maxPrice) &&
+            return _context.Notifications.Where(n => (n.Price >= minPrice) && (n.Price <= maxPrice) &&
                                                                 (n.Metric >= minMetric) && (n.Metric <= maxMetric) && (n.ForRent == forRent));
         }
 
@@ -82,7 +82,7 @@ namespace RealEstateAgency.DBLayer
 
         public void Dispose()
         {
-            _notificationContext.Dispose();
+            _context.Dispose();
         }
     }
 }

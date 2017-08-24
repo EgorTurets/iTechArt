@@ -54,8 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICustomUserStore.cs" />
     <Compile Include="IStockRepository.cs" />
     <Compile Include="IStockService.cs" />
+    <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
