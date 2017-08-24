@@ -20,7 +20,7 @@ namespace RealEstateAgency.UI
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(NinjectWebCommon.StandartKernel));
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(NinjectWebCommon.Kernel));
         }
     }
 }

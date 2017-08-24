@@ -23,11 +23,11 @@ namespace RealEstateAgency.UI.Utils
             _store = store;
         }
 
-        public static CustomUserManager Create(IdentityFactoryOptions<CustomUserManager> options, IKernel kernel)
+        public static CustomUserManager Create(IdentityFactoryOptions<CustomUserManager> options, IOwinContext context)
         {
             //TODO
             //Here DI will return the instance. Make the right constructor for AppUserStore.
-            var manager = new CustomUserManager(kernel.Get<ICustomUserStore>());
+            var manager = new CustomUserManager(context.Get<ICustomUserStore>());
 
             manager.PasswordValidator = new PasswordValidator
             {

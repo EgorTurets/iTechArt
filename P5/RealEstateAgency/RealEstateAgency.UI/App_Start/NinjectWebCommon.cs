@@ -24,7 +24,7 @@ namespace RealEstateAgency.UI.App_Start
         //=== My code ===
         private static IKernel kernel;
 
-        public static IKernel StandartKernel
+        public static IKernel Kernel
         { get { return kernel; } }
 
         //=== End my code ===
@@ -56,6 +56,10 @@ namespace RealEstateAgency.UI.App_Start
             kernel.Bind<IStockRepository>().To<StockRepository>().InRequestScope();
             kernel.Bind<IStockService>().To<StockService>().InRequestScope();
             kernel.Bind<ICustomUserStore>().To<CustomUserStore>().InRequestScope();
+            kernel.Bind<CustomUserManager>().ToSelf();
+            kernel.Bind<CustomSignInManager>().ToSelf();
+
+            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
