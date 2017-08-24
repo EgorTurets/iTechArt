@@ -7,105 +7,67 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using System.Transactions;
+using RealEstateAgency.Models;
+using RealEstateAgency.BusinessLayer;
+using RealEstateAgency.DBLayer;
 
-namespace RealEstateAgency.DBLayer
+namespace RealEstateAgency.UI.Utils
 {
-    public class AppUserStore : ICustomUserStore
+    public class CustomUserStore : ICustomUserStore
     {
-        private EstateAgencyDbContext _context;
-
-        public AppUserStore()
-        {
-            _context = new EstateAgencyDbContext();
-        }
+        private IStockService _service = new StockService(new StockRepository());
 
 
-        public IQueryable<AppUser> Users => _context.Users;
+        public IQueryable<AppUser> Users => _service.GetAllUsers().AsQueryable();
 
         public Task<AppUser> FindByIdAsync(int userId)
         {
 
-            return Task.FromResult(_context.Users.FirstOrDefault(u => u.Id == userId));
+            return Task.FromResult(_service.GetUserById(userId));
         }
 
         public Task<AppUser> FindByNameAsync(string userName)
         {
 
-            return Task.FromResult(_context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)));
+            return Task.FromResult(_service.GetUserByName(userName));
         }
 
         public Task<string> GetPasswordHashAsync(AppUser user)
         {
 
-            return Task.FromResult(_context.Users.FirstOrDefault(u => u.Id == user.Id).PasswordHash);
+            return Task.FromResult(FindByIdAsync(user.Id).Result.PasswordHash);
         }
 
         public Task SetPasswordHashAsync(AppUser user, string passwordHash)
         {
-            using (var tran = new TransactionScope(TransactionScopeOption.Required))
-            {
-                AppUser userNote = _context.Users.FirstOrDefault(u => u.Id == user.Id);
-                if (userNote == null)
-                {
-                    return Task.FromResult(false);
-                }
-                userNote.PasswordHash = passwordHash;
-                _context.Entry(userNote).State = System.Data.Entity.EntityState.Modified;
+            user.PasswordHash = passwordHash;
 
-                return _context.SaveChangesAsync();
-            }
+            return Task.FromResult(_service.UpdateUser(user));
         }
 
         //Create, Delete, Update return 2 different types (bool || int)
 
         public Task CreateAsync(AppUser user)
         {
-            if (_context.Users.FirstOrDefault(u => u.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase)) != null)
-            {
 
-                return Task.FromResult(false);
-            }
-            _context.Set<AppUser>().Add(user);
-
-            return _context.SaveChangesAsync();
+            return Task.FromResult(_service.AddUser(user));
         }
 
         public Task DeleteAsync(AppUser user)
         {
-            using (var tran = new TransactionScope(TransactionScopeOption.Required))
-            {
-                AppUser userNote = _context.Users.FirstOrDefault(u => u.Id == user.Id);
-                if (userNote == null)
-                {
 
-                    return Task.FromResult(false);
-                }
-                _context.Users.Remove(userNote);
-
-                return _context.SaveChangesAsync();
-            }
+            return Task.FromResult(_service.DeleteUser(user));
         }
 
         public Task UpdateAsync(AppUser user)
         {
-            using (var tran = new TransactionScope(TransactionScopeOption.Required))
-            {
-                AppUser userNote = _context.Users.FirstOrDefault(u => u.Id == user.Id);
-                if (userNote == null)
-                {
 
-                    return Task.FromResult(false);
-                }
-                userNote = user;
-                _context.Entry(userNote).State = System.Data.Entity.EntityState.Modified;
-
-                return _context.SaveChangesAsync();
-            }
+            return Task.FromResult(_service.UpdateUser(user));
         }
+
 
         public void Dispose()
         {
-            _context.Dispose(); ;
         }
 
 

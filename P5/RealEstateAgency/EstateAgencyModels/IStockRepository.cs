@@ -9,7 +9,7 @@ namespace RealEstateAgency.Models
 {
     public interface IStockRepository : IDisposable
     {
-        //Notification actions
+        //========= NOTIFICATION ACTIONS =========
 
         Notification GetNotification(int id);
         Task<Notification> GetNotificationAsync(int id);
@@ -24,5 +24,19 @@ namespace RealEstateAgency.Models
         Task<Notification> AddNotificationAsync(Notification notification);
 
         bool RemoveNotification(int id);
+
+        //========= USER ACTIONS =========
+
+        IEnumerable<AppUser> GetUsers();
+
+        AppUser GetUserById(int userId);
+
+        AppUser GetUserByName(string userName);
+
+        AppUser AddUser(AppUser user);
+
+        AppUser UpdateUser(AppUser user);
+
+        bool DeleteUser(AppUser user);
     }
 }

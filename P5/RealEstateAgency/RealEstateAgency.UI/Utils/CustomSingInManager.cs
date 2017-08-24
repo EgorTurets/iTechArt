@@ -13,6 +13,8 @@ namespace RealEstateAgency.UI.Utils
     {
         public CustomSingInManager(UserManager<AppUser, int> userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
         {
+            
         }
+
     }
 }

@@ -18,6 +18,9 @@ namespace RealEstateAgency.BusinessLayer
             _repository = repository;
         }
 
+
+        //========= NOTIFICATION ACTIONS =========
+
         public Notification AddNotification(Notification notification)
         {
             return _repository.AddNotification(notification);
@@ -61,6 +64,45 @@ namespace RealEstateAgency.BusinessLayer
         public async Task<IEnumerable<Notification>> SearchNotificationsAsync(decimal minPrice, decimal maxPrice, double minMetric, double maxMetric, bool forRent)
         {
             return await _repository.SearchNotificationsAsync(minPrice, maxPrice, minMetric, maxMetric, forRent);
+        }
+
+
+        //========= USER ACTIONS =========
+
+        public IEnumerable<AppUser> GetAllUsers()
+        {
+
+            return _repository.GetUsers();
+        }
+
+        public AppUser GetUserById(int userId)
+        {
+
+            return _repository.GetUserById(userId);
+        }
+
+        public AppUser GetUserByName(string userName)
+        {
+
+            return _repository.GetUserByName(userName);
+        }
+
+        public AppUser AddUser(AppUser user)
+        {
+
+            return _repository.AddUser(user);
+        }
+
+        public AppUser UpdateUser(AppUser user)
+        {
+
+            return _repository.UpdateUser(user);
+        }
+
+        public bool DeleteUser(AppUser user)
+        {
+
+            return _repository.DeleteUser(user);
         }
     }
 }
