@@ -11,6 +11,7 @@ using Ninject.Web.Common.OwinHost;
 using RealEstateAgency.UI.App_Start;
 using Ninject.Web.WebApi.OwinHost;
 using Ninject;
+using Microsoft.Owin;
 
 namespace RealEstateAgency.UI
 {
@@ -33,14 +34,12 @@ namespace RealEstateAgency.UI
             appBuilder.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create);
             appBuilder.CreatePerOwinContext<CustomSignInManager>(CustomSignInManager.Create);
 
-            //appBuilder.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create /*Need to get constructor from DI*/);
-            //appBuilder.CreatePerOwinContext<CustomSingInManager>(/*Get constructor from DI*/);
-
-
-
 
             appBuilder.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                CookieName = "AspNet.AuthenticationCookie",
+                CookieHttpOnly = false,
+                LoginPath = new PathString("/Account/LogIn"),
 
             });
         }
