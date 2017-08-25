@@ -2,43 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-using System.Transactions;
-using RealEstateAgency.Models;
-using RealEstateAgency.BusinessLayer;
-using RealEstateAgency.DBLayer;
+using RealEstateAgency.BusinessLayer.Interfaces;
 
 namespace RealEstateAgency.UI.Utils
 {
-    public class CustomUserStore : ICustomUserStore
+    public class ReaUserStore : IUserLoginStore<ReaUser, int>, IUserClaimStore<ReaUser, int>, IUserRoleStore<ReaUser, int>, IUserPasswordStore<ReaUser, int>, IUserSecurityStampStore<ReaUser, int>, IQueryableUserStore<ReaUser, int>, IUserEmailStore<ReaUser, int>, IUserPhoneNumberStore<ReaUser, int>, IUserTwoFactorStore<ReaUser, int>, IUserLockoutStore<ReaUser, int>, IUserStore<ReaUser, int>, IDisposable
     {
-        private IStockService _service = new StockService(new StockRepository());
+        private IUserService _service;
 
-
-        public IQueryable<AppUser> Users => _service.GetAllUsers().AsQueryable();
-
-        public Task<AppUser> FindByIdAsync(int userId)
+        public ReaUserStore(IUserService service)
         {
+            _service = service;
+        }
 
+        public Task<ReaUser> FindByIdAsync(int userId)
+        {
             return Task.FromResult(_service.GetUserById(userId));
         }
 
-        public Task<AppUser> FindByNameAsync(string userName)
+        public Task<ReaUser> FindByNameAsync(string userName)
         {
-
             return Task.FromResult(_service.GetUserByName(userName));
         }
 
-        public Task<string> GetPasswordHashAsync(AppUser user)
+        public Task<string> GetPasswordHashAsync(ReaUser user)
         {
-
             return Task.FromResult(FindByIdAsync(user.Id).Result.PasswordHash);
         }
 
-        public Task SetPasswordHashAsync(AppUser user, string passwordHash)
+        public Task SetPasswordHashAsync(ReaUser user, string passwordHash)
         {
             user.PasswordHash = passwordHash;
 
@@ -47,21 +42,19 @@ namespace RealEstateAgency.UI.Utils
 
         //Create, Delete, Update return 2 different types (bool || int)
 
-        public Task CreateAsync(AppUser user)
+        public Task CreateAsync(ReaUser user)
         {
-
             return Task.FromResult(_service.AddUser(user));
         }
 
-        public Task DeleteAsync(AppUser user)
+        public Task DeleteAsync(ReaUser user)
         {
-
-            return Task.FromResult(_service.DeleteUser(user));
+            return Task.Factory.StartNew(() => _service.DeleteUser(user));
+            //return Task.FromResult(_service.DeleteUser(user));
         }
 
-        public Task UpdateAsync(AppUser user)
+        public Task UpdateAsync(ReaUser user)
         {
-
             return Task.FromResult(_service.UpdateUser(user));
         }
 
@@ -70,7 +63,11 @@ namespace RealEstateAgency.UI.Utils
         {
         }
 
-
+        #region Not implemented methods
+        /// <summary>
+        /// NOT IMPLEMENT
+        /// </summary>
+        public IQueryable<ReaUser> Users => throw new NotImplementedException();
 
         /// <summary>
         /// NOT IMPLEMENT
@@ -78,7 +75,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="claim"></param>
         /// <returns></returns>
-        public Task AddClaimAsync(AppUser user, Claim claim)
+        public Task AddClaimAsync(ReaUser user, Claim claim)
         {
             throw new NotImplementedException();
         }
@@ -89,7 +86,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="login"></param>
         /// <returns></returns>
-        public Task AddLoginAsync(AppUser user, UserLoginInfo login)
+        public Task AddLoginAsync(ReaUser user, UserLoginInfo login)
         {
             throw new NotImplementedException();
         }
@@ -100,7 +97,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public Task AddToRoleAsync(AppUser user, string roleName)
+        public Task AddToRoleAsync(ReaUser user, string roleName)
         {
             throw new NotImplementedException();
         }
@@ -110,7 +107,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public Task<AppUser> FindAsync(UserLoginInfo login)
+        public Task<ReaUser> FindAsync(UserLoginInfo login)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +117,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public Task<AppUser> FindByEmailAsync(string email)
+        public Task<ReaUser> FindByEmailAsync(string email)
         {
             throw new NotImplementedException();
         }
@@ -130,7 +127,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<int> GetAccessFailedCountAsync(AppUser user)
+        public Task<int> GetAccessFailedCountAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -140,7 +137,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<IList<Claim>> GetClaimsAsync(AppUser user)
+        public Task<IList<Claim>> GetClaimsAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -150,7 +147,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<string> GetEmailAsync(AppUser user)
+        public Task<string> GetEmailAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -160,7 +157,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> GetEmailConfirmedAsync(AppUser user)
+        public Task<bool> GetEmailConfirmedAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -170,7 +167,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> GetLockoutEnabledAsync(AppUser user)
+        public Task<bool> GetLockoutEnabledAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -180,7 +177,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<DateTimeOffset> GetLockoutEndDateAsync(AppUser user)
+        public Task<DateTimeOffset> GetLockoutEndDateAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -190,7 +187,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<IList<UserLoginInfo>> GetLoginsAsync(AppUser user)
+        public Task<IList<UserLoginInfo>> GetLoginsAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -200,7 +197,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<string> GetPhoneNumberAsync(AppUser user)
+        public Task<string> GetPhoneNumberAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -210,7 +207,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> GetPhoneNumberConfirmedAsync(AppUser user)
+        public Task<bool> GetPhoneNumberConfirmedAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -220,7 +217,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<IList<string>> GetRolesAsync(AppUser user)
+        public Task<IList<string>> GetRolesAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -230,7 +227,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<string> GetSecurityStampAsync(AppUser user)
+        public Task<string> GetSecurityStampAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -240,7 +237,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> GetTwoFactorEnabledAsync(AppUser user)
+        public Task<bool> GetTwoFactorEnabledAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -250,7 +247,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<bool> HasPasswordAsync(AppUser user)
+        public Task<bool> HasPasswordAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -260,7 +257,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task<int> IncrementAccessFailedCountAsync(AppUser user)
+        public Task<int> IncrementAccessFailedCountAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -271,7 +268,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public Task<bool> IsInRoleAsync(AppUser user, string roleName)
+        public Task<bool> IsInRoleAsync(ReaUser user, string roleName)
         {
             throw new NotImplementedException();
         }
@@ -282,7 +279,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="claim"></param>
         /// <returns></returns>
-        public Task RemoveClaimAsync(AppUser user, Claim claim)
+        public Task RemoveClaimAsync(ReaUser user, Claim claim)
         {
             throw new NotImplementedException();
         }
@@ -293,7 +290,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public Task RemoveFromRoleAsync(AppUser user, string roleName)
+        public Task RemoveFromRoleAsync(ReaUser user, string roleName)
         {
             throw new NotImplementedException();
         }
@@ -304,7 +301,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="login"></param>
         /// <returns></returns>
-        public Task RemoveLoginAsync(AppUser user, UserLoginInfo login)
+        public Task RemoveLoginAsync(ReaUser user, UserLoginInfo login)
         {
             throw new NotImplementedException();
         }
@@ -314,7 +311,7 @@ namespace RealEstateAgency.UI.Utils
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public Task ResetAccessFailedCountAsync(AppUser user)
+        public Task ResetAccessFailedCountAsync(ReaUser user)
         {
             throw new NotImplementedException();
         }
@@ -325,7 +322,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public Task SetEmailAsync(AppUser user, string email)
+        public Task SetEmailAsync(ReaUser user, string email)
         {
             throw new NotImplementedException();
         }
@@ -336,7 +333,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="confirmed"></param>
         /// <returns></returns>
-        public Task SetEmailConfirmedAsync(AppUser user, bool confirmed)
+        public Task SetEmailConfirmedAsync(ReaUser user, bool confirmed)
         {
             throw new NotImplementedException();
         }
@@ -347,18 +344,18 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="enabled"></param>
         /// <returns></returns>
-        public Task SetLockoutEnabledAsync(AppUser user, bool enabled)
+        public Task SetLockoutEnabledAsync(ReaUser user, bool enabled)
         {
             throw new NotImplementedException();
         }
 
-       /// <summary>
+        /// <summary>
         /// NOT IMPLEMENT
         /// </summary>
         /// <param name="user"></param>
         /// <param name="lockoutEnd"></param>
         /// <returns></returns>
-        public Task SetLockoutEndDateAsync(AppUser user, DateTimeOffset lockoutEnd)
+        public Task SetLockoutEndDateAsync(ReaUser user, DateTimeOffset lockoutEnd)
         {
             throw new NotImplementedException();
         }
@@ -369,7 +366,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public Task SetPhoneNumberAsync(AppUser user, string phoneNumber)
+        public Task SetPhoneNumberAsync(ReaUser user, string phoneNumber)
         {
             throw new NotImplementedException();
         }
@@ -380,7 +377,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="confirmed"></param>
         /// <returns></returns>
-        public Task SetPhoneNumberConfirmedAsync(AppUser user, bool confirmed)
+        public Task SetPhoneNumberConfirmedAsync(ReaUser user, bool confirmed)
         {
             throw new NotImplementedException();
         }
@@ -391,7 +388,7 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="stamp"></param>
         /// <returns></returns>
-        public Task SetSecurityStampAsync(AppUser user, string stamp)
+        public Task SetSecurityStampAsync(ReaUser user, string stamp)
         {
             throw new NotImplementedException();
         }
@@ -402,9 +399,11 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="user"></param>
         /// <param name="enabled"></param>
         /// <returns></returns>
-        public Task SetTwoFactorEnabledAsync(AppUser user, bool enabled)
+        public Task SetTwoFactorEnabledAsync(ReaUser user, bool enabled)
         {
             throw new NotImplementedException();
         }
+        #endregion
+
     }
 }

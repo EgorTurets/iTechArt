@@ -12,8 +12,8 @@ namespace RealEstateAgency.DBLayer
 {
     public class EstateAgencyDbContext : DbContext
     {
-        public DbSet<Notification> Notifications { get; set; }
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<Listing> Listings { get; set; }
+        public DbSet<ReaUser> Users { get; set; }
 
         public EstateAgencyDbContext() : base("name=EstateAgencyDB")
         {
@@ -25,10 +25,13 @@ namespace RealEstateAgency.DBLayer
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            var user = new ReaUser();
+            var name = user.FirstName;
+
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Configurations.Add(new NotificationConfig());
-            modelBuilder.Configurations.Add(new AppUserConfig());
+            modelBuilder.Configurations.Add(new ListingConfig());
+            modelBuilder.Configurations.Add(new ReaUserConfig());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RealEstateAgency.DBLayer.Mapping
 {
-    class NotificationConfig : EntityTypeConfiguration<Notification>
+    class ListingConfig : EntityTypeConfiguration<Listing>
     {
-        public NotificationConfig()
+        public ListingConfig()
         {
-            HasEntitySetName("Notifications");
+            HasEntitySetName("Listings");
             ToTable("Notifications").HasKey(n => n.NoticeID);
             Property(n => n.Address).IsRequired().HasColumnName("Address");
             Property(n => n.Description).HasColumnType("nvarchar").HasMaxLength(200).HasColumnName("Description");
@@ -21,8 +21,6 @@ namespace RealEstateAgency.DBLayer.Mapping
             Property(n => n.ProprietorID).IsRequired().HasColumnType("int").HasColumnName("ProprietorID");
             Property(n => n.Title).IsRequired().HasColumnType("nvarchar").HasMaxLength(50).HasColumnName("Title");
             Property(n => n.ForRent).IsRequired().HasColumnType("bit").HasColumnName("ForRent");
-
-            HasRequired(n => n.Proprietor).WithMany(p => p.Notifications).HasForeignKey(n => n.ProprietorID);
         }
     }
 }

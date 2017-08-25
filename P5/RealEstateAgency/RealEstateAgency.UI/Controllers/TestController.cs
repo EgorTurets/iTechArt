@@ -17,12 +17,12 @@ namespace RealEstateAgency.UI.Controllers
 {
     public class TestController : ApiController
     {
-        private StockService _service = new StockService(new StockRepository());
+        private ListingService _service = new ListingService(new ListingRepository());
 
         [HttpGet]
         public IHttpActionResult GetNotification(int id)
         {
-            Notification notification = _service.GetNotification(id);
+            Listing notification = _service.GetNotification(id);
             NotificationViewModel notificationResult = new NotificationViewModel
             {
                 Id = notification.NoticeID,

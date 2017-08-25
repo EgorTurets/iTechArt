@@ -56,10 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EstateAgencyDbContext.cs" />
-    <Compile Include="Mapping\AppUserConfig.cs" />
-    <Compile Include="Mapping\NotificationConfig.cs" />
+    <Compile Include="Mapping\ReaUserConfig.cs" />
+    <Compile Include="Mapping\ListingConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockRepository.cs" />
+    <Compile Include="ListingRepository.cs" />
+    <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\EstateAgencyModels\RealEstateAgency.Models.csproj">
       <Project>{a47a6747-2cff-406f-9940-0ddadea6ea21}</Project>
       <Name>RealEstateAgency.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealEstateAgency.DBLayer.Interfaces\RealEstateAgency.DBLayer.Interfaces.csproj">
+      <Project>{D2BF952D-530D-42E2-8396-8A95215F3408}</Project>
+      <Name>RealEstateAgency.DBLayer.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

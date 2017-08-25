@@ -11,7 +11,7 @@ namespace RealEstateAgency.UI.Controllers
 {
     public class AccountController : ApiController
     {
-        private StockService _service = new StockService(new StockRepository());
+        private ListingService _service = new ListingService(new ListingRepository());
 
 
     }

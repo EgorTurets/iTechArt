@@ -22,7 +22,7 @@ namespace RealEstateAgency.UI
             var config = new HttpConfiguration();
             WebApiConfig.Register(config);
 
-            IKernel kernel = NinjectWebCommon.CreateKernel();
+            IKernel kernel = NinjectWebCommon.Kernel;
 
             config.DependencyResolver = new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);
 

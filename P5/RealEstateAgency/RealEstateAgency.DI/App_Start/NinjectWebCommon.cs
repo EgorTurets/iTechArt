@@ -1,28 +1,25 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RealEstateAgency.UI.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(RealEstateAgency.UI.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RealEstateAgency.DI.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(RealEstateAgency.DI.App_Start.NinjectWebCommon), "Stop")]
 
-namespace RealEstateAgency.UI.App_Start
+namespace RealEstateAgency.DI.App_Start
 {
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Common;
     using RealEstateAgency.BusinessLayer;
+    using RealEstateAgency.BusinessLayer.Interfaces;
     using RealEstateAgency.DBLayer;
+    using RealEstateAgency.DBLayer.Interfaces;
     using RealEstateAgency.Models.Models;
     using RealEstateAgency.UI.Utils;
     using System;
     using System.Reflection;
     using System.Web;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
-        //=== My code ===
-        //private static IKernel kernel;
-
         public static IKernel Kernel
         { get { return bootstrapper.Kernel; } }
-
-        //=== End my code ===
 
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
@@ -73,8 +70,10 @@ namespace RealEstateAgency.UI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IStockRepository>().To<ListingRepository>().InRequestScope();
-            kernel.Bind<IStockService>().To<ListingService>().InRequestScope();
+            kernel.Bind<IListingRepository>().To<ListingRepository>().InRequestScope();
+            kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
+            kernel.Bind<IListingService>().To<ListingService>().InRequestScope();
+            kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<ICustomUserStore>().To<ReaUserStore>().InRequestScope();
             //kernel.Bind<CustomUserManager>().ToSelf().WithConstructorArgument("store", new CustomUserStore());
             //kernel.Bind<CustomSignInManager>().ToSelf();

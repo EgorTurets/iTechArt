@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{29555A4E-18FF-414F-98A4-14D72E1B221D}</ProjectGuid>
+    <ProjectGuid>{7DEB5C36-FBE9-43BF-AD26-B3CFB6E96D8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RealEstateAgency.BusinessLayer</RootNamespace>
-    <AssemblyName>RealEstateAgency.BusinessLayer</AssemblyName>
+    <RootNamespace>RealEstateAgency.DI</RootNamespace>
+    <AssemblyName>RealEstateAgency.DI</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,8 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.3.2.1.0\lib\net45-full\Ninject.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,31 +51,42 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ListingService.cs" />
+    <Compile Include="App_Start\NinjectWeb.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EstateAgencyBusinessLayer\RealEstateAgency.BusinessLayer.csproj">
+      <Project>{29555a4e-18ff-414f-98a4-14d72e1b221d}</Project>
+      <Name>RealEstateAgency.BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EstateAgencyDBLayer\RealEstateAgency.DBLayer.csproj">
-      <Project>{0AC150D1-AC57-4594-B1F9-22B32C2F41F2}</Project>
+      <Project>{0ac150d1-ac57-4594-b1f9-22b32c2f41f2}</Project>
       <Name>RealEstateAgency.DBLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\EstateAgencyModels\RealEstateAgency.Models.csproj">
-      <Project>{A47A6747-2CFF-406F-9940-0DDADEA6EA21}</Project>
+      <Project>{a47a6747-2cff-406f-9940-0ddadea6ea21}</Project>
       <Name>RealEstateAgency.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealEstateAgency.BusinessLayer.Interfaces\RealEstateAgency.BusinessLayer.Interfaces.csproj">
-      <Project>{F3915A88-B967-496B-ACF4-2436C21B83FB}</Project>
+      <Project>{f3915a88-b967-496b-acf4-2436c21b83fb}</Project>
       <Name>RealEstateAgency.BusinessLayer.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealEstateAgency.DBLayer.Interfaces\RealEstateAgency.DBLayer.Interfaces.csproj">
-      <Project>{D2BF952D-530D-42E2-8396-8A95215F3408}</Project>
+      <Project>{d2bf952d-530d-42e2-8396-8a95215f3408}</Project>
       <Name>RealEstateAgency.DBLayer.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealEstateAgency.UI.Utils\RealEstateAgency.UI.Utils.csproj">
+      <Project>{d55db483-f953-4548-af6a-2dc40cc08755}</Project>
+      <Name>RealEstateAgency.UI.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
