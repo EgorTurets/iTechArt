@@ -1,4 +1,4 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RealEstateAgency.UI.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RealEstateAgency.UI.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(RealEstateAgency.UI.App_Start.NinjectWebCommon), "Stop")]
 
 namespace RealEstateAgency.UI.App_Start
@@ -81,8 +81,8 @@ namespace RealEstateAgency.UI.App_Start
             kernel.Bind<IStockRepository>().To<StockRepository>().InRequestScope();
             kernel.Bind<IStockService>().To<StockService>().InRequestScope();
             kernel.Bind<ICustomUserStore>().To<CustomUserStore>().InRequestScope();
-            kernel.Bind<CustomUserManager>().ToSelf().WithConstructorArgument("store", new CustomUserStore());
-            kernel.Bind<CustomSignInManager>().ToSelf();
+            //kernel.Bind<CustomUserManager>().ToSelf().WithConstructorArgument("store", new CustomUserStore());
+            //kernel.Bind<CustomSignInManager>().ToSelf();
 
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
