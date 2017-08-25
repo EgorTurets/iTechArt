@@ -24,11 +24,11 @@ namespace RealEstateAgency.UI
 
             IKernel kernel = NinjectWebCommon.CreateKernel();
 
-            config.DependencyResolver = new NinjectDependencyResolver(kernel);
+            config.DependencyResolver = new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);
 
-            appBuilder.CreatePerOwinContext(NinjectWebCommon.CreateKernel);
+            appBuilder.CreatePerOwinContext(() => kernel);
 
-            appBuilder.UseNinjectMiddleware(NinjectWebCommon.CreateKernel);
+            appBuilder.UseNinjectMiddleware(() => kernel);
             appBuilder.UseNinjectWebApi(config);
 
             appBuilder.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create);

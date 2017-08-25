@@ -22,21 +22,46 @@ namespace RealEstateAgency.UI.App_Start
     public static class NinjectWebCommon 
     {
         //=== My code ===
-        private static IKernel kernel;
+        //private static IKernel kernel;
 
         public static IKernel Kernel
-        { get { return kernel; } }
+        { get { return bootstrapper.Kernel; } }
 
         //=== End my code ===
 
+        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+
+        /// <summary>
+        /// Starts the application
+        /// </summary>
+        public static void Start()
+        {
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
+            bootstrapper.Initialize(CreateKernel);
+        }
+
+        /// <summary>
+        /// Stops the application.
+        /// </summary>
+        public static void Stop()
+        {
+            bootstrapper.ShutDown();
+        }
+
+        /// <summary>
+        /// Creates the kernel that will manage your application.
+        /// </summary>
+        /// <returns>The created kernel.</returns>
         public static IKernel CreateKernel()
         {
-            kernel = new StandardKernel();
-
+            var kernel = new StandardKernel();
             try
             {
                 kernel.Load(Assembly.GetExecutingAssembly());
 
+                kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -56,12 +81,12 @@ namespace RealEstateAgency.UI.App_Start
             kernel.Bind<IStockRepository>().To<StockRepository>().InRequestScope();
             kernel.Bind<IStockService>().To<StockService>().InRequestScope();
             kernel.Bind<ICustomUserStore>().To<CustomUserStore>().InRequestScope();
-            kernel.Bind<CustomUserManager>().ToSelf();
+            kernel.Bind<CustomUserManager>().ToSelf().WithConstructorArgument("store", new CustomUserStore());
             kernel.Bind<CustomSignInManager>().ToSelf();
 
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            //DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }
