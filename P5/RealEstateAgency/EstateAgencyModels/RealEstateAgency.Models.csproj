@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICustomUserStore.cs" />
     <Compile Include="Models\ReaUser.cs" />
     <Compile Include="Models\Listing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

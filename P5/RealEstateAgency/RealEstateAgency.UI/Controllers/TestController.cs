@@ -1,17 +1,9 @@
 ﻿using RealEstateAgency.BusinessLayer;
 using RealEstateAgency.DBLayer;
+using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
 //using System.Web.Helpers;
 using System.Web.Http;
-
-using Newtonsoft.Json;
-using RealEstateAgency.Models.Models;
 
 namespace RealEstateAgency.UI.Controllers
 {
@@ -22,7 +14,7 @@ namespace RealEstateAgency.UI.Controllers
         [HttpGet]
         public IHttpActionResult GetNotification(int id)
         {
-            Listing notification = _service.GetNotification(id);
+            Listing notification = _service.GetListing(id);
             NotificationViewModel notificationResult = new NotificationViewModel
             {
                 Id = notification.NoticeID,

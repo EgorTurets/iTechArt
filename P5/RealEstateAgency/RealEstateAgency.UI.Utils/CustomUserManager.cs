@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Ninject;
+using RealEstateAgency.BusinessLayer;
+using RealEstateAgency.DBLayer;
 using RealEstateAgency.Models.Models;
 using System;
 using System.Linq;
@@ -11,18 +13,19 @@ namespace RealEstateAgency.UI.Utils
 {
     public class CustomUserManager : UserManager<ReaUser, int>
     {
-        private ICustomUserStore _store;
+        private ReaUserStore _store;
 
-        public CustomUserManager(ICustomUserStore store) : base(store)
+        public CustomUserManager(ReaUserStore store) : base(store)
         {
             _store = store;
         }
 
         public static CustomUserManager Create(IdentityFactoryOptions<CustomUserManager> options, IOwinContext context)
         {
-            //TODO
-            //Here DI will return the instance. Make the right constructor for AppUserStore.
-            var manager = new CustomUserManager(context.Get<IKernel>().Get<ICustomUserStore>());
+
+            var kernel = context.Get<IKernel>();
+            //var manager = new CustomUserManager(context.Get<IKernel>().Get<ReaUserStore>());
+            var manager = new CustomUserManager(new ReaUserStore (new UserService(new UserRepository())));
 
             manager.PasswordValidator = new PasswordValidator
             {

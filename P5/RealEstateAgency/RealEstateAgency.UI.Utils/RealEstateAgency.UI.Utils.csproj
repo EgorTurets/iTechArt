@@ -74,6 +74,14 @@
     <Compile Include="ReaUserStore.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EstateAgencyBusinessLayer\RealEstateAgency.BusinessLayer.csproj">
+      <Project>{29555A4E-18FF-414F-98A4-14D72E1B221D}</Project>
+      <Name>RealEstateAgency.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EstateAgencyDBLayer\RealEstateAgency.DBLayer.csproj">
+      <Project>{0AC150D1-AC57-4594-B1F9-22B32C2F41F2}</Project>
+      <Name>RealEstateAgency.DBLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EstateAgencyModels\RealEstateAgency.Models.csproj">
       <Project>{A47A6747-2CFF-406F-9940-0DDADEA6EA21}</Project>
       <Name>RealEstateAgency.Models</Name>
@@ -81,6 +89,10 @@
     <ProjectReference Include="..\RealEstateAgency.BusinessLayer.Interfaces\RealEstateAgency.BusinessLayer.Interfaces.csproj">
       <Project>{f3915a88-b967-496b-acf4-2436c21b83fb}</Project>
       <Name>RealEstateAgency.BusinessLayer.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealEstateAgency.DBLayer.Interfaces\RealEstateAgency.DBLayer.Interfaces.csproj">
+      <Project>{D2BF952D-530D-42E2-8396-8A95215F3408}</Project>
+      <Name>RealEstateAgency.DBLayer.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

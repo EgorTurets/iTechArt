@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Owin;
-using Microsoft.Owin.Security;
+﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Ninject;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
+using Owin;
+using RealEstateAgency.DI.App_Start;
 using RealEstateAgency.UI.Utils;
 using System.Web.Http;
-using Ninject.Web.Common.OwinHost;
-using RealEstateAgency.UI.App_Start;
-using Ninject.Web.WebApi.OwinHost;
-using Ninject;
-using Microsoft.Owin;
 
 namespace RealEstateAgency.UI
 {
@@ -22,6 +17,7 @@ namespace RealEstateAgency.UI
             var config = new HttpConfiguration();
             WebApiConfig.Register(config);
 
+            NinjectWebCommon.Start();
             IKernel kernel = NinjectWebCommon.Kernel;
 
             config.DependencyResolver = new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);

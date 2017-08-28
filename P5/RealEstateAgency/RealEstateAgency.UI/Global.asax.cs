@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
-using System.Web.Http;
-using RealEstateAgency.UI.App_Start;
 
 namespace RealEstateAgency.UI
 {
@@ -17,9 +11,9 @@ namespace RealEstateAgency.UI
         {
             // Code that runs on application startup
 
-            AreaRegistration.RegisterAllAreas();
+            //AreaRegistration.RegisterAllAreas();
             //GlobalConfiguration.Configure(WebApiConfig.Register);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             //DependencyResolver.SetResolver(new NinjectDependencyResolver(NinjectWebCommon.Kernel));
         }

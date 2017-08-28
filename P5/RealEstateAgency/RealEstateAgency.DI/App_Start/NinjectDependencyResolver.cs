@@ -1,13 +1,10 @@
 ﻿using Ninject;
 using Ninject.Parameters;
-using Ninject.Syntax;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http.Dependencies;
 
-namespace RealEstateAgency.UI.App_Start
+namespace RealEstateAgency.DI.App_Start
 {
     public class NinjectDependencyResolver : IDependencyResolver
     {
