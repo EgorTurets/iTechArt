@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RealEstateAgency.UI.ViewModels
+﻿namespace RealEstateAgency.UI.ViewModels
 {
-    public class NotificationViewModel
+    public class ListingViewModel
     {
         public int Id { get; set; }
 
@@ -20,7 +15,5 @@ namespace RealEstateAgency.UI.ViewModels
         public double Metric { get; set; }
 
         public bool ForRent { get; set; }
-
-        public int ProprietorID { get; set; }
     }
 }

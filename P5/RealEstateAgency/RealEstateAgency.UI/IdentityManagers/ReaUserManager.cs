@@ -2,30 +2,28 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Ninject;
-using RealEstateAgency.BusinessLayer;
-using RealEstateAgency.DBLayer;
+using RealEstateAgency.DI.App_Start;
 using RealEstateAgency.Models.Models;
+using RealEstateAgency.UI.Utils;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RealEstateAgency.UI.Utils
+namespace RealEstateAgency.UI.IdentityManagers
 {
-    public class CustomUserManager : UserManager<ReaUser, int>
+    public class ReaUserManager : UserManager<ReaUser, int>
     {
         private ReaUserStore _store;
 
-        public CustomUserManager(ReaUserStore store) : base(store)
+        public ReaUserManager(ReaUserStore store) : base(store)
         {
             _store = store;
         }
 
-        public static CustomUserManager Create(IdentityFactoryOptions<CustomUserManager> options, IOwinContext context)
+        public static ReaUserManager Create(IdentityFactoryOptions<ReaUserManager> options, IOwinContext context)
         {
-
-            var kernel = context.Get<IKernel>();
-            //var manager = new CustomUserManager(context.Get<IKernel>().Get<ReaUserStore>());
-            var manager = new CustomUserManager(new ReaUserStore (new UserService(new UserRepository())));
+            var userStore = new StandardKernel(new ReaNinjectModule()).Get<ReaUserStore>();
+            var manager = new ReaUserManager(userStore);
 
             manager.PasswordValidator = new PasswordValidator
             {
@@ -67,6 +65,20 @@ namespace RealEstateAgency.UI.Utils
             }
 
             return Task.FromResult(new IdentityResult("Invalid password"));
+        }
+
+        public override Task<ReaUser> FindAsync(string userName, string password)
+        {
+            ReaUser user = this.Store.FindByNameAsync(userName).Result;
+            if (user == null)
+            {
+
+                return null;
+            }
+
+            string passHash = this.PasswordHasher.HashPassword(password);
+
+            return CheckPasswordAsync(user, passHash).Result ? Task.FromResult(user) : null;
         }
 
         //=== Add an add-on result check ===
@@ -113,19 +125,6 @@ namespace RealEstateAgency.UI.Utils
             return Task.FromResult(IdentityResult.Success);
         }
 
-        public override Task<ReaUser> FindAsync(string userName, string password)
-        {
-            ReaUser user = this.Store.FindByNameAsync(userName).Result;
-            if (user == null)
-            {
-
-                return null;
-            }
-
-            string passHash = this.PasswordHasher.HashPassword(password);
-
-            return user.PasswordHash.Equals(passHash) ? Task.FromResult(user) : null;
-        }
 
         //=== You will not need after the removal of the field _store ===
         protected override void Dispose(bool disposing)
