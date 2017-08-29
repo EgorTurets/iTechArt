@@ -41,14 +41,18 @@ namespace RealEstateAgency.UI.Controllers
             return Json<RegisterViewModel>(newUser);
         }
 
-
+        [HttpGet]
+        [Route("SignIn/{email}/{password}")]
         public IHttpActionResult SignIn (string email, string password)
         {
             _userManager.FindAsync(email, password);
 
+             
 
-
-            return null;
+            return Json<ReaUser>(new ReaUser {
+                UserName = email,
+                PasswordHash = password
+            });
         }
     }
 }

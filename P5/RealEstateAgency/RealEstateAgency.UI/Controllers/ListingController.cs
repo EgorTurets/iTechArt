@@ -71,5 +71,12 @@ namespace RealEstateAgency.UI.Controllers
         {
 
         }
+
+        [HttpDelete]
+        [Route("DeleteListing")]
+        public void DeleteListing(int id)
+        {
+
+        }
     }
 }

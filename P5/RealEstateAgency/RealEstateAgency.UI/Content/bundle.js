@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d580c28d374a180581b2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e3621145b0bcccd74a31"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -40457,15 +40457,19 @@ function LogIn(event) {
         message = 'Password must be longer than 8 characters!';
     }
 
-    var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
-    for (var i = 0; i < allUsers.length; i++) {
-        if (allUsers[i].email === event.target.email.value && allUsers[i].password === event.target.password.value) {
-            var currentUser = allUsers[i];
-            window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-            canRedirect = true;
-            break;
-        }
-    }
+    var serverResponse;
+    jQuery.post("rea.com/API/Account/SignIn", {
+        email: event.target.email.value,
+        password: event.target.password.value
+    }).success(function (data) {
+        debugger;
+        serverResponse = data;
+        canRedirect = true;
+    }).error(function (data) {
+        debugger;
+        canRedirect = false;
+    });
+
     if (!canRedirect) {
         message = 'Invalid email or password!';
     }

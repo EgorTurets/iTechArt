@@ -37,16 +37,22 @@ export function LogIn(event) {
         message = 'Password must be longer than 8 characters!'
     }
 
-    let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
-    for(let i = 0; i < allUsers.length; i++) {
-        if ((allUsers[i].email === event.target.email.value) &&
-            (allUsers[i].password === event.target.password.value)) {
-            let currentUser = allUsers[i];
-            window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    var serverResponse;
+    jQuery.post("rea.com/API/Account/SignIn",
+        {
+            email: event.target.email.value,
+            password: event.target.password.value
+        })
+        .success((data) => {
+        debugger;
+            serverResponse = data;
             canRedirect = true;
-            break;
-        }
-    }
+        })
+        .error((data) => {
+        debugger;
+            canRedirect = false;
+        });
+
     if(!canRedirect) {
         message = 'Invalid email or password!'
     }
