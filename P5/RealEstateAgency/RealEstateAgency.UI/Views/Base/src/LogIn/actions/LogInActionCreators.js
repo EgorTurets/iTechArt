@@ -24,46 +24,63 @@ export function LogInInit() {
 
 export function LogIn(event) {
 
-    debugger;
     event.preventDefault();
 
     let message;
     let canRedirect = false;
     let emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(event.target.email.value)) {
-        message = 'Invalid Email!'
+        return {
+            type: LogInActions.LOG_IN,
+            payload: {
+                message: 'Invalid Email!',
+                canRedirect
+            }
+        }
     }
     if (event.target.password.value.length < 8) {
-        message = 'Password must be longer than 8 characters!'
+        return {
+            type: LogInActions.LOG_IN,
+            payload: {
+                message: 'Password must be longer than 8 characters!',
+                canRedirect
+            }
+        }
     }
 
-    var serverResponse;
-    jQuery.post("rea.com/API/Account/SignIn",
+    debugger;
+
+    let serverResponse = jQuery.post(`API/Account/SignIn`,
         {
             email: event.target.email.value,
             password: event.target.password.value
-        })
-        .success((data) => {
+        }, () => {}, 'application/json');
+
+    serverResponse.success((data) => {
         debugger;
             serverResponse = data;
             canRedirect = true;
+
+            return {
+                type: LogInActions.LOG_IN,
+                payload: {
+                    message,
+                    canRedirect
+                }
+            }
         })
         .error((data) => {
         debugger;
             canRedirect = false;
-        });
 
-    if(!canRedirect) {
-        message = 'Invalid email or password!'
-    }
-
-    return {
-        type: LogInActions.LOG_IN,
-        payload: {
-            message,
-            canRedirect
-        }
-    }
+            return {
+                type: LogInActions.LOG_IN,
+                payload: {
+                    message: 'Invalid email or password!',
+                    canRedirect
+                }
+            }
+        }).complete((data, status) => {debugger;});
 }
 
 export function LogInEmailUpd(event) {

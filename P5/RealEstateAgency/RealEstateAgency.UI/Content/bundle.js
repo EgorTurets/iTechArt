@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e3621145b0bcccd74a31"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7448e353ab0f6f8da4df"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -40444,43 +40444,63 @@ function LogInInit() {
 
 function LogIn(event) {
 
-    debugger;
     event.preventDefault();
 
     var message = void 0;
     var canRedirect = false;
     var emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(event.target.email.value)) {
-        message = 'Invalid Email!';
+        return {
+            type: _LogInActions.LogInActions.LOG_IN,
+            payload: {
+                message: 'Invalid Email!',
+                canRedirect: canRedirect
+            }
+        };
     }
     if (event.target.password.value.length < 8) {
-        message = 'Password must be longer than 8 characters!';
+        return {
+            type: _LogInActions.LogInActions.LOG_IN,
+            payload: {
+                message: 'Password must be longer than 8 characters!',
+                canRedirect: canRedirect
+            }
+        };
     }
 
-    var serverResponse;
-    jQuery.post("rea.com/API/Account/SignIn", {
+    debugger;
+
+    var serverResponse = jQuery.post('API/Account/SignIn', {
         email: event.target.email.value,
         password: event.target.password.value
-    }).success(function (data) {
+    }, function () {}, 'application/json');
+
+    serverResponse.success(function (data) {
         debugger;
         serverResponse = data;
         canRedirect = true;
+
+        return {
+            type: _LogInActions.LogInActions.LOG_IN,
+            payload: {
+                message: message,
+                canRedirect: canRedirect
+            }
+        };
     }).error(function (data) {
         debugger;
         canRedirect = false;
+
+        return {
+            type: _LogInActions.LogInActions.LOG_IN,
+            payload: {
+                message: 'Invalid email or password!',
+                canRedirect: canRedirect
+            }
+        };
+    }).complete(function (data, status) {
+        debugger;
     });
-
-    if (!canRedirect) {
-        message = 'Invalid email or password!';
-    }
-
-    return {
-        type: _LogInActions.LogInActions.LOG_IN,
-        payload: {
-            message: message,
-            canRedirect: canRedirect
-        }
-    };
 }
 
 function LogInEmailUpd(event) {
@@ -40547,8 +40567,6 @@ var LogIn = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-
-            debugger;
 
             if (this.props.logInState.canRedirect) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/user' });

@@ -150,7 +150,7 @@ a:hover {
 #menu-wrapper {
 	overflow: hidden;
 	height: 56px;
-	background: url(images/img01.gif) repeat-x left top;
+	background-color: #B04840;
 }
 
 #menu {
@@ -188,7 +188,7 @@ a:hover {
 }
 
 #menu a:hover, #menu .current_page_item {
-	text-decoration: none;
+	text-decoration: underline;
 	color: #FFFFFF;
 }
 

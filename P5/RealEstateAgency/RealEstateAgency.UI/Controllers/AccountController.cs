@@ -12,47 +12,48 @@ namespace RealEstateAgency.UI.Controllers
     public class AccountController : ApiController
     {
         private ReaUserManager _userManager;
+        private ReaSignInManager _signInManager;
 
         public AccountController() : base()
         {
             var context = HttpContext.Current.GetOwinContext();
             _userManager = context.Get<ReaUserManager>();
+            _signInManager = context.Get<ReaSignInManager>();
         }
+
+        //[Route("AddUser")]
+        //public IHttpActionResult AddUser(RegisterViewModel newUser)
+        //{
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return Json<System.Web.Http.ModelBinding.ModelStateDictionary>(this.ModelState);
+        //    }
+
+        //    ReaUser reaUser = new ReaUser
+        //    {
+        //        FirstName = newUser.FirstName,
+        //        LastName = newUser.LastName,
+        //        UserName = newUser.Email
+        //    };
+
+        //    _userManager.CreateAsync(reaUser, newUser.Password);
+
+
+        //    return Json<RegisterViewModel>(newUser);
+        //}
 
         [HttpPost]
-        [Route("AddUser")]
-        public IHttpActionResult AddUser(RegisterViewModel newUser)
+        [Route("SignIn")]
+        public IHttpActionResult SignIn(SignInViewModel signInInfo)
         {
-            if (!this.ModelState.IsValid)
+            var user = _userManager.FindAsync(signInInfo.Email, signInInfo.Password).Result;
+            if(user.UserName != null)
             {
-                return Json<System.Web.Http.ModelBinding.ModelStateDictionary>(this.ModelState);
+                _signInManager.SignIn(user, false, false);
             }
 
-            ReaUser reaUser = new ReaUser
-            {
-                FirstName = newUser.FirstName,
-                LastName = newUser.LastName,
-                UserName = newUser.Email
-            };
 
-            _userManager.CreateAsync(reaUser, newUser.Password);
-
-            
-            return Json<RegisterViewModel>(newUser);
-        }
-
-        [HttpGet]
-        [Route("SignIn/{email}/{password}")]
-        public IHttpActionResult SignIn (string email, string password)
-        {
-            _userManager.FindAsync(email, password);
-
-             
-
-            return Json<ReaUser>(new ReaUser {
-                UserName = email,
-                PasswordHash = password
-            });
+            return Json<ReaUser>(user);
         }
     }
 }

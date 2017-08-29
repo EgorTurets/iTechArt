@@ -8,8 +8,6 @@ export default class LogIn extends Component {
 
     render() {
 
-        debugger;
-
         if (this.props.logInState.canRedirect) {
             return (<Redirect to="/user"/>)
         }

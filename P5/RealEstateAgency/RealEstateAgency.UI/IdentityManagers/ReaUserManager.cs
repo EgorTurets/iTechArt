@@ -73,12 +73,12 @@ namespace RealEstateAgency.UI.IdentityManagers
             if (user == null)
             {
 
-                return null;
+                return Task.FromResult(new ReaUser());
             }
 
             string passHash = this.PasswordHasher.HashPassword(password);
 
-            return CheckPasswordAsync(user, passHash).Result ? Task.FromResult(user) : null;
+            return CheckPasswordAsync(user, passHash).Result ? Task.FromResult(user) : Task.FromResult(new ReaUser());
         }
 
         //=== Add an add-on result check ===
