@@ -50,37 +50,36 @@ export function LogIn(event) {
 
     debugger;
 
-    let serverResponse = jQuery.post(`API/Account/SignIn`,
-        {
-            email: event.target.email.value,
-            password: event.target.password.value
-        }, () => {}, 'application/json');
+    let jsonForm = JSON.stringify({
+        email: event.target.email.value,
+        password: event.target.password.value
+    });
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/SignIn', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
 
-    serverResponse.success((data) => {
+    if (xhr.status !== 200) {
+
         debugger;
-            serverResponse = data;
-            canRedirect = true;
-
-            return {
-                type: LogInActions.LOG_IN,
-                payload: {
-                    message,
-                    canRedirect
-                }
+        return {
+            type: LogInActions.LOG_IN,
+            payload: {
+                message: 'Invalid email or password!',
+                canRedirect: false
             }
-        })
-        .error((data) => {
+        }
+    } else {
+
         debugger;
-            canRedirect = false;
-
-            return {
-                type: LogInActions.LOG_IN,
-                payload: {
-                    message: 'Invalid email or password!',
-                    canRedirect
-                }
+        return {
+            type: LogInActions.LOG_IN,
+            payload: {
+                message,
+                canRedirect: true
             }
-        }).complete((data, status) => {debugger;});
+        }
+    }
 }
 
 export function LogInEmailUpd(event) {

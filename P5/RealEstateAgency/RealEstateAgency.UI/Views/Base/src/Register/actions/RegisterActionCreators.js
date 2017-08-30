@@ -107,25 +107,37 @@ export function Register (event) {
     }
 
     isValidForm = true;
-    let allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
 
-    let newUser = {
-        id: +allUsers[allUsers.length - 1].id + 1,
-        firstName: event.target.firstName.value,
-        lastName: event.target.lastName.value,
-        email: event.target.email.value,
-        password: event.target.password.value
-    };
-    allUsers.push(newUser);
-    window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
-    isSuccessfullyAdded = true;
+    let jsonForm = JSON.stringify({
+        FirstName: event.target.firstName.value,
+        LastName: event.target.lastName.value,
+        Email: event.target.email.value,
+        Password: event.target.password.value
+    });
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/AddUser', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
 
-    return {
-        type: RegisterActions.FORM_REGISTER,
-        payload: {
-            message: 'All right',
-            isValidForm,
-            isSuccessfullyAdded
+    if (xhr.status !== 200) {
+
+        return {
+            type: RegisterActions.FORM_REGISTER,
+            payload: {
+                message: 'Server error',
+                isValidForm,
+                isSuccessfullyAdded: false
+            }
+        }
+    } else {
+
+        return {
+            type: RegisterActions.FORM_REGISTER,
+            payload: {
+                message: 'All right',
+                isValidForm,
+                isSuccessfullyAdded: true
+            }
         }
     }
 }

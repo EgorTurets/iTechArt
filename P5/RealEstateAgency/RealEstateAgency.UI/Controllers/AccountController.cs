@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 using Ninject;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 
@@ -21,26 +23,32 @@ namespace RealEstateAgency.UI.Controllers
             _signInManager = context.Get<ReaSignInManager>();
         }
 
-        //[Route("AddUser")]
-        //public IHttpActionResult AddUser(RegisterViewModel newUser)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return Json<System.Web.Http.ModelBinding.ModelStateDictionary>(this.ModelState);
-        //    }
+        [HttpPost]
+        [Route("AddUser")]
+        public IHttpActionResult AddUser(RegisterViewModel newUser)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
-        //    ReaUser reaUser = new ReaUser
-        //    {
-        //        FirstName = newUser.FirstName,
-        //        LastName = newUser.LastName,
-        //        UserName = newUser.Email
-        //    };
+            ReaUser reaUser = new ReaUser
+            {
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                UserName = newUser.Email
+            };
 
-        //    _userManager.CreateAsync(reaUser, newUser.Password);
+            var createResult = _userManager.CreateAsync(reaUser, newUser.Password);
 
+            if(!createResult.Result.Succeeded)
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError); 
+            }
+            var json = JsonConvert.SerializeObject(reaUser);
 
-        //    return Json<RegisterViewModel>(newUser);
-        //}
+            return Json<RegisterViewModel>(newUser);
+        }
 
         [HttpPost]
         [Route("SignIn")]

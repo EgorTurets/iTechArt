@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7448e353ab0f6f8da4df"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d49c6c8cf85938ff0def"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -38985,6 +38985,7 @@ function newUserState() {
             });break;
         case _RegisterActions.RegisterActions.FORM_REGISTER:
             {
+                debugger;
                 if (!action.payload.isValidForm) {
 
                     return Object.assign({}, state, {
@@ -40116,27 +40117,39 @@ function Register(event) {
     }
 
     isValidForm = true;
-    var allUsers = JSON.parse(window.sessionStorage.getItem('allUsers'));
 
-    var newUser = {
-        id: +allUsers[allUsers.length - 1].id + 1,
-        firstName: event.target.firstName.value,
-        lastName: event.target.lastName.value,
-        email: event.target.email.value,
-        password: event.target.password.value
-    };
-    allUsers.push(newUser);
-    window.sessionStorage.setItem('allUsers', JSON.stringify(allUsers));
-    isSuccessfullyAdded = true;
+    var jsonForm = JSON.stringify({
+        FirstName: event.target.firstName.value,
+        LastName: event.target.lastName.value,
+        Email: event.target.email.value,
+        Password: event.target.password.value
+    });
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/AddUser', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
 
-    return {
-        type: _RegisterActions.RegisterActions.FORM_REGISTER,
-        payload: {
-            message: 'All right',
-            isValidForm: isValidForm,
-            isSuccessfullyAdded: isSuccessfullyAdded
-        }
-    };
+    if (xhr.status !== 200) {
+
+        return {
+            type: _RegisterActions.RegisterActions.FORM_REGISTER,
+            payload: {
+                message: 'Server error',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: false
+            }
+        };
+    } else {
+
+        return {
+            type: _RegisterActions.RegisterActions.FORM_REGISTER,
+            payload: {
+                message: 'All right',
+                isValidForm: isValidForm,
+                isSuccessfullyAdded: true
+            }
+        };
+    }
 }
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(10); if (makeExportsHot(module, __webpack_require__(1))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "RegisterActionCreators.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -40470,37 +40483,36 @@ function LogIn(event) {
 
     debugger;
 
-    var serverResponse = jQuery.post('API/Account/SignIn', {
+    var jsonForm = JSON.stringify({
         email: event.target.email.value,
         password: event.target.password.value
-    }, function () {}, 'application/json');
+    });
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/SignIn', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
 
-    serverResponse.success(function (data) {
+    if (xhr.status !== 200) {
+
         debugger;
-        serverResponse = data;
-        canRedirect = true;
-
-        return {
-            type: _LogInActions.LogInActions.LOG_IN,
-            payload: {
-                message: message,
-                canRedirect: canRedirect
-            }
-        };
-    }).error(function (data) {
-        debugger;
-        canRedirect = false;
-
         return {
             type: _LogInActions.LogInActions.LOG_IN,
             payload: {
                 message: 'Invalid email or password!',
-                canRedirect: canRedirect
+                canRedirect: false
             }
         };
-    }).complete(function (data, status) {
+    } else {
+
         debugger;
-    });
+        return {
+            type: _LogInActions.LogInActions.LOG_IN,
+            payload: {
+                message: message,
+                canRedirect: true
+            }
+        };
+    }
 }
 
 function LogInEmailUpd(event) {

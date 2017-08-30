@@ -5,8 +5,6 @@ using Ninject;
 using RealEstateAgency.DI.App_Start;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.Utils;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RealEstateAgency.UI.IdentityManagers
@@ -29,29 +27,21 @@ namespace RealEstateAgency.UI.IdentityManagers
             {
                 RequiredLength = 8
             };
-            
 
             return manager;
         }
 
 
-        //======= Redefinition of necessary methods =======
+        #region Redefinition of necessary methods
 
         public override Task<ReaUser> FindByIdAsync(int userId)
         {
-            return Task.Factory.StartNew(() => this.Users.FirstOrDefault(u => u.Id == userId));
+            return _store.FindByIdAsync(userId);
         }
 
         public override Task<ReaUser> FindByNameAsync(string userName)
         {
-            return Task.Factory.StartNew(() => this.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        public override Task<bool> CheckPasswordAsync(ReaUser user, string password)
-        {
-            string passwordHash = this.PasswordHasher.HashPassword(password);
-
-            return Task<bool>.Factory.StartNew((() => passwordHash.Equals(user.PasswordHash)));
+            return _store.FindByNameAsync(userName);
         }
 
         public override Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
@@ -69,22 +59,20 @@ namespace RealEstateAgency.UI.IdentityManagers
 
         public override Task<ReaUser> FindAsync(string userName, string password)
         {
-            ReaUser user = this.Store.FindByNameAsync(userName).Result;
+            ReaUser user = FindByNameAsync(userName).Result;
             if (user == null)
             {
 
                 return Task.FromResult(new ReaUser());
             }
 
-            string passHash = this.PasswordHasher.HashPassword(password);
-
-            return CheckPasswordAsync(user, passHash).Result ? Task.FromResult(user) : Task.FromResult(new ReaUser());
+            return CheckPasswordAsync(user, password).Result ? Task.FromResult(user) : Task.FromResult(new ReaUser());
         }
 
         //=== Add an add-on result check ===
         public override Task<IdentityResult> CreateAsync(ReaUser user, string password)
         {
-            if (this.Users.FirstOrDefault(u => u.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase)) != null)
+            if (FindByNameAsync(user.UserName).Result != null)
             {
                 IdentityResult falledResult = new IdentityResult("A user with this Email already exists");
 
@@ -99,39 +87,37 @@ namespace RealEstateAgency.UI.IdentityManagers
 
         public override Task<IdentityResult> DeleteAsync(ReaUser user)
         {
-            if (this.Store.FindByNameAsync(user.UserName).Result == null)
+            if (FindByNameAsync(user.UserName).Result == null)
             {
                 IdentityResult falledResult = new IdentityResult("User not found");
 
                 return Task.FromResult(falledResult);
             }
 
-            this.Store.DeleteAsync(user);
+            _store.DeleteAsync(user);
 
             return Task.FromResult(IdentityResult.Success);
         }
 
         public override Task<IdentityResult> UpdateAsync(ReaUser user)
         {
-            if (this.Store.FindByNameAsync(user.UserName).Result == null)
+            if (FindByNameAsync(user.UserName).Result == null)
             {
                 IdentityResult falledResult = new IdentityResult("User not found");
 
                 return Task.FromResult(falledResult);
             }
 
-            this.Store.UpdateAsync(user);
+            _store.UpdateAsync(user);
 
             return Task.FromResult(IdentityResult.Success);
         }
 
-
-        //=== You will not need after the removal of the field _store ===
         protected override void Dispose(bool disposing)
         {
             _store.Dispose();
             base.Dispose(disposing);
         }
-
+        #endregion
     }
 }

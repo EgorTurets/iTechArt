@@ -17,9 +17,5 @@ namespace RealEstateAgency.UI.ViewModels
         [Required]
         [MinLength(8, ErrorMessage = "Password must be longer than 8 characters!")]
         public string Password { get; set; }
-
-        [Required]
-        [Compare("Password", ErrorMessage = "Password is not confirmed!")]
-        public string Confirm { get; set; }
     }
 }
