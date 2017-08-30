@@ -13,7 +13,7 @@ namespace RealEstateAgency.DBLayer.Mapping
         public ListingConfig()
         {
             HasEntitySetName("Listings");
-            ToTable("Notifications").HasKey(n => n.NoticeID);
+            ToTable("Notifications").HasKey(n => n.ListingID);
             Property(n => n.Address).IsRequired().HasColumnName("Address");
             Property(n => n.Description).HasColumnType("nvarchar").HasMaxLength(200).HasColumnName("Description");
             Property(n => n.Metric).IsRequired().HasColumnType("float").HasColumnName("Metric");

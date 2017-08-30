@@ -57,11 +57,23 @@ namespace RealEstateAgency.UI.Controllers
             var user = _userManager.FindAsync(signInInfo.Email, signInInfo.Password).Result;
             if(user.UserName != null)
             {
+                //var context = HttpContext.Current.GetOwinContext();
+                //var authMng = context.Authentication;
+                //authMng.SignIn();
+
                 _signInManager.SignIn(user, false, false);
             }
 
 
             return Json<ReaUser>(user);
+        }
+
+        [HttpGet]
+        [Route("SignOut")]
+        public IHttpActionResult SignOut()
+        {
+
+            return null;
         }
     }
 }

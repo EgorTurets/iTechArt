@@ -201,6 +201,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ListingViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\SearchListingViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

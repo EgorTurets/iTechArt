@@ -5,7 +5,7 @@ namespace RealEstateAgency.Models.Models
 {
     public class Listing
     {
-        public int NoticeID { get; set; }
+        public int ListingID { get; set; }
 
         public string Title { get; set; }
 
