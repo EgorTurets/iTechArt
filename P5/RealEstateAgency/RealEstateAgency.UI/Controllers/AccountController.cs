@@ -4,7 +4,9 @@ using Ninject;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
+using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -16,11 +18,14 @@ namespace RealEstateAgency.UI.Controllers
         private ReaUserManager _userManager;
         private ReaSignInManager _signInManager;
 
-        public AccountController() : base()
+        public AccountController(ReaUserManager userManager, ReaSignInManager signInManager) : base()
         {
-            var context = HttpContext.Current.GetOwinContext();
-            _userManager = context.Get<ReaUserManager>();
-            _signInManager = context.Get<ReaSignInManager>();
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        public AccountController() : this(HttpContext.Current.GetOwinContext().Get<ReaUserManager>(), HttpContext.Current.GetOwinContext().Get<ReaSignInManager>())
+        {
         }
 
         [HttpPost]
@@ -52,28 +57,30 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpPost]
         [Route("SignIn")]
-        public IHttpActionResult SignIn(SignInViewModel signInInfo)
+        public async Task<IHttpActionResult> SignIn(SignInViewModel signInInfo)
         {
             var user = _userManager.FindAsync(signInInfo.Email, signInInfo.Password).Result;
             if(user.UserName != null)
             {
-                //var context = HttpContext.Current.GetOwinContext();
-                //var authMng = context.Authentication;
-                //authMng.SignIn();
-
-                _signInManager.SignIn(user, false, false);
+                var responseCookies = HttpContext.Current.Response.Cookies;
+                //var res = await _signInManager.PasswordSignInAsync(signInInfo.Email, signInInfo.Password, false, false);
+                var idCookie = new HttpCookie("userId", user.Id.ToString());
+                var userNameCookie = new HttpCookie("userName", user.UserName);
+                responseCookies.Add(idCookie);
+                responseCookies.Add(userNameCookie);
             }
 
 
-            return Json<ReaUser>(user);
+            return await Task.FromResult(Json<ReaUser>(user));
         }
 
         [HttpGet]
         [Route("SignOut")]
-        public IHttpActionResult SignOut()
+        public void SignOut()
         {
-
-            return null;
+            var requestCookie = HttpContext.Current.Request.Cookies;
+            requestCookie.Remove("userId");
+            requestCookie.Remove("userName");
         }
     }
 }

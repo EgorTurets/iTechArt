@@ -9,23 +9,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace RealEstateAgency.UI.Controllers
 {
     [RoutePrefix("API/Listing")]
+    [Authorize]
     public class ListingController : ApiController
     {
         private IListingService _service;
 
-        public ListingController() : base()
+        public ListingController(IListingService service) : base()
         {
-            _service = new StandardKernel(new ReaNinjectModule()).Get<IListingService>();
+            _service = service;
+        }
+
+        public ListingController() : this(new StandardKernel(new ReaNinjectModule()).Get<IListingService>())
+        {
         }
 
         [HttpPost]
         [Route("SearchListing")]
+        [AllowAnonymous]
         public IHttpActionResult SearchListing(SearchListingViewModel searchParams)
         {
             if (!this.ModelState.IsValid)
@@ -54,8 +59,10 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpGet]
         [Route("GetListing/{id:int}")]
+        [AllowAnonymous]
         public IHttpActionResult GetListing(int id)
         {
+            
             Listing listing = _service.GetListing(id);
             ListingViewModel listingResult = new ListingViewModel
             {

@@ -40,7 +40,7 @@ namespace RealEstateAgency.DBLayer
 
         public Listing GetListing(int id)
         {
-            return _context.Listings.FirstOrDefault(n => n.NoticeID == id);
+            return _context.Listings.FirstOrDefault(n => n.ListingID == id);
         }
 
         public Task<Listing> GetListingAsync(int id)
