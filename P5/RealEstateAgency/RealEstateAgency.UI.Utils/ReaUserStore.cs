@@ -58,10 +58,32 @@ namespace RealEstateAgency.UI.Utils
             return Task.FromResult(_service.UpdateUser(user));
         }
 
+        /// <summary>
+        /// NOT IMPLEMENT
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Task<bool> GetLockoutEnabledAsync(ReaUser user)
+        {
+            return Task.FromResult(false);
+        }
+
+
+        /// <summary>
+        /// NOT IMPLEMENT
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Task<int> GetAccessFailedCountAsync(ReaUser user)
+        {
+            return Task.FromResult(0);
+        }
 
         public void Dispose()
         {
         }
+
+
 
         #region Not implemented methods
         /// <summary>
@@ -122,15 +144,7 @@ namespace RealEstateAgency.UI.Utils
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task<int> GetAccessFailedCountAsync(ReaUser user)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         /// <summary>
         /// NOT IMPLEMENT
@@ -139,7 +153,8 @@ namespace RealEstateAgency.UI.Utils
         /// <returns></returns>
         public Task<IList<Claim>> GetClaimsAsync(ReaUser user)
         {
-            throw new NotImplementedException();
+            IList<Claim> claims = new List<Claim>();
+            return Task.FromResult(claims);
         }
 
         /// <summary>
@@ -162,15 +177,7 @@ namespace RealEstateAgency.UI.Utils
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task<bool> GetLockoutEnabledAsync(ReaUser user)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         /// <summary>
         /// NOT IMPLEMENT
@@ -219,7 +226,8 @@ namespace RealEstateAgency.UI.Utils
         /// <returns></returns>
         public Task<IList<string>> GetRolesAsync(ReaUser user)
         {
-            throw new NotImplementedException();
+            IList<string> retList = new List<string>();
+            return Task.FromResult(retList);
         }
 
         /// <summary>
@@ -229,7 +237,7 @@ namespace RealEstateAgency.UI.Utils
         /// <returns></returns>
         public Task<string> GetSecurityStampAsync(ReaUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(String.Empty);
         }
 
         /// <summary>
@@ -239,7 +247,7 @@ namespace RealEstateAgency.UI.Utils
         /// <returns></returns>
         public Task<bool> GetTwoFactorEnabledAsync(ReaUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         /// <summary>

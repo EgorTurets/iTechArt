@@ -76,7 +76,6 @@ export function LogIn(event) {
         return {
             type: LogInActions.LOG_IN,
             payload: {
-                userId: jsonResponse.Id,
                 canRedirect: true
             }
         }

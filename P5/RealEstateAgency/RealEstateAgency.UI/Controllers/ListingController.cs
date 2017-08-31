@@ -9,7 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Web;
 using System.Web.Http;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
 
 namespace RealEstateAgency.UI.Controllers
 {
@@ -81,20 +85,28 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpGet]
         [Route("GetUserListings")]
+        [Authorize]
         public IHttpActionResult GetUserListings()
         {
-            var cookie = Request.Headers.GetCookies("AspNet.AuthenticationCookie").FirstOrDefault();
-            if(cookie != null)
+            var claims = HttpContext.Current.GetOwinContext().Authentication.User.Claims;
+            int userId = Int32.Parse(claims.FirstOrDefault(c => c.Type.EndsWith("nameidentifier")).Value);
+            IEnumerable <Listing> userListings = _service.GetAllUserListings(userId);
+
+            IList<ListingViewModel> listingsResult = new List<ListingViewModel>(userListings.Count());
+
+            foreach (var item in userListings)
             {
-                IEnumerable <Listing> userListings = _service.GetAllUserListings(Int32.Parse(cookie["id"].Value));
-
-
-                
+                listingsResult.Add(new ListingViewModel
+                {
+                    Id = item.ListingID,
+                    Address = item.Address,
+                    Description = item.Description,
+                    ForRent = item.ForRent,
+                    Metric = item.Metric,
+                    Price = item.Price,
+                    Title = item.Title
+                });
             }
-
-            
-
-            IEnumerable<ListingViewModel> listingsResult = null;
 
             return Json<IEnumerable<ListingViewModel>>(listingsResult);
         }

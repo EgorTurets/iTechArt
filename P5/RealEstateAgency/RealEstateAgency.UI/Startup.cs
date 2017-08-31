@@ -27,7 +27,7 @@ namespace RealEstateAgency.UI
             appBuilder.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                CookieName = "userId",
+                CookieName = "Rea.Auth",
                 CookieHttpOnly = false,
                 LoginPath = new PathString("/"),
                 Provider = new CookieAuthenticationProvider
@@ -35,19 +35,22 @@ namespace RealEstateAgency.UI
                     OnValidateIdentity = context => 
                     {
                         var cookies = context.Request.Cookies;
-                        var userIdCookie = context.Request.Cookies["userId"];
+                        var userIdCookie = context.Identity.GetUserId<int>();
 
                         var userManager = context.OwinContext.Get<ReaUserManager>();
-                        var foundUser = userManager.FindById(Int32.Parse(userIdCookie));
+                        var foundUser = userManager.FindById(userIdCookie);
                         if (foundUser != null)
                         {
-                            if (foundUser.UserName == context.Request.Cookies["userName"])
+                            if (foundUser.UserName == context.Identity.GetUserName())
                             {
-                                return Task.Factory.StartNew(() => context.OwinContext.Authentication.SignIn());
+                                context.OwinContext.Authentication.SignIn(context.Properties, context.Identity);
+
+                                return Task.CompletedTask;
                             } 
                         }
+                        context.RejectIdentity();
 
-                        return Task.Factory.StartNew(() => context.OwinContext.Authentication.SignOut());
+                        return Task.CompletedTask;
                     }
                 }
             });

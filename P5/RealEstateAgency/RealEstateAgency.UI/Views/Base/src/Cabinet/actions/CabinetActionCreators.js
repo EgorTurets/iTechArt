@@ -6,14 +6,6 @@ import {getCookie} from "../../Common/scripts"
 export function UserInit (event) {
 
     debugger;
-    let currentUserId = getCookie("userId");
-    if(!currentUserId) {
-
-        return {
-            type: CabinetActions.USER_INIT,
-            payload: { unknownUser: true }
-        }
-    }
 
     let currentUser;
     let xhrUser = new XMLHttpRequest();
@@ -86,7 +78,9 @@ export function Delete(event) {
 }
 
 export function LogOut() {
-    window.sessionStorage.removeItem('currentUser');
+    let xhrUser = new XMLHttpRequest();
+    xhrUser.open('GET', 'API/Account/SignOut', false);
+    xhrUser.send();
 
     return {
         type: CabinetActions.USER_LOG_OUT

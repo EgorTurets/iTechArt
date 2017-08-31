@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dcf1f7c2532dd35c2014"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "daf77dcf990fe8968d2b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -16674,7 +16674,7 @@ var SearchActions = exports.SearchActions = {
 
 /* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(7), RootInstanceProvider = __webpack_require__(8), ReactMount = __webpack_require__(5), React = __webpack_require__(1); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -16700,14 +16700,6 @@ var _scripts = __webpack_require__(379);
 function UserInit(event) {
 
     debugger;
-    var currentUserId = (0, _scripts.getCookie)("userId");
-    if (!currentUserId) {
-
-        return {
-            type: _CabinetActions.CabinetActions.USER_INIT,
-            payload: { unknownUser: true }
-        };
-    }
 
     var currentUser = void 0;
     var xhrUser = new XMLHttpRequest();
@@ -40541,7 +40533,6 @@ function LogIn(event) {
         return {
             type: _LogInActions.LogInActions.LOG_IN,
             payload: {
-                userId: jsonResponse.Id,
                 canRedirect: true
             }
         };

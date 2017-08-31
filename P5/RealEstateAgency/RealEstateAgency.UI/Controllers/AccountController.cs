@@ -59,17 +59,16 @@ namespace RealEstateAgency.UI.Controllers
         [Route("SignIn")]
         public async Task<IHttpActionResult> SignIn(SignInViewModel signInInfo)
         {
-            var user = _userManager.FindAsync(signInInfo.Email, signInInfo.Password).Result;
-            if(user.UserName != null)
+            var user = _userManager.FindByNameAsync(signInInfo.Email).Result;
+            if(user.UserName == null)
             {
-                var responseCookies = HttpContext.Current.Response.Cookies;
-                //var res = await _signInManager.PasswordSignInAsync(signInInfo.Email, signInInfo.Password, false, false);
-                var idCookie = new HttpCookie("userId", user.Id.ToString());
-                var userNameCookie = new HttpCookie("userName", user.UserName);
-                responseCookies.Add(idCookie);
-                responseCookies.Add(userNameCookie);
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-
+            var signInStatus = _signInManager.PasswordSignInAsync(signInInfo.Email, signInInfo.Password, false, false).Result;
+            if (signInStatus != SignInStatus.Success)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
             return await Task.FromResult(Json<UserInfoViewModel>(new UserInfoViewModel
                 {
@@ -83,9 +82,7 @@ namespace RealEstateAgency.UI.Controllers
         [Route("SignOut")]
         public void SignOut()
         {
-            var requestCookie = HttpContext.Current.Request.Cookies;
-            requestCookie.Remove("userId");
-            requestCookie.Remove("userName");
+            HttpContext.Current.GetOwinContext().Authentication.SignOut();
         }
 
         [HttpGet]
