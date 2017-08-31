@@ -71,7 +71,12 @@ namespace RealEstateAgency.UI.Controllers
             }
 
 
-            return await Task.FromResult(Json<ReaUser>(user));
+            return await Task.FromResult(Json<UserInfoViewModel>(new UserInfoViewModel
+                {
+                    Email = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                }));
         }
 
         [HttpGet]
@@ -81,6 +86,26 @@ namespace RealEstateAgency.UI.Controllers
             var requestCookie = HttpContext.Current.Request.Cookies;
             requestCookie.Remove("userId");
             requestCookie.Remove("userName");
+        }
+
+        [HttpGet]
+        [Route("UserInfo")]
+        [Authorize]
+        public async Task<IHttpActionResult> UserInfo()
+        {
+            var userIdCookie = HttpContext.Current.Request.Cookies["userId"];
+            if (userIdCookie == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+            var user = await _userManager.FindByIdAsync(Int32.Parse(userIdCookie.Value));
+
+            return Json<UserInfoViewModel>(new UserInfoViewModel
+            {
+                Email = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            });
         }
     }
 }

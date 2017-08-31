@@ -24,10 +24,9 @@ export default function userInfoState(state = initialState, action) {
             }
 
             return Object.assign({}, state, {
-                id: action.payload.currentUser.id,
-                firstName: action.payload.currentUser.firstName,
-                lastName: action.payload.currentUser.lastName,
-                email: action.payload.currentUser.email,
+                firstName: action.payload.currentUser.FirstName,
+                lastName: action.payload.currentUser.LastName,
+                email: action.payload.currentUser.Email,
                 notifications: action.payload.currentUserNotifications,
                 canRedirect: false
             })

@@ -1,32 +1,46 @@
 import {CabinetActions} from './CabinetActions'
+import {getCookie} from "../../Common/scripts"
 
 //------Personal cabinet actions------
 
 export function UserInit (event) {
 
-    let unknownUser = true;
-    let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-    if(!currentUser) {
+    debugger;
+    let currentUserId = getCookie("userId");
+    if(!currentUserId) {
 
         return {
             type: CabinetActions.USER_INIT,
-            payload: { unknownUser: unknownUser }
+            payload: { unknownUser: true }
         }
     }
-    unknownUser = false;
 
-    let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-    let currentUserNotifications = [];
-    for (let i = 0; i < allNotifications.length; i++) {
-        if(+allNotifications[i].proprietor === currentUser.id) {
-            currentUserNotifications.push(allNotifications[i])
+    let currentUser;
+    let xhrUser = new XMLHttpRequest();
+    xhrUser.open('GET', 'API/Account/UserInfo', false);
+    xhrUser.send();
+
+    if (xhrUser.status !== 200) {
+
+        return {
+            type: CabinetActions.USER_INIT,
+            payload: { unknownUser: true }
         }
     }
+    else {
+        currentUser = JSON.parse(xhrUser.responseText);
+    }
+
+    let xhrNotifications = new XMLHttpRequest();
+    xhrNotifications.open('GET', 'API/Listing/GetUserListings', false);
+    xhrNotifications.send();
+
+    let currentUserNotifications = JSON.parse(xhrNotifications.responseText);
 
     return {
         type: CabinetActions.USER_INIT,
         payload: {
-            unknownUser,
+            unknownUser: false,
             currentUser,
             currentUserNotifications
         }

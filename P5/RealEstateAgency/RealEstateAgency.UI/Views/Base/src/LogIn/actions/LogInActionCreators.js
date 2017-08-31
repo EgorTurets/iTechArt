@@ -48,8 +48,6 @@ export function LogIn(event) {
         }
     }
 
-    debugger;
-
     let jsonForm = JSON.stringify({
         email: event.target.email.value,
         password: event.target.password.value
@@ -69,13 +67,16 @@ export function LogIn(event) {
                 canRedirect: false
             }
         }
-    } else {
+    }
+    else {
 
         debugger;
+
+        let jsonResponse = JSON.parse(xhr.responseText);
         return {
             type: LogInActions.LOG_IN,
             payload: {
-                message,
+                userId: jsonResponse.Id,
                 canRedirect: true
             }
         }

@@ -203,6 +203,7 @@
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\SearchListingViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
+    <Compile Include="ViewModels\UserInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
