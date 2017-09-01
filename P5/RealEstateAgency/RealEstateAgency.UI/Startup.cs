@@ -29,9 +29,14 @@ namespace RealEstateAgency.UI
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 CookieName = "Rea.Auth",
                 CookieHttpOnly = false,
-                LoginPath = new PathString("/"),
+                
+                LoginPath = new PathString(),
                 Provider = new CookieAuthenticationProvider
                 {
+                    OnApplyRedirect = context =>
+                    {
+                        context.Response.StatusCode = 401;
+                    },
                     OnValidateIdentity = context => 
                     {
                         var cookies = context.Request.Cookies;

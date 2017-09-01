@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
 
 namespace RealEstateAgency.UI.Controllers
 {
@@ -90,12 +91,12 @@ namespace RealEstateAgency.UI.Controllers
         [Authorize]
         public async Task<IHttpActionResult> UserInfo()
         {
-            var userIdCookie = HttpContext.Current.Request.Cookies["userId"];
-            if (userIdCookie == null)
+            var userName = HttpContext.Current.User.Identity.Name;
+            if (userName.IsNullOrWhiteSpace())
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            var user = await _userManager.FindByIdAsync(Int32.Parse(userIdCookie.Value));
+            var user = await _userManager.FindByNameAsync(userName);
 
             return Json<UserInfoViewModel>(new UserInfoViewModel
             {

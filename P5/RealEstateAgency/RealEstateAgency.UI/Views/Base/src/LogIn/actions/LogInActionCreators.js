@@ -1,9 +1,10 @@
 import { LogInActions } from './LogInActions'
+import {getCookie} from "../../Common/scripts";
 
 //------Log In actions------
 
 export function LogInInit() {
-    let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
+    let currentUserCookie = getCookie('Rea.Auth');
     if(!currentUser) {
 
         return {
