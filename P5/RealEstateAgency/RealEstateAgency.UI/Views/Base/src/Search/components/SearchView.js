@@ -22,7 +22,7 @@ export default class Search extends Component {
         }
 
         let listOfNotices = this.props.searchResult.map((result) =>
-            <li key={`notice-${result.id}`} className="notification-box">
+            <li key={`notice-${result.Id}`} className="notification-box">
                 <NotificationInfo data={result}/>
             </li>);
 

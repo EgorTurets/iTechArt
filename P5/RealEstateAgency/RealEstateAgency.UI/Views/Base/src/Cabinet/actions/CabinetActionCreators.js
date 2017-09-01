@@ -149,11 +149,11 @@ export function AddNotice(event) {
             ForRent: event.target.isForRent.value === 'true',
         });
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'API/Listing/AddListing', false);
+        xhr.open('POST', '/API/Listing/AddListing', false);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
         xhr.send(jsonForm);
 
-        if (xhrUser.status === 204) {
+        if (xhr.status === 204) {
 
             return {
                 type: CabinetActions.NOTICE_ADD,

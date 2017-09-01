@@ -11,7 +11,7 @@ export default class NotificationInfo extends Component {
                         <lable>Title: </lable>
                     </div>
                     <div className="notification-box-right-row">
-                        <h3>{this.props.data.title}</h3>
+                        <h3>{this.props.data.Title}</h3>
                     </div>
                 </div>
 
@@ -20,7 +20,7 @@ export default class NotificationInfo extends Component {
                         <label>Description: </label>
                     </div>
                     <div className="notification-box-right-row">
-                        <h4>{this.props.data.description}</h4>
+                        <h4>{this.props.data.Description}</h4>
                     </div>
                 </div>
 
@@ -29,7 +29,7 @@ export default class NotificationInfo extends Component {
                         <label>Metric area: </label>
                     </div>
                     <div className="notification-box-right-row">
-                        <h4>{this.props.data.metric}</h4>
+                        <h4>{this.props.data.Metric}</h4>
                     </div>
                 </div>
 
@@ -38,7 +38,7 @@ export default class NotificationInfo extends Component {
                         <label>Address: </label>
                     </div>
                     <div className="notification-box-right-row">
-                        <h4>{this.props.data.address}</h4>
+                        <h4>{this.props.data.Address}</h4>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@ export default class NotificationInfo extends Component {
                         <label>Price: </label>
                     </div>
                     <div className="notification-box-right-row">
-                        <h4>{this.props.data.price}</h4>
+                        <h4>{this.props.data.Price}</h4>
                     </div>
                 </div>
             </div>

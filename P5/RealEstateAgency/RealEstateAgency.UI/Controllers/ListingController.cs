@@ -40,7 +40,7 @@ namespace RealEstateAgency.UI.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            IEnumerable<Listing> listings = _service.SearchListings(searchParams.MinPrice, searchParams.MaxPrice, searchParams.MinMetric, searchParams.MaxMetric, searchParams.ForRent);
+            IEnumerable<Listing> listings = _service.SearchListings(searchParams.MinPrice, searchParams.MaxPrice, searchParams.MinMetric, searchParams.MaxMetric, searchParams.ForRent).ToList();
             IList<ListingViewModel> listingsResult = new List<ListingViewModel>(listings.Count());
             foreach (var item in listings)
             {
@@ -150,7 +150,7 @@ namespace RealEstateAgency.UI.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            _service.RemoveListing(id)
+            _service.RemoveListing(id);
             return Task.CompletedTask;
         }
     }

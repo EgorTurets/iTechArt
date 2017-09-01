@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d5b2438e9f197d759f7d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "522424094d414cf03a7a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -16841,11 +16841,11 @@ function AddNotice(event) {
             ForRent: event.target.isForRent.value === 'true'
         });
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'API/Listing/AddListing', false);
+        xhr.open('POST', '/API/Listing/AddListing', false);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
         xhr.send(jsonForm);
 
-        if (xhrUser.status === 204) {
+        if (xhr.status === 204) {
 
             return {
                 type: _CabinetActions.CabinetActions.NOTICE_ADD,
@@ -16953,7 +16953,7 @@ var NotificationInfo = function (_Component) {
                         _react2.default.createElement(
                             'h3',
                             null,
-                            this.props.data.title
+                            this.props.data.Title
                         )
                     )
                 ),
@@ -16975,7 +16975,7 @@ var NotificationInfo = function (_Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            this.props.data.description
+                            this.props.data.Description
                         )
                     )
                 ),
@@ -16997,7 +16997,7 @@ var NotificationInfo = function (_Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            this.props.data.metric
+                            this.props.data.Metric
                         )
                     )
                 ),
@@ -17019,7 +17019,7 @@ var NotificationInfo = function (_Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            this.props.data.address
+                            this.props.data.Address
                         )
                     )
                 ),
@@ -17041,7 +17041,7 @@ var NotificationInfo = function (_Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            this.props.data.price
+                            this.props.data.Price
                         )
                     )
                 )
@@ -39329,6 +39329,7 @@ var initialState = {
         maxMetric: 0,
         isForRent: false
     },
+    searchResults: [],
     searchResultPart: [],
     resultsCount: 0,
     currentPage: 1
@@ -39349,8 +39350,9 @@ function searchState() {
             {
 
                 return Object.assign({}, state, {
+                    searchResults: action.payload.searchResults,
                     resultsCount: action.payload.resultsCount,
-                    searchResultPart: action.payload.firstPartOfResults
+                    searchResultPart: action.payload.searchResults.slice(0, 5)
                 });
             }
         case _SearchActions.SearchActions.SEARCH_MIN_PRICE_UPDATE:
@@ -39439,14 +39441,9 @@ function searchState() {
             }
         case _SearchActions.SearchActions.SEARCH_PAGE_CHANGE:
             {
-
-                debugger;
-
-                var allResults = JSON.parse(window.sessionStorage.getItem('SearchResults'));
-
                 var sliceFrom = (action.payload - 1) * 5;
                 var sliceTo = action.payload * 5;
-                var partOfSearchResults = allResults.slice(sliceFrom, sliceTo);
+                var partOfSearchResults = state.searchResults.slice(sliceFrom, sliceTo);
 
                 return Object.assign({}, state, {
                     currentPage: action.payload,
@@ -40172,10 +40169,10 @@ var PersonalCabinet = function (_Component) {
             var listOfNotices = this.props.currentUser.notifications.map(function (notice) {
                 return _react2.default.createElement(
                     'li',
-                    { key: 'notice-' + notice.id, className: 'notification-box' },
+                    { key: 'notice-' + notice.Id, className: 'notification-box' },
                     _react2.default.createElement(_NotificationBoxView2.default, { data: notice }),
                     _react2.default.createElement('input', { type: 'button', className: 'button',
-                        id: notice.id,
+                        id: notice.Id,
                         onClick: _this2.props.Delete,
                         value: 'Delete notification' })
                 );
@@ -40895,21 +40892,35 @@ function SearchMaxMetricUpdate(event) {
 function SearchNotifications(event) {
     event.preventDefault();
 
-    debugger;
-    var isForRent = event.target.isForRent.value === 'true';
-
-    var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-    var searchResults = allNotifications.filter(function (item) {
-        return item.price >= +event.target.minPrice.value && item.price <= +event.target.maxPrice.value && item.metric >= +event.target.minMetric.value && item.metric <= +event.target.maxMetric.value && item.isForRent === isForRent;
+    var jsonForm = JSON.stringify({
+        MinPrice: +event.target.minPrice.value,
+        MaxPrice: +event.target.maxPrice.value,
+        MinMetric: +event.target.minMetric.value,
+        MaxMetric: +event.target.maxMetric.value,
+        ForRent: event.target.isForRent.value === 'true'
     });
 
-    window.sessionStorage.setItem('SearchResults', JSON.stringify(searchResults));
-    var firstPartOfResults = searchResults.slice(0, 5);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Listing/SearchListing', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
+
+    if (xhr.status !== 200) {
+
+        return {
+            type: _SearchActions.SearchActions.SEARCH,
+            payload: {
+                message: 'Server error'
+            }
+        };
+    }
+
+    var searchResults = JSON.parse(xhr.responseText);
 
     return {
         type: _SearchActions.SearchActions.SEARCH,
         payload: {
-            firstPartOfResults: firstPartOfResults,
+            searchResults: searchResults,
             resultsCount: searchResults.length
         }
     };
@@ -41001,7 +41012,7 @@ var Search = function (_Component) {
             var listOfNotices = this.props.searchResult.map(function (result) {
                 return _react2.default.createElement(
                     'li',
-                    { key: 'notice-' + result.id, className: 'notification-box' },
+                    { key: 'notice-' + result.Id, className: 'notification-box' },
                     _react2.default.createElement(_NotificationBoxView2.default, { data: result })
                 );
             });

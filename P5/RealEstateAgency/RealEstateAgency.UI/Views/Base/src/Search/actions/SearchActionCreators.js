@@ -1,15 +1,9 @@
 import { SearchActions } from './SearchActions'
 
 
-
-
-
-
 //------Search actions------
 
 export function SearchInit() {
-
-
 
     return {
         type: SearchActions.SEARCH_INIT
@@ -51,23 +45,35 @@ export function SearchMaxMetricUpdate(event) {
 export function SearchNotifications(event) {
     event.preventDefault();
 
-    debugger;
-    let isForRent = event.target.isForRent.value === 'true';
-
-    let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-    let searchResults = allNotifications.filter((item) => {
-        return ((item.price >= +event.target.minPrice.value) && (item.price <= +event.target.maxPrice.value) &&
-            (item.metric >= +event.target.minMetric.value) && (item.metric <= +event.target.maxMetric.value) &&
-            (item.isForRent === isForRent))
+    let jsonForm = JSON.stringify({
+        MinPrice: +event.target.minPrice.value,
+        MaxPrice: +event.target.maxPrice.value,
+        MinMetric: +event.target.minMetric.value,
+        MaxMetric: +event.target.maxMetric.value,
+        ForRent: event.target.isForRent.value === 'true'
     });
 
-    window.sessionStorage.setItem('SearchResults', JSON.stringify(searchResults));
-    let firstPartOfResults = searchResults.slice(0, 5);
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Listing/SearchListing', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
+
+    if(xhr.status !== 200) {
+
+        return {
+            type: SearchActions.SEARCH,
+            payload: {
+                message: 'Server error'
+            }
+        }
+    }
+
+    let searchResults = JSON.parse(xhr.responseText);
 
     return {
         type: SearchActions.SEARCH,
         payload: {
-            firstPartOfResults,
+            searchResults,
             resultsCount: searchResults.length
         }
     }

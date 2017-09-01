@@ -9,6 +9,7 @@ const initialState = {
         maxMetric: 0,
         isForRent: false
     },
+    searchResults: [],
     searchResultPart: [],
     resultsCount: 0,
     currentPage: 1
@@ -24,8 +25,9 @@ export default function searchState(state = initialState, action) {
         case SearchActions.SEARCH: {
 
             return Object.assign({}, state, {
+                searchResults: action.payload.searchResults,
                 resultsCount: action.payload.resultsCount,
-                searchResultPart: action.payload.firstPartOfResults
+                searchResultPart: action.payload.searchResults.slice(0, 5)
             })
 
         }
@@ -110,14 +112,9 @@ export default function searchState(state = initialState, action) {
             })
         }
         case SearchActions.SEARCH_PAGE_CHANGE: {
-
-            debugger;
-
-            let allResults = JSON.parse(window.sessionStorage.getItem('SearchResults'));
-
             let sliceFrom = (action.payload - 1) * 5;
             let sliceTo = action.payload * 5;
-            let partOfSearchResults = allResults.slice(sliceFrom, sliceTo);
+            let partOfSearchResults = state.searchResults.slice(sliceFrom, sliceTo);
 
             return Object.assign({}, state, {
                 currentPage: action.payload,

@@ -14,10 +14,10 @@ export default class PersonalCabinet extends Component {
         }
 
         let listOfNotices = this.props.currentUser.notifications.map((notice) =>
-            <li key={`notice-${notice.id}`} className="notification-box">
+            <li key={`notice-${notice.Id}`} className="notification-box">
                 <NotificationInfo data={notice}/>
                 <input type="button" className="button"
-                       id={notice.id}
+                       id={notice.Id}
                        onClick={this.props.Delete}
                        value="Delete notification"/>
             </li>);
