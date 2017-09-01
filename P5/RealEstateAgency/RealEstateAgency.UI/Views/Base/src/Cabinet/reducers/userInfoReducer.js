@@ -14,9 +14,6 @@ export default function userInfoState(state = initialState, action) {
 
     switch (action.type) {
         case CabinetActions.USER_INIT: {
-
-            debugger;
-
             if(action.payload.unknownUser) {
                 return Object.assign({}, state, {
                     canRedirect: true
@@ -33,16 +30,7 @@ export default function userInfoState(state = initialState, action) {
         }
         case CabinetActions.USER_DELETE_NOTICE: {
 
-            let message;
-            if (action.payload.elementNotFound) {
-                message = 'Notification not found';
-            }
-            if(!action.payload.successfullyDeleted) {
-                message = 'Error during deleting';
-            }
-
             return Object.assign({}, state, {
-                message: message,
                 notifications: action.payload.currentUserNotifications
             })
         }

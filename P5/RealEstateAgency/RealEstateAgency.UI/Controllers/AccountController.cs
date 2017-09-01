@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using Ninject;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
 
 namespace RealEstateAgency.UI.Controllers
 {
@@ -83,7 +83,7 @@ namespace RealEstateAgency.UI.Controllers
         [Route("SignOut")]
         public void SignOut()
         {
-            HttpContext.Current.GetOwinContext().Authentication.SignOut();
+            HttpContext.Current.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
 
         [HttpGet]

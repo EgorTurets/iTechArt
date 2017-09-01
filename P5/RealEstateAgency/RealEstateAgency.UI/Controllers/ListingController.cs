@@ -9,11 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 
 namespace RealEstateAgency.UI.Controllers
 {
@@ -152,22 +150,11 @@ namespace RealEstateAgency.UI.Controllers
 
 
         [HttpDelete]
-        [Route("DeleteListing")]
-        public void DeleteListing(int id)
+        [Route("DeleteListing/{id:int}")]
+        public Task DeleteListing(int id)
         {
-            int userId;
-            var cookie = Request.Headers.GetCookies("AspNet.AuthenticationCookie").FirstOrDefault();
-            if (cookie != null)
-            {
-                userId = Int32.Parse(cookie["id"].Value);
-
-
-
-            }
-            else
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+            var claims = HttpContext.Current.GetOwinContext().Authentication.User.Claims;
+            int userId = Int32.Parse(claims.FirstOrDefault(c => c.Type.EndsWith("nameidentifier")).Value);
 
             var listing = _service.GetListing(id);
             if (listing == null)
@@ -179,6 +166,7 @@ namespace RealEstateAgency.UI.Controllers
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
             _service.RemoveListing(id);
+            return Task.CompletedTask;
         }
     }
 }

@@ -59,7 +59,6 @@ export function LogIn(event) {
 
     if (xhr.status !== 200) {
 
-        debugger;
         return {
             type: LogInActions.LOG_IN,
             payload: {
@@ -69,8 +68,6 @@ export function LogIn(event) {
         }
     }
     else {
-
-        debugger;
 
         let jsonResponse = JSON.parse(xhr.responseText);
         return {

@@ -29,7 +29,6 @@ namespace RealEstateAgency.UI
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 CookieName = "Rea.Auth",
                 CookieHttpOnly = false,
-                
                 LoginPath = new PathString(),
                 Provider = new CookieAuthenticationProvider
                 {

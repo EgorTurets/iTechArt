@@ -4,9 +4,6 @@ import {getCookie} from "../../Common/scripts"
 //------Personal cabinet actions------
 
 export function UserInit (event) {
-
-    debugger;
-
     let currentUser;
     let xhrUser = new XMLHttpRequest();
     xhrUser.open('GET', 'API/Account/UserInfo', false);
@@ -40,38 +37,18 @@ export function UserInit (event) {
 }
 
 export function Delete(event) {
+    let xhrDelete = new XMLHttpRequest();
+    xhrDelete.open('DELETE', `API/Listing/DeleteListing/${event.target.id}`, false);
+    xhrDelete.send();
 
-    let elementNotFound = false;
-    let successfullyDeleted = false;
-    let indexOfElement = -1;
-    let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-    for (let i = 0; i < allNotifications.length; i++) {
-        if(allNotifications[i].id === +event.target.id) {
-            indexOfElement = i;
-            break;
-        }
-    }
-    if (indexOfElement === -1) {
-        elementNotFound = true;
-    }
-
-    allNotifications.splice(indexOfElement, 1);
-    window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
-    successfullyDeleted = true;
-
-    let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-    let currentUserNotifications = [];
-    for (let i = 0; i < allNotifications.length; i++) {
-        if(+allNotifications[i].proprietor === currentUser.id) {
-            currentUserNotifications.push(allNotifications[i])
-        }
-    }
+    let xhrNotifications = new XMLHttpRequest();
+    xhrNotifications.open('GET', 'API/Listing/GetUserListings', false);
+    xhrNotifications.send();
+    let currentUserNotifications = JSON.parse(xhrNotifications.responseText);
 
     return {
         type: CabinetActions.USER_DELETE_NOTICE,
         payload: {
-            elementNotFound,
-            successfullyDeleted,
             currentUserNotifications
         }
     };

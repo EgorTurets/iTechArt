@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "93307251822d4fe65578"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b936eb594be9260d8863"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -16698,9 +16698,6 @@ var _scripts = __webpack_require__(156);
 //------Personal cabinet actions------
 
 function UserInit(event) {
-
-    debugger;
-
     var currentUser = void 0;
     var xhrUser = new XMLHttpRequest();
     xhrUser.open('GET', 'API/Account/UserInfo', false);
@@ -16733,38 +16730,18 @@ function UserInit(event) {
 }
 
 function Delete(event) {
+    var xhrDelete = new XMLHttpRequest();
+    xhrDelete.open('DELETE', 'API/Listing/DeleteListing/' + event.target.id, false);
+    xhrDelete.send();
 
-    var elementNotFound = false;
-    var successfullyDeleted = false;
-    var indexOfElement = -1;
-    var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
-    for (var i = 0; i < allNotifications.length; i++) {
-        if (allNotifications[i].id === +event.target.id) {
-            indexOfElement = i;
-            break;
-        }
-    }
-    if (indexOfElement === -1) {
-        elementNotFound = true;
-    }
-
-    allNotifications.splice(indexOfElement, 1);
-    window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
-    successfullyDeleted = true;
-
-    var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-    var currentUserNotifications = [];
-    for (var _i = 0; _i < allNotifications.length; _i++) {
-        if (+allNotifications[_i].proprietor === currentUser.id) {
-            currentUserNotifications.push(allNotifications[_i]);
-        }
-    }
+    var xhrNotifications = new XMLHttpRequest();
+    xhrNotifications.open('GET', 'API/Listing/GetUserListings', false);
+    xhrNotifications.send();
+    var currentUserNotifications = JSON.parse(xhrNotifications.responseText);
 
     return {
         type: _CabinetActions.CabinetActions.USER_DELETE_NOTICE,
         payload: {
-            elementNotFound: elementNotFound,
-            successfullyDeleted: successfullyDeleted,
             currentUserNotifications: currentUserNotifications
         }
     };
@@ -39013,7 +38990,6 @@ function newUserState() {
             });break;
         case _RegisterActions.RegisterActions.FORM_REGISTER:
             {
-                debugger;
                 if (!action.payload.isValidForm) {
 
                     return Object.assign({}, state, {
@@ -39097,9 +39073,6 @@ function userInfoState() {
     switch (action.type) {
         case _CabinetActions.CabinetActions.USER_INIT:
             {
-
-                debugger;
-
                 if (action.payload.unknownUser) {
                     return Object.assign({}, state, {
                         canRedirect: true
@@ -39117,16 +39090,7 @@ function userInfoState() {
         case _CabinetActions.CabinetActions.USER_DELETE_NOTICE:
             {
 
-                var message = void 0;
-                if (action.payload.elementNotFound) {
-                    message = 'Notification not found';
-                }
-                if (!action.payload.successfullyDeleted) {
-                    message = 'Error during deleting';
-                }
-
                 return Object.assign({}, state, {
-                    message: message,
                     notifications: action.payload.currentUserNotifications
                 });
             }
@@ -40376,7 +40340,6 @@ var _scripts = __webpack_require__(156);
 //------Log In actions------
 
 function LogInInit() {
-    var currentUserCookie = (0, _scripts.getCookie)('Rea.Auth');
     if ((0, _scripts.getCookie)('Rea.Auth')) {
 
         return {
@@ -40432,7 +40395,6 @@ function LogIn(event) {
 
     if (xhr.status !== 200) {
 
-        debugger;
         return {
             type: _LogInActions.LogInActions.LOG_IN,
             payload: {
@@ -40441,8 +40403,6 @@ function LogIn(event) {
             }
         };
     } else {
-
-        debugger;
 
         var jsonResponse = JSON.parse(xhr.responseText);
         return {

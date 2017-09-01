@@ -52,7 +52,6 @@ export default function newUserState(state = initialState, action) {
                 newUserConfirm: action.payload
             }); break;
         case RegisterActions.FORM_REGISTER:{
-            debugger;
             if(!action.payload.isValidForm) {
 
                 return Object.assign({}, state, {
