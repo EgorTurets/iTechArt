@@ -64,7 +64,6 @@ namespace RealEstateAgency.UI.Controllers
         [AllowAnonymous]
         public IHttpActionResult GetListing(int id)
         {
-            
             Listing listing = _service.GetListing(id);
             ListingViewModel listingResult = new ListingViewModel
             {
@@ -119,18 +118,8 @@ namespace RealEstateAgency.UI.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            var cookie = Request.Headers.GetCookies("AspNet.AuthenticationCookie").FirstOrDefault();
-            if (cookie != null)
-            {
-                var userId = Int32.Parse(cookie["id"].Value);
-
-
-
-            }
-            else
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+            var claims = HttpContext.Current.GetOwinContext().Authentication.User.Claims;
+            int userId = Int32.Parse(claims.FirstOrDefault(c => c.Type.EndsWith("nameidentifier")).Value);
 
             _service.AddListing(new Listing
             {
@@ -140,12 +129,8 @@ namespace RealEstateAgency.UI.Controllers
                 Metric = newListing.Metric,
                 Price = newListing.Price,
                 ForRent = newListing.ForRent,
-                ProprietorID = 0                //need to read userID from cookie
+                ProprietorID = userId
             });
-
-
-
-
         }
 
 
@@ -165,7 +150,7 @@ namespace RealEstateAgency.UI.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            _service.RemoveListing(id);
+            _service.RemoveListing(id)
             return Task.CompletedTask;
         }
     }

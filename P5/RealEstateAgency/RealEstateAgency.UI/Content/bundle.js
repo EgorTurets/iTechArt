@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b936eb594be9260d8863"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d5b2438e9f197d759f7d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -16819,7 +16819,6 @@ function AddNotice(event) {
 
     event.preventDefault();
     var formIsValid = true;
-    var addedSuccessfully = false;
     var message = void 0;
 
     if (event.target.title.value.length === 0) {
@@ -16833,33 +16832,40 @@ function AddNotice(event) {
     }
 
     if (formIsValid) {
-        var currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-        var allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+        var jsonForm = JSON.stringify({
+            Title: event.target.title.value,
+            Description: event.target.description.value,
+            Metric: event.target.metric.value,
+            Address: event.target.address.value,
+            Price: event.target.price.value,
+            ForRent: event.target.isForRent.value === 'true'
+        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'API/Listing/AddListing', false);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        xhr.send(jsonForm);
 
-        var newNoticeForm = {
-            id: allNotifications[allNotifications.length - 1].id + 1,
-            title: event.target.title.value,
-            description: event.target.description.value,
-            metric: event.target.metric.value,
-            address: event.target.address.value,
-            price: event.target.price.value,
-            isForRent: event.target.isForRent.value === 'true',
-            proprietor: currentUser.id
-        };
+        if (xhrUser.status === 204) {
 
-        allNotifications.push(newNoticeForm);
-        window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
-        addedSuccessfully = true;
-    }
-
-    return {
-        type: _CabinetActions.CabinetActions.NOTICE_ADD,
-        payload: {
-            formIsValid: formIsValid,
-            addedSuccessfully: addedSuccessfully,
-            message: message
+            return {
+                type: _CabinetActions.CabinetActions.NOTICE_ADD,
+                payload: {
+                    formIsValid: formIsValid,
+                    addedSuccessfully: true,
+                    message: 'The entry was added.'
+                }
+            };
+        } else {
+            return {
+                type: _CabinetActions.CabinetActions.NOTICE_ADD,
+                payload: {
+                    formIsValid: formIsValid,
+                    addedSuccessfully: false,
+                    message: 'Server error.'
+                }
+            };
         }
-    };
+    }
 }
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(10); if (makeExportsHot(module, __webpack_require__(1))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "CabinetActionCreators.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -39290,7 +39296,7 @@ function newNotificationState() {
                     price: 0,
                     isForRent: false,
                     proprietor: 0,
-                    message: 'Your notification is begin added!'
+                    message: action.payload.message
                 });
             }
     }

@@ -87,7 +87,7 @@ export default function newNotificationState(state = initialState, action) {
                 price: 0,
                 isForRent: false,
                 proprietor: 0,
-                message: 'Your notification is begin added!'
+                message: action.payload.message
             })
         }
     }

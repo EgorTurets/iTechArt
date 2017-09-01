@@ -126,7 +126,6 @@ export function AddNotice(event) {
 
     event.preventDefault();
     let formIsValid = true;
-    let addedSuccessfully = false;
     let message;
 
     if (event.target.title.value.length === 0) {
@@ -141,31 +140,39 @@ export function AddNotice(event) {
     }
 
     if (formIsValid) {
-        let currentUser = JSON.parse(window.sessionStorage.getItem('currentUser'));
-        let allNotifications = JSON.parse(window.sessionStorage.getItem('AllNotifications'));
+        let jsonForm = JSON.stringify({
+            Title: event.target.title.value,
+            Description: event.target.description.value,
+            Metric: event.target.metric.value,
+            Address: event.target.address.value,
+            Price: event.target.price.value,
+            ForRent: event.target.isForRent.value === 'true',
+        });
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'API/Listing/AddListing', false);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        xhr.send(jsonForm);
 
-        let newNoticeForm = {
-            id: allNotifications[allNotifications.length-1].id + 1,
-            title: event.target.title.value,
-            description: event.target.description.value,
-            metric: event.target.metric.value,
-            address: event.target.address.value,
-            price: event.target.price.value,
-            isForRent: event.target.isForRent.value === 'true',
-            proprietor: currentUser.id
-        };
+        if (xhrUser.status === 204) {
 
-        allNotifications.push(newNoticeForm);
-        window.sessionStorage.setItem('AllNotifications', JSON.stringify(allNotifications));
-        addedSuccessfully = true;
-    }
-
-    return {
-        type: CabinetActions.NOTICE_ADD,
-        payload: {
-            formIsValid,
-            addedSuccessfully,
-            message
+            return {
+                type: CabinetActions.NOTICE_ADD,
+                payload: {
+                    formIsValid,
+                    addedSuccessfully: true,
+                    message: 'The entry was added.'
+                }
+            }
+        }
+        else {
+            return {
+                type: CabinetActions.NOTICE_ADD,
+                payload: {
+                    formIsValid,
+                    addedSuccessfully: false,
+                    message: 'Server error.'
+                }
+            }
         }
     }
 }
