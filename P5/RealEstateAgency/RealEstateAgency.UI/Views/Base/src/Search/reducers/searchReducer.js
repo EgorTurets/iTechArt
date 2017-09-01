@@ -1,0 +1,137 @@
+import { SearchActions } from '../actions/SearchActions'
+
+
+const initialState = {
+    searchParams: {
+        minPrice: 0,
+        maxPrice: 0,
+        minMetric: 0,
+        maxMetric: 0,
+        isForRent: false
+    },
+    searchResults: [],
+    searchResultPart: [],
+    resultsCount: 0,
+    currentPage: 1
+};
+
+export default function searchState(state = initialState, action) {
+
+    switch (action.type) {
+        case SearchActions.SEARCH_INIT: {
+
+            return state;
+        }
+        case SearchActions.SEARCH: {
+
+            return Object.assign({}, state, {
+                searchResults: action.payload.searchResults,
+                resultsCount: action.payload.resultsCount,
+                searchResultPart: action.payload.searchResults.slice(0, 5)
+            })
+
+        }
+        case SearchActions.SEARCH_MIN_PRICE_UPDATE: {
+            if (action.payload < 0) {
+
+                return Object.assign({}, state, {
+                    searchParams: Object.assign({}, state.searchParams, {
+                        minPrice: 0
+                    })
+                })
+            }
+            if (action.payload > state.searchParams.maxPrice) {
+
+                return Object.assign({}, state, {
+                    searchParams: Object.assign({}, state.searchParams, {
+                        minPrice: state.searchParams.maxPrice
+                    })
+                })
+            }
+
+            return Object.assign({}, state, {
+                searchParams: Object.assign({}, state.searchParams, {
+                    minPrice: action.payload
+                })
+            })
+        }
+        case SearchActions.SEARCH_MAX_PRICE_UPDATE: {
+            if (action.payload < state.searchParams.minPrice) {
+
+                return Object.assign({}, state, {
+                    searchParams: Object.assign({}, state.searchParams, {
+                        maxPrice: state.searchParams.minPrice
+                    })
+                })
+            }
+
+            return Object.assign({}, state, {
+                searchParams: Object.assign({}, state.searchParams, {
+                    maxPrice: action.payload
+                })
+            })
+        }
+        case SearchActions.SEARCH_MIN_METRIC_UPDATE: {
+            if (action.payload < 0) {
+
+                return Object.assign({}, state, {
+                    searchParams: Object.assign({}, state.searchParams, {
+                        minMetric: 0
+                    })
+                })
+            }
+            if (action.payload > state.searchParams.maxMetric) {
+
+                return Object.assign({}, state, {
+                    searchParams: Object.assign({}, state.searchParams, {
+                        minMetric: state.searchParams.maxMetric
+                    })
+                })
+            }
+
+            return Object.assign({}, state, {
+                searchParams: Object.assign({}, state.searchParams, {
+                    minMetric: action.payload
+                })
+            })
+        }
+        case SearchActions.SEARCH_MAX_METRIC_UPDATE: {
+            if (action.payload < state.searchParams.minMetric) {
+
+                return Object.assign({}, state, {
+                    searchParams: Object.assign({}, state.searchParams, {
+                        maxMetric: state.searchParams.minMetric
+                    })
+                })
+            }
+
+            return Object.assign({}, state, {
+                searchParams: Object.assign({}, state.searchParams, {
+                    maxMetric: action.payload
+                })
+            })
+        }
+        case SearchActions.SEARCH_PAGE_CHANGE: {
+            let sliceFrom = (action.payload - 1) * 5;
+            let sliceTo = action.payload * 5;
+            let partOfSearchResults = state.searchResults.slice(sliceFrom, sliceTo);
+
+            return Object.assign({}, state, {
+                currentPage: action.payload,
+                searchResultPart: partOfSearchResults
+            })
+        }
+        case SearchActions.SEARCH_FOR_RENT_CHANGE: {
+
+            return Object.assign({}, state, {
+                searchParams: Object.assign({}, state.searchParams, {
+                    isForRent: action.payload
+                })
+            })
+        }
+
+        default:
+            return state;
+    }
+
+}
