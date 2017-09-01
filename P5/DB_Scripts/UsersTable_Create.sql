@@ -1,7 +1,7 @@
 USE [Resume_iTechArt]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 25.08.2017 11:07:10 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 01.09.2017 13:41:30 ******/
 SET ANSI_NULLS ON
 GO
 
