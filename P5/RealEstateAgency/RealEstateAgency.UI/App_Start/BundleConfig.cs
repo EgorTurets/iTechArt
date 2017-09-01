@@ -7,7 +7,7 @@ namespace RealEstateAgency.UI.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/Content/bundle").Include(
-                        "~/Views/Base/dist/bundle.js"));
+                        "~/Content/bundle.js"));
 
             bundles.Add(new StyleBundle("~/Content/style").Include(
                       "~/Views/Base/style.css"));

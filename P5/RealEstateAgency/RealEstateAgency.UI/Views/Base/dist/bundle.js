@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a81c3bf8fe2699fade43"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "93307251822d4fe65578"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -40377,12 +40377,12 @@ var _scripts = __webpack_require__(156);
 
 function LogInInit() {
     var currentUserCookie = (0, _scripts.getCookie)('Rea.Auth');
-    if (!currentUser) {
+    if ((0, _scripts.getCookie)('Rea.Auth')) {
 
         return {
             type: _LogInActions.LogInActions.LOG_IN_INIT,
             payload: {
-                canRedirect: false
+                canRedirect: true
             }
         };
     }
@@ -40390,7 +40390,7 @@ function LogInInit() {
     return {
         type: _LogInActions.LogInActions.LOG_IN_INIT,
         payload: {
-            canRedirect: true
+            canRedirect: false
         }
     };
 }

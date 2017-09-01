@@ -11,7 +11,7 @@ namespace RealEstateAgency.UI.Controllers
         // GET: Base
         public ActionResult Index()
         {
-            return File("~/Views/Base/index.html", "text/html");
+            return View();
         }
     }
 }

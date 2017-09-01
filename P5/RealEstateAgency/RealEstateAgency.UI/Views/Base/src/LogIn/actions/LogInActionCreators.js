@@ -4,13 +4,12 @@ import {getCookie} from "../../Common/scripts";
 //------Log In actions------
 
 export function LogInInit() {
-    let currentUserCookie = getCookie('Rea.Auth');
-    if(!currentUser) {
+    if(getCookie('Rea.Auth')) {
 
         return {
             type: LogInActions.LOG_IN_INIT,
             payload: {
-                canRedirect: false
+                canRedirect: true
             }
         }
     }
@@ -18,7 +17,7 @@ export function LogInInit() {
     return {
         type: LogInActions.LOG_IN_INIT,
         payload: {
-            canRedirect: true
+            canRedirect: false
         }
     }
 }

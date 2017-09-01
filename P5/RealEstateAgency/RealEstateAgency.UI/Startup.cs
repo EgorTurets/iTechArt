@@ -19,7 +19,7 @@ namespace RealEstateAgency.UI
         {
             var config = new HttpConfiguration();
             WebApiConfig.Register(config);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             appBuilder.CreatePerOwinContext<ReaUserManager>(ReaUserManager.Create);
             appBuilder.CreatePerOwinContext<ReaSignInManager>(ReaSignInManager.Create);
