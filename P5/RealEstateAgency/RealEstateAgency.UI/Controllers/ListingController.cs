@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNet.Identity.Owin;
-using Ninject;
-using RealEstateAgency.BusinessLayer.Interfaces;
-using RealEstateAgency.DI.App_Start;
+﻿using RealEstateAgency.BusinessLayer.Interfaces;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.ViewModels;
 using System;
@@ -24,10 +21,6 @@ namespace RealEstateAgency.UI.Controllers
         public ListingController(IListingService service) : base()
         {
             _service = service;
-        }
-
-        public ListingController() : this(new StandardKernel(new ReaNinjectModule()).Get<IListingService>())
-        {
         }
 
         [HttpPost]

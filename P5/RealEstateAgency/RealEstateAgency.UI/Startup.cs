@@ -2,29 +2,36 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
 using Owin;
+using RealEstateAgency.DI;
 using RealEstateAgency.UI.App_Start;
 using RealEstateAgency.UI.IdentityManagers;
-using System;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Optimization;
+
+[assembly: OwinStartup(typeof(RealEstateAgency.UI.Startup))]
 
 namespace RealEstateAgency.UI
 {
     public class Startup
     {
-        public void Configuration(IAppBuilder appBuilder)
+        public void Configuration(IAppBuilder app)
         {
+            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
+
             var config = new HttpConfiguration();
             WebApiConfig.Register(config);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            appBuilder.CreatePerOwinContext<ReaUserManager>(ReaUserManager.Create);
-            appBuilder.CreatePerOwinContext<ReaSignInManager>(ReaSignInManager.Create);
+            app.UseNinjectMiddleware(NinjectConfig.CreateKernel/*() => NinjectConfig.Kernel*/).UseNinjectWebApi(config);
 
-            appBuilder.UseCookieAuthentication(new CookieAuthenticationOptions
+            app.CreatePerOwinContext<ReaUserManager>(ReaUserManager.Create);
+            app.CreatePerOwinContext<ReaSignInManager>(ReaSignInManager.Create);
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 CookieName = "Rea.Auth",
@@ -36,9 +43,8 @@ namespace RealEstateAgency.UI
                     {
                         context.Response.StatusCode = 401;
                     },
-                    OnValidateIdentity = context => 
+                    OnValidateIdentity = context =>
                     {
-                        var cookies = context.Request.Cookies;
                         var userIdCookie = context.Identity.GetUserId<int>();
 
                         var userManager = context.OwinContext.Get<ReaUserManager>();
@@ -50,7 +56,7 @@ namespace RealEstateAgency.UI
                                 context.OwinContext.Authentication.SignIn(context.Properties, context.Identity);
 
                                 return Task.CompletedTask;
-                            } 
+                            }
                         }
                         context.RejectIdentity();
 

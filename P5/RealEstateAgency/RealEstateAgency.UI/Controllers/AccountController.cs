@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
-using Ninject;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
@@ -19,14 +18,10 @@ namespace RealEstateAgency.UI.Controllers
         private ReaUserManager _userManager;
         private ReaSignInManager _signInManager;
 
-        public AccountController(ReaUserManager userManager, ReaSignInManager signInManager) : base()
+        public AccountController() : base()
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
-
-        public AccountController() : this(HttpContext.Current.GetOwinContext().Get<ReaUserManager>(), HttpContext.Current.GetOwinContext().Get<ReaSignInManager>())
-        {
+            _userManager = HttpContext.Current.GetOwinContext().Get<ReaUserManager>();
+            _signInManager = HttpContext.Current.GetOwinContext().Get<ReaSignInManager>();
         }
 
         [HttpPost]

@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Ninject;
-using RealEstateAgency.DI.App_Start;
+using RealEstateAgency.DI;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.Utils;
 using System.Threading.Tasks;
@@ -20,12 +20,13 @@ namespace RealEstateAgency.UI.IdentityManagers
 
         public static ReaUserManager Create(IdentityFactoryOptions<ReaUserManager> options, IOwinContext context)
         {
-            var userStore = new StandardKernel(new ReaNinjectModule()).Get<ReaUserStore>();
-            var manager = new ReaUserManager(userStore);
-
-            manager.PasswordValidator = new PasswordValidator
+            var userStore = NinjectConfig.Kernel.Get<ReaUserStore>();
+            var manager = new ReaUserManager(userStore)
             {
-                RequiredLength = 8
+                PasswordValidator = new PasswordValidator
+                {
+                    RequiredLength = 8
+                }
             };
 
             return manager;
