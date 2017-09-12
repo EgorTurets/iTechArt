@@ -15,5 +15,7 @@ namespace RealEstateAgency.Models.Models
         public string PasswordHash { get; set; }
 
         public bool Confirmed { get; set; }
+
+        public string ResetToken { get; set; }
     }
 }

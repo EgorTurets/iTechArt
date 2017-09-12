@@ -119,6 +119,7 @@ namespace RealEstateAgency.UI.IdentityManagers
             _store.Dispose();
             base.Dispose(disposing);
         }
+        
         #endregion
     }
 }

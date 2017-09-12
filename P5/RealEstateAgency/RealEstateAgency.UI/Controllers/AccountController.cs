@@ -48,17 +48,17 @@ namespace RealEstateAgency.UI.Controllers
             };
 
             var createResult = _userManager.CreateAsync(reaUser, newUser.Password);
-
             if(!createResult.Result.Succeeded)
             {
                 throw new HttpResponseException(HttpStatusCode.InternalServerError); 
             }
-            Task<ReaUser> addedUser = _userManager.FindByNameAsync(newUser.Email);
 
-            Task<string> confirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(addedUser.Result.Id);
+            ReaUser addedUser = _userManager.FindByNameAsync(newUser.Email).Result;
+
+            string confirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(addedUser.Id).Result;
 
             string confirmationUlr = Url.Link("http://rea.com/API/Account/ConfirmRegistration",
-                new {id = addedUser.Result.Id, token = confirmationToken.Result});
+                new {id = addedUser.Id, token = confirmationToken});
 
             Logger logger = LogManager.GetCurrentClassLogger();
             logger.Trace("Click for confirm registration: " + confirmationUlr);

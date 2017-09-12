@@ -1,10 +1,7 @@
 ﻿using RealEstateAgency.DBLayer.Interfaces;
 using RealEstateAgency.Models.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateAgency.DBLayer
 {

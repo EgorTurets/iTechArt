@@ -50,7 +50,6 @@ namespace RealEstateAgency.UI.Utils
         public Task DeleteAsync(ReaUser user)
         {
             return Task.Factory.StartNew(() => _service.DeleteUser(user));
-            //return Task.FromResult(_service.DeleteUser(user));
         }
 
         public Task UpdateAsync(ReaUser user)
@@ -58,26 +57,42 @@ namespace RealEstateAgency.UI.Utils
             return Task.FromResult(_service.UpdateUser(user));
         }
 
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        #region Methods for SignInManager
+
         public Task<bool> GetLockoutEnabledAsync(ReaUser user)
         {
             return Task.FromResult(false);
         }
 
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public Task<int> GetAccessFailedCountAsync(ReaUser user)
         {
             return Task.FromResult(0);
         }
+
+        public Task<IList<Claim>> GetClaimsAsync(ReaUser user)
+        {
+            IList<Claim> claims = new List<Claim>();
+            return Task.FromResult(claims);
+        }
+
+        public Task<IList<string>> GetRolesAsync(ReaUser user)
+        {
+            IList<string> retList = new List<string>();
+            return Task.FromResult(retList);
+        }
+
+        public Task<string> GetSecurityStampAsync(ReaUser user)
+        {
+            return Task.FromResult(String.Empty);
+        }
+
+        public Task<bool> GetTwoFactorEnabledAsync(ReaUser user)
+        {
+            return Task.FromResult(true);
+        }
+
+        #endregion
+
 
         public void Dispose()
         {
@@ -86,6 +101,7 @@ namespace RealEstateAgency.UI.Utils
 
 
         #region Not implemented methods
+
         /// <summary>
         /// NOT IMPLEMENT
         /// </summary>
@@ -144,19 +160,6 @@ namespace RealEstateAgency.UI.Utils
             throw new NotImplementedException();
         }
 
-        
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task<IList<Claim>> GetClaimsAsync(ReaUser user)
-        {
-            IList<Claim> claims = new List<Claim>();
-            return Task.FromResult(claims);
-        }
-
         /// <summary>
         /// NOT IMPLEMENT
         /// </summary>
@@ -176,8 +179,6 @@ namespace RealEstateAgency.UI.Utils
         {
             throw new NotImplementedException();
         }
-
-        
 
         /// <summary>
         /// NOT IMPLEMENT
@@ -217,37 +218,6 @@ namespace RealEstateAgency.UI.Utils
         public Task<bool> GetPhoneNumberConfirmedAsync(ReaUser user)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task<IList<string>> GetRolesAsync(ReaUser user)
-        {
-            IList<string> retList = new List<string>();
-            return Task.FromResult(retList);
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task<string> GetSecurityStampAsync(ReaUser user)
-        {
-            return Task.FromResult(String.Empty);
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Task<bool> GetTwoFactorEnabledAsync(ReaUser user)
-        {
-            return Task.FromResult(true);
         }
 
         /// <summary>
@@ -411,6 +381,7 @@ namespace RealEstateAgency.UI.Utils
         {
             throw new NotImplementedException();
         }
+
         #endregion
 
     }
