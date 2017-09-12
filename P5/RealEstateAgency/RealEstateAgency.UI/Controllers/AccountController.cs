@@ -1,7 +1,7 @@
 ﻿using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Newtonsoft.Json;
+using NLog;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
@@ -43,7 +43,8 @@ namespace RealEstateAgency.UI.Controllers
             {
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
-                UserName = newUser.Email
+                UserName = newUser.Email,
+                Confirmed = false
             };
 
             var createResult = _userManager.CreateAsync(reaUser, newUser.Password);
@@ -52,9 +53,33 @@ namespace RealEstateAgency.UI.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.InternalServerError); 
             }
-            var json = JsonConvert.SerializeObject(reaUser);
+            Task<ReaUser> addedUser = _userManager.FindByNameAsync(newUser.Email);
 
-            return Json<RegisterViewModel>(newUser);
+            Task<string> confirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(addedUser.Result.Id);
+
+            string confirmationUlr = Url.Link("http://rea.com/API/Account/ConfirmRegistration",
+                new {id = addedUser.Result.Id, token = confirmationToken.Result});
+
+            Logger logger = LogManager.GetCurrentClassLogger();
+            logger.Trace("Click for confirm registration: " + confirmationUlr);
+
+            return Json(new
+            {
+                message = "Please, confirm registration in Log file"
+            });
+        }
+
+        [HttpGet]
+        [Route("ConfirmRegistration")]
+        public async Task<IHttpActionResult> ConfirmRegistration(int id, string confirmationToken)
+        {
+            ReaUser user = _userManager.FindByIdAsync(id).Result;
+            user.Confirmed = true;
+
+            await _userManager.UpdateAsync(user);
+            await _signInManager.SignInAsync(user, false, false);
+
+            return null;
         }
 
         [HttpPost]

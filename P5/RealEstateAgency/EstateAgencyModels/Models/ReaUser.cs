@@ -13,5 +13,7 @@ namespace RealEstateAgency.Models.Models
         public string LastName { get; set; }
 
         public string PasswordHash { get; set; }
+
+        public bool Confirmed { get; set; }
     }
 }

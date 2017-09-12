@@ -25,9 +25,6 @@ namespace RealEstateAgency.DBLayer
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var user = new ReaUser();
-            var name = user.FirstName;
-
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Configurations.Add(new ListingConfig());

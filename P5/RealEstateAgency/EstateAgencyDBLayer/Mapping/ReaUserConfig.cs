@@ -14,6 +14,7 @@ namespace RealEstateAgency.DBLayer.Mapping
             Property(u => u.LastName).IsRequired().HasColumnType("nvarchar").HasMaxLength(50).HasColumnName("LastName");
             Property(u => u.UserName).IsRequired().HasColumnType("nvarchar").HasMaxLength(100).HasColumnName("Email");
             Property(u => u.PasswordHash).IsRequired().HasColumnType("nvarchar").HasMaxLength(200).HasColumnName("PasswordHash");
+            Property(u => u.Confirmed).IsRequired().HasColumnType("bit").HasColumnName("Confirmed");
         }
     }
 }
