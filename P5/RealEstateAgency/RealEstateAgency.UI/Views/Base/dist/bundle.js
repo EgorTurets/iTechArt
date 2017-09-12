@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "522424094d414cf03a7a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "049dade45401d25d29a1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -40045,11 +40045,12 @@ function Register(event) {
             }
         };
     } else {
+        var response = JSON.parse(xhr.responseText);
 
         return {
             type: _RegisterActions.RegisterActions.FORM_REGISTER,
             payload: {
-                message: 'All right',
+                message: response.message,
                 isValidForm: isValidForm,
                 isSuccessfullyAdded: true
             }

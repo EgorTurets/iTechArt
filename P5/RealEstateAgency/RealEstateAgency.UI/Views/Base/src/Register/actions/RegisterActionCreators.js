@@ -130,11 +130,12 @@ export function Register (event) {
             }
         }
     } else {
+        let response = JSON.parse(xhr.responseText);
 
         return {
             type: RegisterActions.FORM_REGISTER,
             payload: {
-                message: 'All right',
+                message: response.message,
                 isValidForm,
                 isSuccessfullyAdded: true
             }
