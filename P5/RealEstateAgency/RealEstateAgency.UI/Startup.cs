@@ -3,10 +3,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Ninject.Web.Common.OwinHost;
-using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using RealEstateAgency.DI;
-using RealEstateAgency.UI.App_Start;
 using RealEstateAgency.UI.IdentityManagers;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -26,7 +24,7 @@ namespace RealEstateAgency.UI
             WebApiConfig.Register(config);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            app.UseNinjectMiddleware(NinjectConfig.CreateKernel/*() => NinjectConfig.Kernel*/).UseNinjectWebApi(config);
+            app.UseNinjectMiddleware(NinjectConfig.CreateKernel);
 
             app.CreatePerOwinContext<ReaUserManager>(ReaUserManager.Create);
             app.CreatePerOwinContext<ReaSignInManager>(ReaSignInManager.Create);

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using RealEstateAgency.Models.Models;
+using System.Threading.Tasks;
 using Ninject;
 using RealEstateAgency.DI;
-using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.Utils;
-using System.Threading.Tasks;
 
 namespace RealEstateAgency.UI.IdentityManagers
 {

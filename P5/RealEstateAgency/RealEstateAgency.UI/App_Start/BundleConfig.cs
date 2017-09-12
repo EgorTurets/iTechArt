@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace RealEstateAgency.UI.App_Start
+namespace RealEstateAgency.UI
 {
     public class BundleConfig
     {
@@ -10,7 +10,7 @@ namespace RealEstateAgency.UI.App_Start
                         "~/Content/bundle.js"));
 
             bundles.Add(new StyleBundle("~/Content/style").Include(
-                      "~/Views/Base/style.css"));
+                      "~/Content/style.css"));
 
             BundleTable.EnableOptimizations = false;
         }

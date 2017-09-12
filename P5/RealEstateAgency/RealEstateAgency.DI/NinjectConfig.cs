@@ -1,9 +1,12 @@
-﻿using Ninject;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using Ninject;
 using Ninject.Web.Common;
 using RealEstateAgency.BusinessLayer;
 using RealEstateAgency.BusinessLayer.Interfaces;
 using RealEstateAgency.DBLayer;
 using RealEstateAgency.DBLayer.Interfaces;
+using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.Utils;
 using System;
 using System.Web;
@@ -47,7 +50,7 @@ namespace RealEstateAgency.DI
             kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
             kernel.Bind<IListingService>().To<ListingService>().InRequestScope().WithConstructorArgument("repository", ctx => ctx.Kernel.Get<IListingRepository>());
             kernel.Bind<IUserService>().To<UserService>().InRequestScope().WithConstructorArgument("repository", ctx => ctx.Kernel.Get<IUserRepository>());
-            kernel.Bind<ReaUserStore>().ToSelf().WithConstructorArgument("service", ctx => ctx.Kernel.Get<IUserService>());
+            kernel.Bind<IUserStore<ReaUser, int>>().To<ReaUserStore>();//.WithConstructorArgument("service", ctx => ctx.Kernel.Get<IUserService>());
         }
     }
 }

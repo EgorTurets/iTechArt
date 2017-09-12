@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Web;
 
 namespace RealEstateAgency.UI.IdentityManagers
 {
     public class ReaClaim : ClaimsIdentity
     {
-        #region Constroctors
+        #region Constructors
         public ReaClaim()
         {
         }
