@@ -62,7 +62,7 @@ namespace RealEstateAgency.DBLayer
         public IEnumerable<Listing> SearchListings(decimal minPrice, decimal maxPrice, double minMetric, double maxMetric, bool forRent)
         {
             return _context.Listings.Where(n => (n.Price >= minPrice) && (n.Price <= maxPrice) &&
-                                          (n.Metric >= minMetric) && (n.Metric <= maxMetric) && (n.ForRent == forRent));
+                                                (n.Metric >= minMetric) && (n.Metric <= maxMetric) && (n.ForRent == forRent));
         }
 
         public Task<IEnumerable<Listing>> SearchListingsAsync(decimal minPrice, decimal maxPrice, double minMetric, double maxMetric, bool forRent)

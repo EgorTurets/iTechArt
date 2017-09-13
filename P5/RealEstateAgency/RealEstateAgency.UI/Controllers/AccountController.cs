@@ -32,7 +32,7 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpPost]
         [Route("AddUser")]
-        public IHttpActionResult AddUser(RegisterViewModel newUser)
+        public  IHttpActionResult AddUser(RegisterViewModel newUser)
         {
             if (!this.ModelState.IsValid)
             {
@@ -47,18 +47,17 @@ namespace RealEstateAgency.UI.Controllers
                 Confirmed = false
             };
 
-            var createResult = _userManager.CreateAsync(reaUser, newUser.Password);
-            if(!createResult.Result.Succeeded)
+            var createResult =  _userManager.CreateAsync(reaUser, newUser.Password).Result;
+            if(!createResult.Succeeded)
             {
                 throw new HttpResponseException(HttpStatusCode.InternalServerError); 
             }
 
-            ReaUser addedUser = _userManager.FindByNameAsync(newUser.Email).Result;
+            ReaUser addedUser =  _userManager.FindByNameAsync(newUser.Email).Result;
 
-            string confirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(addedUser.Id).Result;
+            string confirmationToken =  _userManager.GenerateEmailConfirmationTokenAsync(addedUser.Id).Result;
 
-            string confirmationUlr = Url.Link("http://rea.com/API/Account/ConfirmRegistration",
-                new {id = addedUser.Id, token = confirmationToken});
+            string confirmationUlr = Url.Link("ConfirmReg", new {id = addedUser.Id, token = confirmationToken});
 
             Logger logger = LogManager.GetCurrentClassLogger();
             logger.Trace("Click for confirm registration: " + confirmationUlr);
@@ -70,8 +69,8 @@ namespace RealEstateAgency.UI.Controllers
         }
 
         [HttpGet]
-        [Route("ConfirmRegistration")]
-        public async Task<IHttpActionResult> ConfirmRegistration(int id, string confirmationToken)
+        [Route("ConfirmRegistration"/*"?{id:int}&{token:string}"*/, Name = "ConfirmReg")]
+        public async Task<IHttpActionResult> ConfirmRegistration(int id, string token)
         {
             ReaUser user = _userManager.FindByIdAsync(id).Result;
             user.Confirmed = true;

@@ -16,6 +16,7 @@ namespace RealEstateAgency.UI.IdentityManagers
         public ReaUserManager(ReaUserStore store) : base(store)
         {
             _store = store;
+            UserTokenProvider = new ReaUserTokenProvider();
         }
 
         public static ReaUserManager Create(IdentityFactoryOptions<ReaUserManager> options, IOwinContext context)

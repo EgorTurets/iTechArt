@@ -7,27 +7,32 @@ namespace RealEstateAgency.UI.IdentityManagers
 {
     public class ReaUserTokenProvider : IUserTokenProvider<ReaUser, int>
     {
-        public Task<string> GenerateAsync(string purpose, UserManager<ReaUser, int> manager, ReaUser user)
+        public async Task<string> GenerateAsync(string purpose, UserManager<ReaUser, int> manager, ReaUser user)
         {
             Guid resetToken = Guid.NewGuid();
             user.ResetToken = resetToken.ToString();
-            manager.UpdateAsync(user);
-            return Task.FromResult<string>(resetToken.ToString());
+            await manager.UpdateAsync(user);
+
+            return await Task.FromResult<string>(resetToken.ToString());
         }
 
         public Task<bool> ValidateAsync(string purpose, string token, UserManager<ReaUser, int> manager, ReaUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<bool>(user.ResetToken.ToString() == token);
         }
 
         public Task NotifyAsync(string token, UserManager<ReaUser, int> manager, ReaUser user)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<int>(0);
         }
 
         public Task<bool> IsValidProviderForUserAsync(UserManager<ReaUser, int> manager, ReaUser user)
         {
-            throw new NotImplementedException();
+            if (manager == null) throw new ArgumentNullException();
+            else
+            {
+                return Task.FromResult<bool>(manager.SupportsUserPassword);
+            }
         }
     }
 }

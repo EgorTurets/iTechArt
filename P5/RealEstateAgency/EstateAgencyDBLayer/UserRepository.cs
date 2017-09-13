@@ -31,7 +31,7 @@ namespace RealEstateAgency.DBLayer
                 throw new ApplicationException("A user with this Email already exists");
             }
             _context.Set<ReaUser>().Add(user);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return user;
         }
@@ -47,7 +47,10 @@ namespace RealEstateAgency.DBLayer
             userNote.LastName = user.LastName;
             userNote.PasswordHash = user.PasswordHash;
             userNote.UserName = user.UserName;
+            userNote.Confirmed = user.Confirmed;
+            userNote.ResetToken = user.ResetToken;
             _context.Entry(userNote).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
 
             return GetUserById(userNote.Id);
         }
@@ -60,7 +63,7 @@ namespace RealEstateAgency.DBLayer
                 throw new ApplicationException("User not found");
             }
             _context.Users.Remove(userNote);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Dispose()
