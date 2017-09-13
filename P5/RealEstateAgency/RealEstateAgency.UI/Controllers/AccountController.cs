@@ -69,11 +69,12 @@ namespace RealEstateAgency.UI.Controllers
         }
 
         [HttpGet]
-        [Route("ConfirmRegistration"/*"?{id:int}&{token:string}"*/, Name = "ConfirmReg")]
+        [Route("ConfirmRegistration", Name = "ConfirmReg")]
         public async Task<IHttpActionResult> ConfirmRegistration(int id, string token)
         {
             ReaUser user = _userManager.FindByIdAsync(id).Result;
             user.Confirmed = true;
+            user.ResetToken = null;
 
             await _userManager.UpdateAsync(user);
             await _signInManager.SignInAsync(user, false, false);
