@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2df8750f7ac05372e832"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "521341243223aaf25c3a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -39182,12 +39182,27 @@ function logInState() {
                     password: action.payload
                 });
             }
-        case _LogInActions.LogInActions.LOG_IN_RESET_PASS:
+        case _LogInActions.LogInActions.LOG_IN_FORGOT_PASS:
             {
 
                 return Object.assign({}, state, {
                     isPassForgot: true
                 });
+            }
+        case _LogInActions.LogInActions.LOG_IN_RESET_PASS:
+            {
+                if (action.payload.isPassWasReset) {
+
+                    return Object.assign({}, state, {
+                        isPassForgot: false,
+                        message: 'See the new password in the log file.'
+                    });
+                } else {
+
+                    return Object.assign({}, state, {
+                        message: action.payload.message
+                    });
+                }
             }
         default:
             return state;
@@ -40440,7 +40455,35 @@ function LogInForgotPass(event) {
     };
 }
 
-function LogInResetPass(event) {}
+function LogInResetPass(event) {
+    var jsonForm = JSON.stringify({
+        email: event.target.email.value
+    });
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/ResetPassword', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
+
+    if (xhr.status !== 200) {
+        var jsonResponse = JSON.parse(xhr.responseText);
+
+        return {
+            type: _LogInActions.LogInActions.LOG_IN_RESET_PASS,
+            payload: {
+                message: jsonResponse,
+                isPassWasReset: false
+            }
+        };
+    } else {
+
+        return {
+            type: _LogInActions.LogInActions.LOG_IN,
+            payload: {
+                isPassWasReset: true
+            }
+        };
+    }
+}
 
 function LogInEmailUpd(event) {
 

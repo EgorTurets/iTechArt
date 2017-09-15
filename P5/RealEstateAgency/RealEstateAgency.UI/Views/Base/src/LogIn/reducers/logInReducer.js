@@ -39,11 +39,26 @@ export default function logInState(state = initialState, action) {
                 password: action.payload
             })
         }
-        case LogInActions.LOG_IN_RESET_PASS: {
+        case LogInActions.LOG_IN_FORGOT_PASS: {
 
             return Object.assign({}, state, {
                 isPassForgot: true
             })
+        }
+        case LogInActions.LOG_IN_RESET_PASS: {
+            if(action.payload.isPassWasReset) {
+
+                return Object.assign({}, state, {
+                    isPassForgot: false,
+                    message: 'See the new password in the log file.'
+                })
+            }
+            else {
+
+                return Object.assign({}, state, {
+                    message: action.payload.message
+                })
+            }
         }
         default:
             return state;

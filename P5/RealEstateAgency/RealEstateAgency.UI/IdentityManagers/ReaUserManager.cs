@@ -115,6 +115,11 @@ namespace RealEstateAgency.UI.IdentityManagers
             return Task.FromResult(IdentityResult.Success);
         }
 
+        public override Task<IdentityResult> ResetPasswordAsync(int userId, string token, string newPassword)
+        {
+            return base.ResetPasswordAsync(userId, token, newPassword);
+        }
+
         protected override void Dispose(bool disposing)
         {
             _store.Dispose();

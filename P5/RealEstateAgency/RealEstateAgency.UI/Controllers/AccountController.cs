@@ -132,5 +132,13 @@ namespace RealEstateAgency.UI.Controllers
                 LastName = user.LastName
             });
         }
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public Task<IHttpActionResult> ResetPassword(string email)
+        {
+            _userManager.ResetPassword()
+            return null;
+        }
     }
 }

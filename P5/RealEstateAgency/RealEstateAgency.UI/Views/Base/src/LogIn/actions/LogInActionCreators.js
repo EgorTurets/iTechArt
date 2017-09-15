@@ -87,7 +87,34 @@ export function LogInForgotPass(event) {
 }
 
 export function LogInResetPass(event) {
+    let jsonForm = JSON.stringify({
+        email: event.target.email.value,
+    });
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/ResetPassword', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
 
+    if (xhr.status !== 200) {
+        let jsonResponse = JSON.parse(xhr.responseText);
+
+        return {
+            type: LogInActions.LOG_IN_RESET_PASS,
+            payload: {
+                message: jsonResponse,
+                isPassWasReset: false
+            }
+        }
+    }
+    else {
+
+        return {
+            type: LogInActions.LOG_IN,
+            payload: {
+                isPassWasReset: true
+            }
+        }
+    }
 }
 
 export function LogInEmailUpd(event) {
