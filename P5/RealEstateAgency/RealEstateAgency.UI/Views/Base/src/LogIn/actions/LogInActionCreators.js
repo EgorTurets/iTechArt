@@ -79,6 +79,17 @@ export function LogIn(event) {
     }
 }
 
+export function LogInForgotPass(event) {
+
+    return {
+        type: LogInActions.LOG_IN_FORGOT_PASS,
+    }
+}
+
+export function LogInResetPass(event) {
+
+}
+
 export function LogInEmailUpd(event) {
 
     return {

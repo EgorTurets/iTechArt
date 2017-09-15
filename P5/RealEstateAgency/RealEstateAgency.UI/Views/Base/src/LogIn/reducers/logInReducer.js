@@ -4,12 +4,21 @@ import { LogInActions } from '../actions/LogInActions'
 const initialState = {
     email: '',
     password: '',
-    canRedirect: false
+    canRedirect: false,
+    isPassForgot: false
 };
 
 export default function logInState(state = initialState, action) {
 
     switch (action.type) {
+        case LogInActions.LOG_IN_INIT: {
+
+            return Object.assign({}, state, {
+                email: '',
+                canRedirect: action.payload.canRedirect,
+                isPassForgot: false
+            })
+        }
         case LogInActions.LOG_IN: {
 
             return Object.assign({}, state, {
@@ -30,11 +39,10 @@ export default function logInState(state = initialState, action) {
                 password: action.payload
             })
         }
-        case LogInActions.LOG_IN_INIT: {
+        case LogInActions.LOG_IN_RESET_PASS: {
 
             return Object.assign({}, state, {
-                email: '',
-                canRedirect: action.payload.canRedirect
+                isPassForgot: true
             })
         }
         default:

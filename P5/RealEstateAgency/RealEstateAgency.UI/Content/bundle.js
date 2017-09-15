@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "049dade45401d25d29a1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2df8750f7ac05372e832"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -16637,7 +16637,9 @@ var LogInActions = exports.LogInActions = {
     LOG_IN_EMAIL_UPDATE: 'LOG_IN_EMAIL_UPDATE',
     LOG_IN_PASSWORD_UPDATE: 'LOG_IN_PASSWORD_UPDATE',
     LOG_IN: 'LOG_IN',
-    LOG_IN_INIT: 'LOG_IN_INIT'
+    LOG_IN_INIT: 'LOG_IN_INIT',
+    LOG_IN_FORGOT_PASS: 'LOG_IN_FORGOT_PASS',
+    LOG_IN_RESET_PASS: 'LOG_IN_RESET_PASS'
 };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(10); if (makeExportsHot(module, __webpack_require__(1))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "LogInActions.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -39019,7 +39021,7 @@ function newUserState() {
                     newUserEmail: '',
                     newUserPassword: '',
                     newUserConfirm: '',
-                    message: 'Account was created!'
+                    message: action.payload.message
                 });
             }
         default:
@@ -39138,7 +39140,8 @@ var _LogInActions = __webpack_require__(153);
 var initialState = {
     email: '',
     password: '',
-    canRedirect: false
+    canRedirect: false,
+    isPassForgot: false
 };
 
 function logInState() {
@@ -39147,6 +39150,15 @@ function logInState() {
 
 
     switch (action.type) {
+        case _LogInActions.LogInActions.LOG_IN_INIT:
+            {
+
+                return Object.assign({}, state, {
+                    email: '',
+                    canRedirect: action.payload.canRedirect,
+                    isPassForgot: false
+                });
+            }
         case _LogInActions.LogInActions.LOG_IN:
             {
 
@@ -39170,12 +39182,11 @@ function logInState() {
                     password: action.payload
                 });
             }
-        case _LogInActions.LogInActions.LOG_IN_INIT:
+        case _LogInActions.LogInActions.LOG_IN_RESET_PASS:
             {
 
                 return Object.assign({}, state, {
-                    email: '',
-                    canRedirect: action.payload.canRedirect
+                    isPassForgot: true
                 });
             }
         default:
@@ -40312,7 +40323,9 @@ function mapDispatchToProps(dispatch) {
         LogInInit: (0, _redux.bindActionCreators)(ActionCreators.LogInInit, dispatch),
         LogIn: (0, _redux.bindActionCreators)(ActionCreators.LogIn, dispatch),
         EmailUpdate: (0, _redux.bindActionCreators)(ActionCreators.LogInEmailUpd, dispatch),
-        PassUpdate: (0, _redux.bindActionCreators)(ActionCreators.LogInPassUpd, dispatch)
+        PassUpdate: (0, _redux.bindActionCreators)(ActionCreators.LogInPassUpd, dispatch),
+        ForgotPass: (0, _redux.bindActionCreators)(ActionCreators.LogInForgotPass, dispatch),
+        ResetPass: (0, _redux.bindActionCreators)(ActionCreators.LogInResetPass, dispatch)
     };
 }
 
@@ -40334,6 +40347,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LogInInit = LogInInit;
 exports.LogIn = LogIn;
+exports.LogInForgotPass = LogInForgotPass;
+exports.LogInResetPass = LogInResetPass;
 exports.LogInEmailUpd = LogInEmailUpd;
 exports.LogInPassUpd = LogInPassUpd;
 
@@ -40418,6 +40433,15 @@ function LogIn(event) {
     }
 }
 
+function LogInForgotPass(event) {
+
+    return {
+        type: _LogInActions.LogInActions.LOG_IN_FORGOT_PASS
+    };
+}
+
+function LogInResetPass(event) {}
+
 function LogInEmailUpd(event) {
 
     return {
@@ -40484,18 +40508,18 @@ var LogIn = function (_Component) {
         value: function render() {
 
             if (this.props.logInState.canRedirect) {
+
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/user' });
             }
 
-            return _react2.default.createElement(
-                'form',
-                { className: 'form-inner-center', onSubmit: this.props.LogIn },
-                _react2.default.createElement(
-                    'ul',
-                    { className: 'input-form-list' },
+            if (this.props.logInState.isPassForgot) {
+
+                return _react2.default.createElement(
+                    'div',
+                    null,
                     _react2.default.createElement(
-                        'li',
-                        null,
+                        'form',
+                        { className: 'form-inner-center', onSubmit: this.props.ResetPass },
                         _react2.default.createElement(
                             'div',
                             null,
@@ -40505,30 +40529,66 @@ var LogIn = function (_Component) {
                             id: 'email',
                             type: 'email',
                             value: this.props.logInState.email,
-                            onChange: this.props.EmailUpdate })
+                            onChange: this.props.EmailUpdate }),
+                        _react2.default.createElement(
+                            'p',
+                            { id: 'logIn-message',
+                                className: 'message-paragraph' },
+                            this.props.logInState.message
+                        ),
+                        _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Reset password' })
+                    )
+                );
+            }
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'form',
+                    { className: 'form-inner-center', onSubmit: this.props.LogIn },
+                    _react2.default.createElement(
+                        'ul',
+                        { className: 'input-form-list' },
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                'Email: '
+                            ),
+                            _react2.default.createElement('input', {
+                                id: 'email',
+                                type: 'email',
+                                value: this.props.logInState.email,
+                                onChange: this.props.EmailUpdate })
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                'Password: '
+                            ),
+                            _react2.default.createElement('input', {
+                                id: 'password',
+                                type: 'password',
+                                value: this.props.logInState.password,
+                                onChange: this.props.PassUpdate })
+                        )
                     ),
                     _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            'Password: '
-                        ),
-                        _react2.default.createElement('input', {
-                            id: 'password',
-                            type: 'password',
-                            value: this.props.logInState.password,
-                            onChange: this.props.PassUpdate })
-                    )
+                        'p',
+                        { id: 'logIn-message',
+                            className: 'message-paragraph' },
+                        this.props.logInState.message
+                    ),
+                    _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Log In' })
                 ),
-                _react2.default.createElement(
-                    'p',
-                    { id: 'logIn-message',
-                        className: 'message-paragraph' },
-                    this.props.logInState.message
-                ),
-                _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Log In' })
+                _react2.default.createElement('input', { type: 'button', className: 'button', value: 'Forgot password',
+                    onClick: this.props.ForgotPass })
             );
         }
     }]);
