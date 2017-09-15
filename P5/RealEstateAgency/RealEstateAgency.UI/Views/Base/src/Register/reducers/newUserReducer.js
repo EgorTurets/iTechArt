@@ -75,7 +75,7 @@ export default function newUserState(state = initialState, action) {
                 newUserEmail: '',
                 newUserPassword: '',
                 newUserConfirm: '',
-                message: 'Account was created!'
+                message: action.payload.message
             })
         }
         default:

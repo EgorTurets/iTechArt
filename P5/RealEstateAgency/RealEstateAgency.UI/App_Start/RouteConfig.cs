@@ -10,6 +10,13 @@ namespace RealEstateAgency.UI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "NotAPI",
+                url: "{pageName}/{param1}",
+                defaults: new {controller = "Base", action = "Index", param1 = UrlParameter.Optional },
+                constraints: new { pageName = "^register$|^user$|^login$" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Base", action = "Index", id = UrlParameter.Optional }

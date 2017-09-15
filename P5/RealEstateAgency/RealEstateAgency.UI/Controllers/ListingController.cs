@@ -58,6 +58,11 @@ namespace RealEstateAgency.UI.Controllers
         public IHttpActionResult GetListing(int id)
         {
             Listing listing = _service.GetListing(id);
+            if (listing == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
             ListingViewModel listingResult = new ListingViewModel
             {
                 Id = listing.ListingID,
