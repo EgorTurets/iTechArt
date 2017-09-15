@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using System;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using NLog;
@@ -79,7 +80,7 @@ namespace RealEstateAgency.UI.Controllers
             await _userManager.UpdateAsync(user);
             await _signInManager.SignInAsync(user, false, false);
 
-            return null;
+            return await Task.FromResult(Redirect(new Uri("http://rea.com/user")));
         }
 
         [HttpPost]
