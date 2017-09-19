@@ -18,6 +18,10 @@ namespace RealEstateAgency.UI.IdentityManagers
 
         public Task<bool> ValidateAsync(string purpose, string token, UserManager<ReaUser, int> manager, ReaUser user)
         {
+            if (user.ResetToken == null || token == null)
+            {
+                return Task.FromResult<bool>(false);
+            }
             return Task.FromResult<bool>(user.ResetToken.Equals(token));
         }
 
