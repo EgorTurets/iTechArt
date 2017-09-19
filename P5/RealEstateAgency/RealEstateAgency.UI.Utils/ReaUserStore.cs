@@ -93,6 +93,12 @@ namespace RealEstateAgency.UI.Utils
 
         #endregion
 
+        public Task SetEmailConfirmedAsync(ReaUser user, bool confirmed)
+        {
+            user.Confirmed = confirmed;
+            user.ResetToken = null;
+            return Task.FromResult(this.UpdateAsync(user));
+        }
 
         public void Dispose()
         {
@@ -301,17 +307,6 @@ namespace RealEstateAgency.UI.Utils
         /// <param name="email"></param>
         /// <returns></returns>
         public Task SetEmailAsync(ReaUser user, string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// NOT IMPLEMENT
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="confirmed"></param>
-        /// <returns></returns>
-        public Task SetEmailConfirmedAsync(ReaUser user, bool confirmed)
         {
             throw new NotImplementedException();
         }

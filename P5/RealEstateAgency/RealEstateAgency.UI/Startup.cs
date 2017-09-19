@@ -49,7 +49,7 @@ namespace RealEstateAgency.UI
                         var foundUser = userManager.FindById(userIdCookie);
                         if (foundUser != null)
                         {
-                            if (foundUser.UserName == context.Identity.GetUserName())
+                            if (foundUser.UserName.Equals(context.Identity.GetUserName()) && foundUser.Confirmed)
                             {
                                 context.OwinContext.Authentication.SignIn(context.Properties, context.Identity);
 

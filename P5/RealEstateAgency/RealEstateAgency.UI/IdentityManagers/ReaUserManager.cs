@@ -115,10 +115,23 @@ namespace RealEstateAgency.UI.IdentityManagers
             return Task.FromResult(IdentityResult.Success);
         }
 
-        public override Task<IdentityResult> ResetPasswordAsync(int userId, string token, string newPassword)
+        public override async Task<IdentityResult> ConfirmEmailAsync(int userId, string token)
         {
-            return base.ResetPasswordAsync(userId, token, newPassword);
+            var user = await this.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return await Task.FromResult(new IdentityResult("User not found"));
+            }
+
+            if(!UserTokenProvider.ValidateAsync("", token, this, user).Result)
+            {
+                return await Task.FromResult(new IdentityResult("Invalid token"));
+            }
+
+            await _store.SetEmailConfirmedAsync(user, true);
+            return await Task.FromResult(IdentityResult.Success);
         }
+
 
         protected override void Dispose(bool disposing)
         {

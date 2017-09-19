@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -8,6 +9,8 @@ using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -19,6 +22,7 @@ namespace RealEstateAgency.UI.Controllers
     {
         private ReaUserManager _userManager;
         private ReaSignInManager _signInManager;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public AccountController(ReaUserManager userManager, ReaSignInManager signInManager) : base()
         {
@@ -60,7 +64,6 @@ namespace RealEstateAgency.UI.Controllers
 
             string confirmationUlr = Url.Link("ConfirmReg", new {id = addedUser.Id, token = confirmationToken});
 
-            Logger logger = LogManager.GetCurrentClassLogger();
             logger.Trace("Click for confirm registration: " + confirmationUlr);
 
             return Json(new
@@ -73,14 +76,13 @@ namespace RealEstateAgency.UI.Controllers
         [Route("ConfirmRegistration", Name = "ConfirmReg")]
         public async Task<IHttpActionResult> ConfirmRegistration(int id, string token)
         {
-            ReaUser user = _userManager.FindByIdAsync(id).Result;
-            user.Confirmed = true;
-            user.ResetToken = null;
-
-            await _userManager.UpdateAsync(user);
-            await _signInManager.SignInAsync(user, false, false);
-
-            return await Task.FromResult(Redirect(new Uri("http://rea.com/user")));
+            var confirmResult = await _userManager.ConfirmEmailAsync(id, token);
+            if (!confirmResult.Succeeded)
+            {
+                return BadRequest(confirmResult.Errors.FirstOrDefault());
+            }
+ 
+            return await Task.FromResult(Redirect(new Uri("http://rea.com/login")));
         }
 
         [HttpPost]
@@ -90,8 +92,13 @@ namespace RealEstateAgency.UI.Controllers
             var user = _userManager.FindByNameAsync(signInInfo.Email).Result;
             if(user.UserName == null)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return await Task.FromResult(BadRequest("User not found"));
             }
+            if (!user.Confirmed)
+            {
+                return await Task.FromResult(BadRequest("Your account not confirmed!"));
+            }
+
             var signInStatus = _signInManager.PasswordSignInAsync(signInInfo.Email, signInInfo.Password, false, false).Result;
             if (signInStatus != SignInStatus.Success)
             {
@@ -137,8 +144,7 @@ namespace RealEstateAgency.UI.Controllers
         [Route("ResetPassword")]
         public Task<IHttpActionResult> ResetPassword(string email)
         {
-            _userManager.ResetPassword()
-            return null;
+            throw new NotImplementedException();
         }
     }
 }
