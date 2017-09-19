@@ -51,7 +51,14 @@ namespace RealEstateAgency.UI.IdentityManagers
             ReaUser user = FindByIdAsync(userId).Result;
             if (CheckPasswordAsync(user, currentPassword).Result)
             {
-                user.PasswordHash = this.PasswordHasher.HashPassword(newPassword);
+                string newPasswordHash = this.PasswordHasher.HashPassword(newPassword);
+
+                var updatePass = _store.SetPasswordHashAsync(user, newPasswordHash);
+                updatePass.Wait();
+                if (updatePass.IsFaulted)
+                {
+                    return Task.FromResult(new IdentityResult(updatePass.Exception.Message));
+                }
 
                 return Task.FromResult(IdentityResult.Success);
             }
@@ -71,7 +78,6 @@ namespace RealEstateAgency.UI.IdentityManagers
             return CheckPasswordAsync(user, password).Result ? Task.FromResult(user) : Task.FromResult(new ReaUser());
         }
 
-        //=== Add an add-on result check ===
         public override Task<IdentityResult> CreateAsync(ReaUser user, string password)
         {
             if (FindByNameAsync(user.UserName).Result != null)
