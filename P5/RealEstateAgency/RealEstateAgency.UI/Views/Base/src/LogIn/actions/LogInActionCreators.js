@@ -57,19 +57,21 @@ export function LogIn(event) {
     xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     xhr.send(jsonForm);
 
+    let jsonResponse = JSON.parse(xhr.responseText);
     if (xhr.status !== 200) {
+
+        debugger;
 
         return {
             type: LogInActions.LOG_IN,
             payload: {
-                message: 'Invalid email or password!',
+                message: jsonResponse.Message ? jsonResponse.Message : 'Invalid email or password!',
                 canRedirect: false
             }
         }
     }
     else {
 
-        let jsonResponse = JSON.parse(xhr.responseText);
         return {
             type: LogInActions.LOG_IN,
             payload: {
@@ -101,7 +103,7 @@ export function LogInResetPass(event) {
         return {
             type: LogInActions.LOG_IN_RESET_PASS,
             payload: {
-                message: jsonResponse,
+                message: jsonResponse.message,
                 isPassWasReset: false
             }
         }

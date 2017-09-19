@@ -37,10 +37,8 @@ namespace RealEstateAgency.UI.Utils
         {
             user.PasswordHash = passwordHash;
 
-            return Task.FromResult(_service.UpdateUser(user));
+            return Task.FromResult(this.UpdateAsync(user));
         }
-
-        //Create, Delete, Update return 2 different types (bool || int)
 
         public Task CreateAsync(ReaUser user)
         {
@@ -56,6 +54,7 @@ namespace RealEstateAgency.UI.Utils
         {
             return Task.FromResult(_service.UpdateUser(user));
         }
+
 
         #region Methods for SignInManager
 

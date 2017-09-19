@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "521341243223aaf25c3a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3e1b42ebe5a6008ac7ae"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -40427,18 +40427,20 @@ function LogIn(event) {
     xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     xhr.send(jsonForm);
 
+    var jsonResponse = JSON.parse(xhr.responseText);
     if (xhr.status !== 200) {
+
+        debugger;
 
         return {
             type: _LogInActions.LogInActions.LOG_IN,
             payload: {
-                message: 'Invalid email or password!',
+                message: jsonResponse.Message ? jsonResponse.Message : 'Invalid email or password!',
                 canRedirect: false
             }
         };
     } else {
 
-        var jsonResponse = JSON.parse(xhr.responseText);
         return {
             type: _LogInActions.LogInActions.LOG_IN,
             payload: {

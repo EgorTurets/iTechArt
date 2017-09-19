@@ -1,16 +1,14 @@
-﻿using System;
-using System.Linq;
-using Microsoft.Ajax.Utilities;
+﻿using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using NLog;
 using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
+using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -92,7 +90,7 @@ namespace RealEstateAgency.UI.Controllers
             var user = _userManager.FindByNameAsync(signInInfo.Email).Result;
             if(user.UserName == null)
             {
-                return await Task.FromResult(BadRequest("User not found"));
+                return await Task.FromResult(BadRequest("Invalid Email"));
             }
             if (!user.Confirmed)
             {
@@ -102,7 +100,7 @@ namespace RealEstateAgency.UI.Controllers
             var signInStatus = _signInManager.PasswordSignInAsync(signInInfo.Email, signInInfo.Password, false, false).Result;
             if (signInStatus != SignInStatus.Success)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return await Task.FromResult(BadRequest("Invalid password"));
             }
 
             return await Task.FromResult(Json<UserInfoViewModel>(new UserInfoViewModel
