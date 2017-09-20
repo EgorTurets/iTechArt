@@ -13,7 +13,7 @@ namespace RealEstateAgency.UI
                 name: "NotAPI",
                 url: "{pageName}/{param1}",
                 defaults: new {controller = "Base", action = "Index", param1 = UrlParameter.Optional },
-                constraints: new { pageName = "^register$|^user$|^login$" }
+                constraints: new { pageName = "^register$|^user$|^login$|^resetPass$" }
             );
 
             routes.MapRoute(

@@ -84,6 +84,21 @@ namespace RealEstateAgency.UI.Controllers
         }
 
         [HttpPost]
+        [Route("SendNewEmail")]
+        public async Task<IHttpActionResult> SendNewEmail(string email)
+        {
+            ReaUser user = await _userManager.FindByNameAsync(email);
+            string confirmationUlr = Url.Link("ConfirmReg", new { id = user.Id, token = user.ResetToken });
+
+            logger.Trace("Follow the link to continue: " + confirmationUlr);
+
+            return Json(new
+            {
+                message = "Letter re-sent to the Log file"
+            });
+        }
+
+        [HttpPost]
         [Route("SignIn")]
         public async Task<IHttpActionResult> SignIn(SignInViewModel signInInfo)
         {
@@ -140,9 +155,43 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpPost]
         [Route("ResetPassword")]
-        public Task<IHttpActionResult> ResetPassword(string email)
+        public async Task<IHttpActionResult> ResetPassword([FromBody] string email)
         {
-            throw new NotImplementedException();
+            ReaUser user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
+            user.ResetToken = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+            user.Confirmed = false;
+
+            var updateTask = _userManager.UpdateAsync(user);
+
+            string confirmationUlr = Url.Route("NotAPI", new { pageName = "resetPass", id = user.Id, token = user.ResetToken });
+
+            logger.Trace("Follow the link to continue: " + confirmationUlr);
+
+            HttpContext.Current.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            updateTask.Wait();
+            return Json(new
+            {
+                message = "Letter re-sent to change the password"
+            });
+        }
+
+        [HttpGet]
+        [Route("ChangePass", Name = "ChangePass")]
+        public async Task<IHttpActionResult> ChangePassword(int id, string token)
+        {
+            ReaUser user = await _userManager.FindByIdAsync(id);
+            if (user.Confirmed)
+            {
+                return RedirectToRoute("NotAPI", new {});
+            }
+
+
+            return null;
         }
     }
 }
