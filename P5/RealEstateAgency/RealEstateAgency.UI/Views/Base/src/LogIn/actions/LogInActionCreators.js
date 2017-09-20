@@ -89,9 +89,10 @@ export function LogInForgotPass(event) {
 }
 
 export function LogInResetPass(event) {
-    let jsonForm = JSON.stringify({
-        email: event.target.email.value,
-    });
+    let jsonForm = JSON.stringify(event.target.email.value);
+
+    debugger;
+
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'API/Account/ResetPassword', false);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
