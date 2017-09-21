@@ -6,7 +6,7 @@ import ChangePass from '../components/ChangePassView'
 
 function mapStateToProps(state) {
     return {
-        ChangePassState : state.changePassState,
+        changePassState : state.changePassState,
     }
 }
 
@@ -16,7 +16,6 @@ function mapDispatchToProps(dispatch) {
         PassUpdate: bindActionCreators(ActionCreators.PasswordUpdate, dispatch),
         ConfirmUpdate: bindActionCreators(ActionCreators.ConfirmUpdate, dispatch),
         SubmitForm: bindActionCreators(ActionCreators.ChangePassSubmit, dispatch),
-
     }
 }
 

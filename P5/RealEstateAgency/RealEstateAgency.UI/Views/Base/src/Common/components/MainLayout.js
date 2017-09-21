@@ -6,6 +6,7 @@ import CabinetController from '../../Cabinet/containers/CabinetController'
 import LogInController from '../../LogIn/containers/LogInController'
 import AddNotificationController from "../../Cabinet/containers/AddNotificationController";
 import SearchController from "../../Search/containers/SearchController";
+import ChangePassController from "../../ChangePass/containers/ChangePassController";
 
 export default class MainLayout extends Component {
 
@@ -33,6 +34,7 @@ export default class MainLayout extends Component {
                             <Route path="/user/add" component={AddNotificationController}/>
                             <Route path="/login" component={LogInController}/>
                             <Route path="/register" component={RegisterFormController}/>
+                            <Route path="/ChangePass" component={ChangePassController}/>
                         </div>
                     </div>
                 </div>

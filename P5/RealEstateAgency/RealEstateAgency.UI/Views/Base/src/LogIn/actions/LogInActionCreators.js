@@ -98,8 +98,8 @@ export function LogInResetPass(event) {
     xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     xhr.send(jsonForm);
 
+    let jsonResponse = JSON.parse(xhr.responseText);
     if (xhr.status !== 200) {
-        let jsonResponse = JSON.parse(xhr.responseText);
 
         return {
             type: LogInActions.LOG_IN_RESET_PASS,
@@ -114,7 +114,8 @@ export function LogInResetPass(event) {
         return {
             type: LogInActions.LOG_IN,
             payload: {
-                isPassWasReset: true
+                isPassWasReset: true,
+                message: jsonResponse.message
             }
         }
     }
