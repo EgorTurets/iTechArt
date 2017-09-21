@@ -88,7 +88,7 @@ namespace RealEstateAgency.UI.IdentityManagers
             }
             user.PasswordHash = this.PasswordHasher.HashPassword(password);
 
-            _store.CreateAsync(user);
+            _store.CreateAsync(user).Wait();
 
             return Task.FromResult(IdentityResult.Success);
         }
@@ -102,7 +102,7 @@ namespace RealEstateAgency.UI.IdentityManagers
                 return Task.FromResult(falledResult);
             }
 
-            _store.DeleteAsync(user);
+            _store.DeleteAsync(user).Wait();
 
             return Task.FromResult(IdentityResult.Success);
         }
@@ -116,7 +116,7 @@ namespace RealEstateAgency.UI.IdentityManagers
                 return Task.FromResult(falledResult);
             }
 
-            _store.UpdateAsync(user);
+            _store.UpdateAsync(user).Wait();
 
             return Task.FromResult(IdentityResult.Success);
         }
@@ -138,6 +138,26 @@ namespace RealEstateAgency.UI.IdentityManagers
             return await Task.FromResult(IdentityResult.Success);
         }
 
+
+        public override async Task<IdentityResult> ResetPasswordAsync(int userId, string token, string newPassword)
+        {
+            var user = await this.FindByIdAsync(userId);
+            if(!UserTokenProvider.ValidateAsync("", token, this, user).Result)
+            {
+                return new IdentityResult("Invalid token. Access is denied.");
+            }
+
+            user.PasswordHash = this.PasswordHasher.HashPassword(newPassword);
+            user.ResetToken = null;
+            user.Confirmed = true;
+
+            if (!this.UpdateAsync(user).Result.Succeeded)
+            {
+                return new IdentityResult("Server error during update");
+            }
+
+            return IdentityResult.Success;
+        }
 
         protected override void Dispose(bool disposing)
         {

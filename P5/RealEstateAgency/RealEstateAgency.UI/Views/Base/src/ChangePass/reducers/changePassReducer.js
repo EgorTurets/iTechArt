@@ -28,10 +28,13 @@ export default function changePassState(state = initialState, action) {
             })
         }
         case ChangePassActions.CHG_PASS_SUBMIT: {
-
-
-
-            return Object.assign({}, state, {})
+            return Object.assign({}, state, {
+                password: '',
+                confirm: '',
+                userId: '',
+                token: '',
+                message: action.payload.message
+            })
         }
         default: return state;
     }

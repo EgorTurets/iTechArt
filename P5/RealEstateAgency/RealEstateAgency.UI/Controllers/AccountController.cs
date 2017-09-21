@@ -167,8 +167,7 @@ namespace RealEstateAgency.UI.Controllers
 
             var updateTask = _userManager.UpdateAsync(user);
 
-            string confirmationUlr =
-                Url.Link("NotAPI", new {pageName = "ChangePass", id = user.Id, token = user.ResetToken});  //Route("NotAPI", new { pageName = "ChangePass", id = user.Id, token = user.ResetToken });
+            string confirmationUlr = Url.Link("NotAPI", new {pageName = "ChangePass", id = user.Id, token = user.ResetToken});
 
             logger.Trace("Follow the link to continue: " + confirmationUlr);
 
@@ -183,16 +182,23 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpGet]
         [Route("ChangePass", Name = "ChangePass")]
-        public async Task<IHttpActionResult> ChangePassword(int id, string token)
+        public async Task<IHttpActionResult> ChangePassword(ChangePassViewModel changePassModel)
         {
-            ReaUser user = await _userManager.FindByIdAsync(id);
+            ReaUser user = await _userManager.FindByIdAsync(changePassModel.UserId);
             if (user.Confirmed)
             {
-                return RedirectToRoute("NotAPI", new {});
+                return BadRequest("Error. Invalid operation");
+            }
+            var resetPassResult = await _userManager.ResetPasswordAsync(changePassModel.UserId, changePassModel.ResetToken, changePassModel.NewPassword);
+            if (!resetPassResult.Succeeded)
+            {
+                return BadRequest(resetPassResult.Errors.FirstOrDefault());
             }
 
-
-            return null;
+            return Json(new
+            {
+                message = "The password has been changed"
+            });
         }
     }
 }
