@@ -167,7 +167,8 @@ namespace RealEstateAgency.UI.Controllers
 
             var updateTask = _userManager.UpdateAsync(user);
 
-            string confirmationUlr = Url.Route("NotAPI", new { pageName = "resetPass", id = user.Id, token = user.ResetToken });
+            string confirmationUlr =
+                Url.Link("NotAPI", new {pageName = "ChangePass", id = user.Id, token = user.ResetToken});  //Route("NotAPI", new { pageName = "ChangePass", id = user.Id, token = user.ResetToken });
 
             logger.Trace("Follow the link to continue: " + confirmationUlr);
 
