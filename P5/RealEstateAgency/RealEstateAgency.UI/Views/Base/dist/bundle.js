@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cfae501d003368cb0f29"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c4d28acee8df9c784818"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -39222,7 +39222,7 @@ function logInState() {
 
                     return Object.assign({}, state, {
                         isPassForgot: false,
-                        message: 'See the new password in the log file.'
+                        message: 'See the link for changing the password in the log file'
                     });
                 } else {
 
@@ -39547,7 +39547,6 @@ function changePassState() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
 
-
     switch (action.type) {
         case _ChangePassActions.ChangePassActions.CHG_PASS_INIT:
             {
@@ -39570,13 +39569,24 @@ function changePassState() {
             }
         case _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT:
             {
-                return Object.assign({}, state, {
-                    password: '',
-                    confirm: '',
-                    userId: '',
-                    token: '',
-                    message: action.payload.message
-                });
+
+                debugger;
+
+                if (action.payload.isValidForm && action.payload.isSuccessfullyReset) {
+                    return Object.assign({}, state, {
+                        password: '',
+                        confirm: '',
+                        userId: '',
+                        token: '',
+                        message: action.payload.message
+                    });
+                } else {
+                    return Object.assign({}, state, {
+                        password: '',
+                        confirm: '',
+                        message: action.payload.message
+                    });
+                }
             }
         default:
             return state;
@@ -40490,7 +40500,6 @@ function LogInInit() {
 }
 
 function LogIn(event) {
-
     event.preventDefault();
 
     var message = void 0;
@@ -40555,6 +40564,7 @@ function LogInForgotPass(event) {
 }
 
 function LogInResetPass(event) {
+    event.preventDefault();
     var jsonForm = JSON.stringify(event.target.email.value);
 
     debugger;
@@ -40570,17 +40580,17 @@ function LogInResetPass(event) {
         return {
             type: _LogInActions.LogInActions.LOG_IN_RESET_PASS,
             payload: {
-                message: jsonResponse.message,
+                message: jsonResponse.Message,
                 isPassWasReset: false
             }
         };
     } else {
 
         return {
-            type: _LogInActions.LogInActions.LOG_IN,
+            type: _LogInActions.LogInActions.LOG_IN_RESET_PASS,
             payload: {
                 isPassWasReset: true,
-                message: jsonResponse.message
+                message: jsonResponse.Message
             }
         };
     }
@@ -40645,7 +40655,6 @@ var LogIn = function (_Component) {
     _createClass(LogIn, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            debugger;
             this.props.LogInInit();
         }
     }, {
@@ -40653,7 +40662,6 @@ var LogIn = function (_Component) {
         value: function render() {
 
             if (this.props.logInState.canRedirect) {
-
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/user' });
             }
 
@@ -41366,7 +41374,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         ChangePassInit: (0, _redux.bindActionCreators)(ActionCreators.ChangePassInit, dispatch),
-        PassUpdate: (0, _redux.bindActionCreators)(ActionCreators.PasswordUpdate, dispatch),
+        PasswordUpdate: (0, _redux.bindActionCreators)(ActionCreators.PasswordUpdate, dispatch),
         ConfirmUpdate: (0, _redux.bindActionCreators)(ActionCreators.ConfirmUpdate, dispatch),
         SubmitForm: (0, _redux.bindActionCreators)(ActionCreators.ChangePassSubmit, dispatch)
     };
@@ -41422,6 +41430,8 @@ function ConfirmUpdate(event) {
 }
 
 function ChangePassSubmit(event) {
+    event.preventDefault();
+
     debugger;
     var queryParamsRegExp = /id=(\d+)&token=([\w-]{36})$/;
     var userId = void 0,
@@ -41431,12 +41441,15 @@ function ChangePassSubmit(event) {
         resetToken = token;
     });
 
+    var isValidForm = false;
+
     if (event.target.newPassword.value.length < 8) {
 
         return {
             type: _ChangePassActions.ChangePassActions.CHG_PASS_PASSWORD_UPDATE,
             payload: {
-                message: 'Password must be longer than 8 characters!'
+                message: 'Password must be longer than 8 characters!',
+                isValidForm: isValidForm
             }
         };
     }
@@ -41445,10 +41458,13 @@ function ChangePassSubmit(event) {
         return {
             type: _ChangePassActions.ChangePassActions.CHG_PASS_CONFIRM_UPDATE,
             payload: {
-                message: 'Password is not confirmed!'
+                message: 'Password is not confirmed!',
+                isValidForm: isValidForm
             }
         };
     }
+
+    isValidForm = true;
 
     var jsonForm = JSON.stringify({
         userId: userId,
@@ -41465,7 +41481,8 @@ function ChangePassSubmit(event) {
         return {
             type: _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
-                message: JSON.parse(xhr.responseText).message
+                message: JSON.parse(xhr.responseText).Message,
+                isValidForm: isValidForm
             }
         };
     } else {
@@ -41474,8 +41491,9 @@ function ChangePassSubmit(event) {
             payload: {
                 type: _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT,
                 payload: {
-                    message: JSON.parse(xhr.responseText).message,
-                    isSuccessfullyReset: true
+                    message: JSON.parse(xhr.responseText).Message,
+                    isSuccessfullyReset: true,
+                    isValidForm: isValidForm
                 }
             }
         };
@@ -41525,7 +41543,6 @@ var ChangePass = function (_Component) {
     _createClass(ChangePass, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            debugger;
             var queryParamsRegExp = /id=(\d+)&token=([\w-]{36})$/;
             var userId = void 0,
                 resetToken = void 0;
@@ -41566,7 +41583,7 @@ var ChangePass = function (_Component) {
                         onChange: this.props.ConfirmUpdate }),
                     _react2.default.createElement(
                         'p',
-                        { id: 'logIn-message',
+                        { id: 'changePass-message',
                             className: 'message-paragraph' },
                         this.props.changePassState.message
                     ),

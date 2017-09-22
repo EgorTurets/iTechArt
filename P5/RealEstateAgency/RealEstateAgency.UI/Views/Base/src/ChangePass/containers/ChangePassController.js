@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         ChangePassInit: bindActionCreators(ActionCreators.ChangePassInit, dispatch),
-        PassUpdate: bindActionCreators(ActionCreators.PasswordUpdate, dispatch),
+        PasswordUpdate: bindActionCreators(ActionCreators.PasswordUpdate, dispatch),
         ConfirmUpdate: bindActionCreators(ActionCreators.ConfirmUpdate, dispatch),
         SubmitForm: bindActionCreators(ActionCreators.ChangePassSubmit, dispatch),
     }

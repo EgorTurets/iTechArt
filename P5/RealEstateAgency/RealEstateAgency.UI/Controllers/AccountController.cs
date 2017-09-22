@@ -6,6 +6,7 @@ using RealEstateAgency.Models.Models;
 using RealEstateAgency.UI.IdentityManagers;
 using RealEstateAgency.UI.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -176,14 +177,20 @@ namespace RealEstateAgency.UI.Controllers
             updateTask.Wait();
             return Json(new
             {
-                message = "Letter re-sent to change the password"
+                message = "The password was reset. Check the log file"
             });
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("ChangePass", Name = "ChangePass")]
         public async Task<IHttpActionResult> ChangePassword(ChangePassViewModel changePassModel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                IEnumerable<string> errorMessages = from val in this.ModelState.Values
+                                                    select val.Errors[0].ErrorMessage;
+                return BadRequest(String.Join("\n", errorMessages));
+            }
             ReaUser user = await _userManager.FindByIdAsync(changePassModel.UserId);
             if (user.Confirmed)
             {
@@ -197,7 +204,7 @@ namespace RealEstateAgency.UI.Controllers
 
             return Json(new
             {
-                message = "The password has been changed"
+                Message = "The password has been changed"
             });
         }
     }

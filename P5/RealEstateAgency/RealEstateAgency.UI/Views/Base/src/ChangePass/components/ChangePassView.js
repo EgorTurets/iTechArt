@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 
 export default class ChangePass extends Component {
     componentWillMount(){
-        debugger;
         let queryParamsRegExp = /id=(\d+)&token=([\w-]{36})$/;
         let userId, resetToken;
         this.props.location.search.replace(queryParamsRegExp, function (str, id, token) {
@@ -30,7 +29,7 @@ export default class ChangePass extends Component {
                         value={this.props.changePassState.confirm}
                         onChange={this.props.ConfirmUpdate}/>
 
-                    <p id="logIn-message"
+                    <p id="changePass-message"
                         className="message-paragraph">
                          {this.props.changePassState.message}
                     </p>

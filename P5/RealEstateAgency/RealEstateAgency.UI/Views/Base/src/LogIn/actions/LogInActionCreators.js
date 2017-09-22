@@ -23,7 +23,6 @@ export function LogInInit() {
 }
 
 export function LogIn(event) {
-
     event.preventDefault();
 
     let message;
@@ -89,6 +88,7 @@ export function LogInForgotPass(event) {
 }
 
 export function LogInResetPass(event) {
+    event.preventDefault();
     let jsonForm = JSON.stringify(event.target.email.value);
 
     debugger;
@@ -104,7 +104,7 @@ export function LogInResetPass(event) {
         return {
             type: LogInActions.LOG_IN_RESET_PASS,
             payload: {
-                message: jsonResponse.message,
+                message: jsonResponse.Message,
                 isPassWasReset: false
             }
         }
@@ -112,10 +112,10 @@ export function LogInResetPass(event) {
     else {
 
         return {
-            type: LogInActions.LOG_IN,
+            type: LogInActions.LOG_IN_RESET_PASS,
             payload: {
                 isPassWasReset: true,
-                message: jsonResponse.message
+                message: jsonResponse.Message
             }
         }
     }

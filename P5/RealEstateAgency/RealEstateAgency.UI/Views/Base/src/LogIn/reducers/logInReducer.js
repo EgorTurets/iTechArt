@@ -50,7 +50,7 @@ export default function logInState(state = initialState, action) {
 
                 return Object.assign({}, state, {
                     isPassForgot: false,
-                    message: 'See the new password in the log file.'
+                    message: 'See the link for changing the password in the log file'
                 })
             }
             else {

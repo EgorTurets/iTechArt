@@ -3,14 +3,12 @@ import { Redirect } from 'react-router-dom'
 
 export default class LogIn extends Component {
     componentWillMount() {
-        debugger;
         this.props.LogInInit();
     }
 
     render() {
 
         if (this.props.logInState.canRedirect) {
-
             return (<Redirect to="/user"/>)
         }
 

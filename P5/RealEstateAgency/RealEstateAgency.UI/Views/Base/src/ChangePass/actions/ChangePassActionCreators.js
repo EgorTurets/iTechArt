@@ -27,6 +27,8 @@ export function ConfirmUpdate(event) {
 }
 
 export function ChangePassSubmit(event) {
+    event.preventDefault();
+
     debugger;
     let queryParamsRegExp = /id=(\d+)&token=([\w-]{36})$/;
     let userId, resetToken;
@@ -35,12 +37,15 @@ export function ChangePassSubmit(event) {
         resetToken = token;
     });
 
+    let isValidForm = false;
+
     if (event.target.newPassword.value.length < 8) {
 
         return {
             type: ChangePassActions.CHG_PASS_PASSWORD_UPDATE,
             payload: {
                 message: 'Password must be longer than 8 characters!',
+                isValidForm
             }
         }
     }
@@ -50,9 +55,12 @@ export function ChangePassSubmit(event) {
             type: ChangePassActions.CHG_PASS_CONFIRM_UPDATE,
             payload: {
                 message: 'Password is not confirmed!',
+                isValidForm
             }
         }
     }
+
+    isValidForm = true;
 
     let jsonForm = JSON.stringify({
         userId,
@@ -69,7 +77,8 @@ export function ChangePassSubmit(event) {
         return {
             type: ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
-                message: JSON.parse(xhr.responseText).message
+                message: JSON.parse(xhr.responseText).Message,
+                isValidForm
             }
         }
     }
@@ -79,8 +88,9 @@ export function ChangePassSubmit(event) {
             payload: {
                 type: ChangePassActions.CHG_PASS_SUBMIT,
                 payload: {
-                    message: JSON.parse(xhr.responseText).message,
-                    isSuccessfullyReset: true
+                    message: JSON.parse(xhr.responseText).Message,
+                    isSuccessfullyReset: true,
+                    isValidForm
                 }
             }
         }

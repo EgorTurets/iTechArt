@@ -9,7 +9,6 @@ const initialState = {
 };
 
 export default function changePassState(state = initialState, action) {
-
     switch (action.type) {
         case ChangePassActions.CHG_PASS_INIT: {
             return Object.assign({}, state, {
@@ -28,13 +27,26 @@ export default function changePassState(state = initialState, action) {
             })
         }
         case ChangePassActions.CHG_PASS_SUBMIT: {
-            return Object.assign({}, state, {
-                password: '',
-                confirm: '',
-                userId: '',
-                token: '',
-                message: action.payload.message
-            })
+
+            debugger;
+
+            if(action.payload.isValidForm && action.payload.isSuccessfullyReset)
+            {
+                return Object.assign({}, state, {
+                    password: '',
+                    confirm: '',
+                    userId: '',
+                    token: '',
+                    message: action.payload.message
+                })
+            }
+            else {
+                return Object.assign({}, state, {
+                    password: '',
+                    confirm: '',
+                    message: action.payload.message
+                })
+            }
         }
         default: return state;
     }
