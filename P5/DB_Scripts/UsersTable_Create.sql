@@ -1,7 +1,7 @@
 USE [Resume_iTechArt]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 01.09.2017 13:41:30 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 22.09.2017 15:24:30 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,6 +14,9 @@ CREATE TABLE [dbo].[Users](
 	[LastName] [nvarchar](50) NOT NULL,
 	[Email] [nvarchar](100) NOT NULL,
 	[PasswordHash] [nvarchar](200) NOT NULL,
+	[Confirmed] [bit] NULL,
+	[ResetToken] [nvarchar](50) NULL,
+	[PassIsReset] [bit] NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[UserID] ASC

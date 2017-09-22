@@ -48,7 +48,8 @@ namespace RealEstateAgency.UI.Controllers
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
                 UserName = newUser.Email,
-                Confirmed = false
+                Confirmed = false,
+                PasswordIsReset = false
             };
 
             var createResult =  _userManager.CreateAsync(reaUser, newUser.Password).Result;
@@ -89,14 +90,32 @@ namespace RealEstateAgency.UI.Controllers
         public async Task<IHttpActionResult> SendNewEmail(string email)
         {
             ReaUser user = await _userManager.FindByNameAsync(email);
-            string confirmationUlr = Url.Link("ConfirmReg", new { id = user.Id, token = user.ResetToken });
-
-            logger.Trace("Follow the link to continue: " + confirmationUlr);
-
-            return Json(new
+            if (user == null)
             {
-                message = "Letter re-sent to the Log file"
-            });
+                return BadRequest("User not found");
+            }
+            if (!user.Confirmed)
+            {
+                string confirmationUlr = Url.Link("ConfirmReg", new { id = user.Id, token = user.ResetToken });
+                logger.Trace("Click for confirm registration: " + confirmationUlr);
+
+                return Json(new
+                {
+                    Message = "Letter re-sent to the Log file"
+                });
+            }
+            if (user.PasswordIsReset)
+            {
+                string confirmationUlr = Url.Link("NotAPI", new { pageName = "ChangePass", id = user.Id, token = user.ResetToken });
+                logger.Trace("Follow the link to continue: " + confirmationUlr);
+
+                return Json(new
+                {
+                    Message = "Letter re-sent to the Log file"
+                });
+            }
+
+            return BadRequest("Error. Invalid operation");
         }
 
         [HttpPost]
@@ -163,8 +182,12 @@ namespace RealEstateAgency.UI.Controllers
             {
                 return BadRequest("User not found");
             }
+            if (!user.Confirmed)
+            {
+                return BadRequest("Error. Invalid operation");
+            }
             user.ResetToken = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
-            user.Confirmed = false;
+            user.PasswordIsReset = true;
 
             var updateTask = _userManager.UpdateAsync(user);
 
@@ -192,7 +215,7 @@ namespace RealEstateAgency.UI.Controllers
                 return BadRequest(String.Join("\n", errorMessages));
             }
             ReaUser user = await _userManager.FindByIdAsync(changePassModel.UserId);
-            if (user.Confirmed)
+            if (user.Confirmed && !user.PasswordIsReset)
             {
                 return BadRequest("Error. Invalid operation");
             }

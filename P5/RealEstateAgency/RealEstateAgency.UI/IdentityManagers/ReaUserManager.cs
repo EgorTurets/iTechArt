@@ -144,12 +144,12 @@ namespace RealEstateAgency.UI.IdentityManagers
             var user = await this.FindByIdAsync(userId);
             if(!UserTokenProvider.ValidateAsync("", token, this, user).Result)
             {
-                return new IdentityResult("Invalid token. Access is denied.");
+                return new IdentityResult("Invalid token. Access is denied");
             }
 
             user.PasswordHash = this.PasswordHasher.HashPassword(newPassword);
             user.ResetToken = null;
-            user.Confirmed = true;
+            user.PasswordIsReset = false;
 
             if (!this.UpdateAsync(user).Result.Succeeded)
             {

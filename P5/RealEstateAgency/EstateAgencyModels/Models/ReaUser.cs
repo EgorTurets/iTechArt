@@ -17,5 +17,7 @@ namespace RealEstateAgency.Models.Models
         public bool Confirmed { get; set; }
 
         public string ResetToken { get; set; }
+
+        public bool PasswordIsReset { get; set; }
     }
 }
