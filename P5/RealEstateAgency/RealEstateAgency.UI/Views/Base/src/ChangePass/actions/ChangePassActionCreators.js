@@ -42,7 +42,7 @@ export function ChangePassSubmit(event) {
     if (event.target.newPassword.value.length < 8) {
 
         return {
-            type: ChangePassActions.CHG_PASS_PASSWORD_UPDATE,
+            type: ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
                 message: 'Password must be longer than 8 characters!',
                 isValidForm
@@ -52,7 +52,7 @@ export function ChangePassSubmit(event) {
     if (event.target.newPassword.value !== event.target.confirm.value) {
 
         return {
-            type: ChangePassActions.CHG_PASS_CONFIRM_UPDATE,
+            type: ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
                 message: 'Password is not confirmed!',
                 isValidForm
@@ -86,12 +86,9 @@ export function ChangePassSubmit(event) {
         return {
             type: ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
-                type: ChangePassActions.CHG_PASS_SUBMIT,
-                payload: {
-                    message: JSON.parse(xhr.responseText).Message,
-                    isSuccessfullyReset: true,
-                    isValidForm
-                }
+                message: JSON.parse(xhr.responseText).Message,
+                isSuccessfullyReset: true,
+                isValidForm
             }
         }
     }

@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c4d28acee8df9c784818"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5f44f473395bbb830980"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -41446,7 +41446,7 @@ function ChangePassSubmit(event) {
     if (event.target.newPassword.value.length < 8) {
 
         return {
-            type: _ChangePassActions.ChangePassActions.CHG_PASS_PASSWORD_UPDATE,
+            type: _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
                 message: 'Password must be longer than 8 characters!',
                 isValidForm: isValidForm
@@ -41456,7 +41456,7 @@ function ChangePassSubmit(event) {
     if (event.target.newPassword.value !== event.target.confirm.value) {
 
         return {
-            type: _ChangePassActions.ChangePassActions.CHG_PASS_CONFIRM_UPDATE,
+            type: _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
                 message: 'Password is not confirmed!',
                 isValidForm: isValidForm
@@ -41489,12 +41489,9 @@ function ChangePassSubmit(event) {
         return {
             type: _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT,
             payload: {
-                type: _ChangePassActions.ChangePassActions.CHG_PASS_SUBMIT,
-                payload: {
-                    message: JSON.parse(xhr.responseText).Message,
-                    isSuccessfullyReset: true,
-                    isValidForm: isValidForm
-                }
+                message: JSON.parse(xhr.responseText).Message,
+                isSuccessfullyReset: true,
+                isValidForm: isValidForm
             }
         };
     }
