@@ -17,7 +17,9 @@ function mapDispatchToProps(dispatch) {
         EmailUpdate: bindActionCreators(ActionCreators.LogInEmailUpd, dispatch),
         PassUpdate: bindActionCreators(ActionCreators.LogInPassUpd, dispatch),
         ForgotPass: bindActionCreators(ActionCreators.LogInForgotPass, dispatch),
-        ResetPass: bindActionCreators(ActionCreators.LogInResetPass, dispatch)
+        ResetPass: bindActionCreators(ActionCreators.LogInResetPass, dispatch),
+        ForgotMsg: bindActionCreators(ActionCreators.ForgotMsg, dispatch),
+        SendNewMsg: bindActionCreators(ActionCreators.SendNewMsg, dispatch)
     }
 }
 

@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5f44f473395bbb830980"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3adc4f173e0ec3ce322f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -16644,7 +16644,9 @@ var LogInActions = exports.LogInActions = {
     LOG_IN: 'LOG_IN',
     LOG_IN_INIT: 'LOG_IN_INIT',
     LOG_IN_FORGOT_PASS: 'LOG_IN_FORGOT_PASS',
-    LOG_IN_RESET_PASS: 'LOG_IN_RESET_PASS'
+    LOG_IN_RESET_PASS: 'LOG_IN_RESET_PASS',
+    LOG_IN_FORGOT_MSG: 'LOG_IN_FORGOT_MSG',
+    LOG_IN_SEND_NEW_MSG: 'LOG_IN_SEND_NEW_MSG'
 };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(8); if (makeExportsHot(module, __webpack_require__(1))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "LogInActions.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -39183,7 +39185,8 @@ function logInState() {
                 return Object.assign({}, state, {
                     email: '',
                     canRedirect: action.payload.canRedirect,
-                    isPassForgot: false
+                    isPassForgot: false,
+                    isMsgForgot: false
                 });
             }
         case _LogInActions.LogInActions.LOG_IN:
@@ -39230,6 +39233,18 @@ function logInState() {
                         message: action.payload.message
                     });
                 }
+            }
+        case _LogInActions.LogInActions.LOG_IN_FORGOT_MSG:
+            {
+                return Object.assign({}, state, {
+                    isMsgForgot: true
+                });
+            }
+        case _LogInActions.LogInActions.LOG_IN_SEND_NEW_MSG:
+            {
+                return Object.assign({}, state, {
+                    message: action.payload.message
+                });
             }
         default:
             return state;
@@ -40447,7 +40462,9 @@ function mapDispatchToProps(dispatch) {
         EmailUpdate: (0, _redux.bindActionCreators)(ActionCreators.LogInEmailUpd, dispatch),
         PassUpdate: (0, _redux.bindActionCreators)(ActionCreators.LogInPassUpd, dispatch),
         ForgotPass: (0, _redux.bindActionCreators)(ActionCreators.LogInForgotPass, dispatch),
-        ResetPass: (0, _redux.bindActionCreators)(ActionCreators.LogInResetPass, dispatch)
+        ResetPass: (0, _redux.bindActionCreators)(ActionCreators.LogInResetPass, dispatch),
+        ForgotMsg: (0, _redux.bindActionCreators)(ActionCreators.ForgotMsg, dispatch),
+        SendNewMsg: (0, _redux.bindActionCreators)(ActionCreators.SendNewMsg, dispatch)
     };
 }
 
@@ -40471,6 +40488,8 @@ exports.LogInInit = LogInInit;
 exports.LogIn = LogIn;
 exports.LogInForgotPass = LogInForgotPass;
 exports.LogInResetPass = LogInResetPass;
+exports.ForgotMsg = ForgotMsg;
+exports.SendNewMsg = SendNewMsg;
 exports.LogInEmailUpd = LogInEmailUpd;
 exports.LogInPassUpd = LogInPassUpd;
 
@@ -40482,7 +40501,6 @@ var _scripts = __webpack_require__(157);
 
 function LogInInit() {
     if ((0, _scripts.getCookie)('Rea.Auth')) {
-
         return {
             type: _LogInActions.LogInActions.LOG_IN_INIT,
             payload: {
@@ -40557,7 +40575,6 @@ function LogIn(event) {
 }
 
 function LogInForgotPass(event) {
-
     return {
         type: _LogInActions.LogInActions.LOG_IN_FORGOT_PASS
     };
@@ -40566,8 +40583,6 @@ function LogInForgotPass(event) {
 function LogInResetPass(event) {
     event.preventDefault();
     var jsonForm = JSON.stringify(event.target.email.value);
-
-    debugger;
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'API/Account/ResetPassword', false);
@@ -40596,8 +40611,36 @@ function LogInResetPass(event) {
     }
 }
 
-function LogInEmailUpd(event) {
+function ForgotMsg(event) {
+    event.preventDefault();
 
+    return {
+        type: _LogInActions.LogInActions.LOG_IN_FORGOT_MSG
+    };
+}
+
+function SendNewMsg(event) {
+    event.preventDefault();
+
+    var jsonForm = JSON.stringify(event.target.email.value);
+
+    debugger;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/SendNewEmail', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
+
+    var responseMessage = JSON.parse(xhr.responseText).Message;
+    return {
+        type: _LogInActions.LogInActions.LOG_IN_SEND_NEW_MSG,
+        payload: {
+            message: responseMessage
+        }
+    };
+}
+
+function LogInEmailUpd(event) {
     return {
         type: _LogInActions.LogInActions.LOG_IN_EMAIL_UPDATE,
         payload: event.target.value
@@ -40605,7 +40648,6 @@ function LogInEmailUpd(event) {
 }
 
 function LogInPassUpd(event) {
-
     return {
         type: _LogInActions.LogInActions.LOG_IN_PASSWORD_UPDATE,
         payload: event.target.value
@@ -40665,14 +40707,15 @@ var LogIn = function (_Component) {
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/user' });
             }
 
-            if (this.props.logInState.isPassForgot) {
+            if (this.props.logInState.isPassForgot || this.props.logInState.isMsgForgot) {
 
                 return _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement(
                         'form',
-                        { className: 'form-inner-center', onSubmit: this.props.ResetPass },
+                        { className: 'form-inner-center',
+                            onSubmit: this.props.logInState.isPassForgot ? this.props.ResetPass : this.props.SendNewMsg },
                         _react2.default.createElement(
                             'div',
                             null,
@@ -40689,7 +40732,7 @@ var LogIn = function (_Component) {
                                 className: 'message-paragraph' },
                             this.props.logInState.message
                         ),
-                        _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Reset password' })
+                        _react2.default.createElement('input', { type: 'submit', className: 'button', value: this.props.logInState.isPassForgot ? "Reset password" : "Send new message" })
                     )
                 );
             }
@@ -40741,7 +40784,9 @@ var LogIn = function (_Component) {
                     _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Log In' })
                 ),
                 _react2.default.createElement('input', { type: 'button', className: 'button', value: 'Forgot password',
-                    onClick: this.props.ForgotPass })
+                    onClick: this.props.ForgotPass }),
+                _react2.default.createElement('input', { type: 'button', className: 'button', value: 'Send new message',
+                    onClick: this.props.ForgotMsg })
             );
         }
     }]);

@@ -5,7 +5,6 @@ import {getCookie} from "../../Common/scripts";
 
 export function LogInInit() {
     if(getCookie('Rea.Auth')) {
-
         return {
             type: LogInActions.LOG_IN_INIT,
             payload: {
@@ -81,7 +80,6 @@ export function LogIn(event) {
 }
 
 export function LogInForgotPass(event) {
-
     return {
         type: LogInActions.LOG_IN_FORGOT_PASS,
     }
@@ -90,8 +88,6 @@ export function LogInForgotPass(event) {
 export function LogInResetPass(event) {
     event.preventDefault();
     let jsonForm = JSON.stringify(event.target.email.value);
-
-    debugger;
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'API/Account/ResetPassword', false);
@@ -121,8 +117,36 @@ export function LogInResetPass(event) {
     }
 }
 
-export function LogInEmailUpd(event) {
+export function ForgotMsg(event) {
+    event.preventDefault();
 
+    return {
+        type: LogInActions.LOG_IN_FORGOT_MSG,
+    }
+}
+
+export function SendNewMsg(event) {
+    event.preventDefault();
+
+    let jsonForm = JSON.stringify(event.target.email.value);
+
+    debugger;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API/Account/SendNewEmail', false);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.send(jsonForm);
+
+    let responseMessage = JSON.parse(xhr.responseText).Message;
+    return {
+        type: LogInActions.LOG_IN_SEND_NEW_MSG,
+        payload: {
+            message: responseMessage
+        }
+    }
+}
+
+export function LogInEmailUpd(event) {
     return {
         type: LogInActions.LOG_IN_EMAIL_UPDATE,
         payload: event.target.value
@@ -130,7 +154,6 @@ export function LogInEmailUpd(event) {
 }
 
 export function LogInPassUpd(event) {
-
     return {
         type: LogInActions.LOG_IN_PASSWORD_UPDATE,
         payload: event.target.value

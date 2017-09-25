@@ -12,11 +12,12 @@ export default class LogIn extends Component {
             return (<Redirect to="/user"/>)
         }
 
-        if(this.props.logInState.isPassForgot) {
+        if(this.props.logInState.isPassForgot || this.props.logInState.isMsgForgot) {
 
             return (
                 <div>
-                    <form className="form-inner-center" onSubmit={this.props.ResetPass}>
+                    <form className="form-inner-center"
+                          onSubmit={this.props.logInState.isPassForgot ? this.props.ResetPass : this.props.SendNewMsg}>
                         <div>Email: </div>
                         <input
                             id="email"
@@ -28,7 +29,7 @@ export default class LogIn extends Component {
                            className="message-paragraph">
                             {this.props.logInState.message}
                         </p>
-                        <input type="submit" className="button" value="Reset password"/>
+                        <input type="submit" className="button" value={this.props.logInState.isPassForgot ? "Reset password" : "Send new message"}/>
                     </form>
                 </div>
             );
@@ -63,6 +64,8 @@ export default class LogIn extends Component {
                 </form>
                 <input type="button" className="button" value="Forgot password"
                        onClick={this.props.ForgotPass}/>
+                <input type="button" className="button" value="Send new message"
+                        onClick={this.props.ForgotMsg}/>
             </div>
         )
     }

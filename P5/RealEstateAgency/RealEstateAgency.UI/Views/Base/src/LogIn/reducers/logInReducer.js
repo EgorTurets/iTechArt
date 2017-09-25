@@ -16,7 +16,8 @@ export default function logInState(state = initialState, action) {
             return Object.assign({}, state, {
                 email: '',
                 canRedirect: action.payload.canRedirect,
-                isPassForgot: false
+                isPassForgot: false,
+                isMsgForgot: false
             })
         }
         case LogInActions.LOG_IN: {
@@ -59,6 +60,16 @@ export default function logInState(state = initialState, action) {
                     message: action.payload.message
                 })
             }
+        }
+        case LogInActions.LOG_IN_FORGOT_MSG: {
+            return Object.assign({}, state,{
+                isMsgForgot: true
+            })
+        }
+        case LogInActions.LOG_IN_SEND_NEW_MSG: {
+            return Object.assign({}, state, {
+                message: action.payload.message
+            })
         }
         default:
             return state;

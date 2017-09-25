@@ -87,7 +87,7 @@ namespace RealEstateAgency.UI.Controllers
 
         [HttpPost]
         [Route("SendNewEmail")]
-        public async Task<IHttpActionResult> SendNewEmail(string email)
+        public async Task<IHttpActionResult> SendNewEmail([FromBody] string email)
         {
             ReaUser user = await _userManager.FindByNameAsync(email);
             if (user == null)
