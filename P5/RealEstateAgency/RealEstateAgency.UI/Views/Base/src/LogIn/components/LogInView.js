@@ -31,6 +31,8 @@ export default class LogIn extends Component {
                         </p>
                         <input type="submit" className="button" value={this.props.logInState.isPassForgot ? "Reset password" : "Send new message"}/>
                     </form>
+                    <input type="button" className="button" value="Back to LogIn"
+                           onClick={this.props.LogInInit}/>
                 </div>
             );
         }
@@ -65,7 +67,7 @@ export default class LogIn extends Component {
                 <input type="button" className="button" value="Forgot password"
                        onClick={this.props.ForgotPass}/>
                 <input type="button" className="button" value="Send new message"
-                        onClick={this.props.ForgotMsg}/>
+                       onClick={this.props.ForgotMsg}/>
             </div>
         )
     }

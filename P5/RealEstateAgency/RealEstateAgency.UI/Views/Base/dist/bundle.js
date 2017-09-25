@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3adc4f173e0ec3ce322f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7ce8e8341a0d12e2a52b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -39186,7 +39186,8 @@ function logInState() {
                     email: '',
                     canRedirect: action.payload.canRedirect,
                     isPassForgot: false,
-                    isMsgForgot: false
+                    isMsgForgot: false,
+                    message: ''
                 });
             }
         case _LogInActions.LogInActions.LOG_IN:
@@ -39225,6 +39226,7 @@ function logInState() {
 
                     return Object.assign({}, state, {
                         isPassForgot: false,
+                        email: '',
                         message: 'See the link for changing the password in the log file'
                     });
                 } else {
@@ -40733,7 +40735,9 @@ var LogIn = function (_Component) {
                             this.props.logInState.message
                         ),
                         _react2.default.createElement('input', { type: 'submit', className: 'button', value: this.props.logInState.isPassForgot ? "Reset password" : "Send new message" })
-                    )
+                    ),
+                    _react2.default.createElement('input', { type: 'button', className: 'button', value: 'Back to LogIn',
+                        onClick: this.props.LogInInit })
                 );
             }
 
